@@ -1,0 +1,52 @@
+# Arquivo para guardar variáveis de ambiente e senhas.
+.env
+
+# Dependências do Node.js (usado pelo Angular e talvez pelo Back-end)
+node_modules/
+
+# Arquivos de log e cache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+pids/
+*.pid
+*.seed
+*.log
+*.log.*
+
+# Arquivos gerados pelo processo de build do Angular
+dist/
+tmp/
+out-tsc/
+bazel-out/
+/src/main/webapp/content/
+
+# Arquivos de configuração do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de configuração de IDEs (Editores de Código)
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Arquivos gerados pelo Java/Maven/Spring Boot
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+.mvn/
+*.jar
+*.war
+hs_err_pid*
+
+# Arquivos gerados pelo Docker
+docker-compose.override.yml
+
+# Outros
+coverage/
