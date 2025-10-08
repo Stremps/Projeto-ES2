@@ -6,8 +6,8 @@
 
 ### Equipe:
 
-- Aliana Wakassugui de Paula e Silva;
-- Jamile Hassen Sa (Scrum Master);
+- Aliana Wakassugui de Paula e Silva (Scrum Master);
+- Jamile Hassen Sa;
 - José Lucas Hoppe Macedo;
 - Gustavo Camargo Domingues.
 
