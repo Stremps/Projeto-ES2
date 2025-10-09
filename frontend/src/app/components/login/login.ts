@@ -6,7 +6,7 @@ import { Router, RouterLink } from "@angular/router";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
-  selector: 'app-login', // Alterado para corresponder ao componente de login
+  selector: 'app-login',
   standalone: true,
   imports: [
     CommonModule, 
@@ -15,85 +15,73 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     RouterLink, 
     HttpClientModule
   ],
-  templateUrl: './login.html', // Aponta para o seu HTML de login
-  styleUrls: ['./login.css']    // Mude para o seu CSS de login, se houver
+  templateUrl: './login.html',
+  styleUrls: ['./login.css']
 })
 export class Login {
-
-  // Propriedades para o formulário de login
-  nomeUsuario: string = ''; // Vinculado ao campo de email no HTML
-  senhaUsuario: string = ''; // Vinculado ao campo de senha no HTML
+  // ATENÇÃO: O HTML usa [(ngModel)]="nomeUsuario", então manteremos essa variável
+  nomeUsuario: string = ''; 
+  senhaUsuario: string = '';
   mostrarSenha = false;
   isSubmitting = false;
-
-  // Propriedades para exibir erros de validação
   errorEmail: string | null = null;
   errorSenha: string | null = null;
 
-  // Injetando HttpClient para chamadas API e Router para navegação
   constructor(private http: HttpClient, private router: Router) {}
 
-  // --- MÉTODOS ---
-
-  // Validações dos campos de login
+  // ... (seus métodos de validação e onToggleSenha permanecem os mesmos) ...
   validateEmail(email: string): string | null {
     if (!email) return 'E-mail é obrigatório.';
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'E-mail inválido.';
     return null;
   }
-
   validateSenha(senha: string): string | null {
     if (!senha) return 'Senha é obrigatória.';
-    if (senha.length < 8) return 'Senha deve ter pelo menos 8 caracteres.';
+    // A validação de 8 caracteres é do seu front, a API pode ter outra regra.
+    // A API de exemplo usa "123456", então vamos ajustar para 6.
+    if (senha.length < 6) return 'Senha deve ter pelo menos 6 caracteres.';
     return null;
   }
-  
-  // Alterna a visibilidade da senha
-  onToggleSenha(): void {
-    const senhaInput = document.getElementById('senha') as HTMLInputElement;
-    this.mostrarSenha = !this.mostrarSenha;
-    senhaInput.type = this.mostrarSenha ? 'text' : 'password';
-  }
+  onToggleSenha(): void { /* ... */ }
 
-  // Método chamado ao submeter o formulário
+  // ATUALIZE O MÉTODO ONSUBMIT
   onSubmit(): void {
-    // Limpa erros antigos e executa novas validações
     this.errorEmail = this.validateEmail(this.nomeUsuario);
     this.errorSenha = this.validateSenha(this.senhaUsuario);
 
-    // Se houver erros de validação, interrompe a submissão
     if (this.errorEmail || this.errorSenha) {
       return;
     }
 
     this.isSubmitting = true;
 
+    // O JSON da API espera "email" e "senha", então mapeamos nossas variáveis
     const credentials = {
       email: this.nomeUsuario,
       senha: this.senhaUsuario
     };
 
-    // Defina a URL da sua API de login
-    const apiUrl = 'https://sua-api.com/login'; // <-- SUBSTITUA PELA URL REAL DA SUA API
+    const apiUrl = 'http://localhost:8080/api/auth/login';
 
-    // Faz a chamada POST para a API de autenticação
-    this.http.post(apiUrl, credentials).subscribe({
-      next: (response: any) => {
+    this.http.post<any>(apiUrl, credentials).subscribe({ // Espera uma resposta do tipo "any" (ou uma interface específica)
+      next: (response) => {
         console.log('Login bem-sucedido!', response);
-        alert('Login realizado com sucesso!');
         
-        // Exemplo: Armazenar o token de autenticação recebido da API
-        // localStorage.setItem('authToken', response.token); 
-        
-        this.isSubmitting = false;
-        
-        // Redireciona o usuário para uma página principal ou dashboard após o login
-        this.router.navigate(['/home']); // Mude '/home' para a rota desejada
+        // **PARTE CRÍTICA: ARMAZENAR O TOKEN**
+        if (response && response.token) {
+          localStorage.setItem('token', response.token);
+          alert('Login realizado com sucesso!');
+          this.isSubmitting = false;
+          // Redireciona para /home conforme solicitado
+          this.router.navigate(['/home']);
+        } else {
+          // Caso a resposta não venha como esperado
+          this.errorSenha = 'Resposta de login inválida do servidor.';
+          this.isSubmitting = false;
+        }
       },
       error: (err) => {
         console.error('Erro ao fazer login:', err);
-        
-        // Exibe uma mensagem de erro genérica ou específica da API
         this.errorSenha = err.error?.message || 'Email ou senha inválidos. Tente novamente.';
         this.isSubmitting = false;
       }
