@@ -1,0 +1,118 @@
+<div class="full-screen-container">
+  <div class="website-name">
+    <h1>Criar nova conta</h1>
+  </div>
+
+  <div class="body-container">
+    <p-card class="login-card">
+
+      <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+
+        <div *ngIf="etapa === 1">
+          <nav class="quick-links">
+            <a [routerLink]="['/login']" routerLinkActive="link-ativo">Já tem conta? Login</a>
+          </nav>
+
+          <div class="field">
+            <label for="nome">NOME</label>
+            <input type="text" id="nome" name="nome" [(ngModel)]="nome" required minlength="2" placeholder="João Silva" />
+            <p class="error" *ngIf="errorNome">{{ errorNome }}</p>
+          </div>
+
+          <div class="field">
+            <label for="email">EMAIL</label>
+            <input type="email" id="email" name="email" [(ngModel)]="email" required placeholder="joaosilva@email.com" />
+            <p class="error" *ngIf="errorEmail">{{ errorEmail }}</p>
+          </div>
+
+          <div class="field">
+            <label for="senha">SENHA</label>
+            <div class="password-wrapper">
+              <input [type]="mostrarSenha ? 'text' : 'password'" id="senha" name="senha" [(ngModel)]="senha" required minlength="8" placeholder="***********************" />
+              <button type="button" class="toggle" (click)="onToggleSenha()">👁</button>
+            </div>
+            <p class="error" *ngIf="errorSenha">{{ errorSenha }}</p>
+          </div>
+
+          <div class="field">
+            <label for="telefone">TELEFONE</label>
+            <input type="tel" id="telefone" name="telefone" [(ngModel)]="telefone" required placeholder="(49) 9999-9999" />
+            <p class="error" *ngIf="errorTelefone">{{ errorTelefone }}</p>
+          </div>
+
+          <div class="field">
+            <label for="cargo">CARGO</label>
+            <p-select 
+              id="cargo"
+              name="cargo"
+              [options]="cargos" 
+              [(ngModel)]="cargo" 
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Selecionar um cargo" 
+              class="w-full"
+              required
+            ></p-select>
+            <p class="error" *ngIf="errorCargo">{{ errorCargo }}</p>
+          </div>
+          
+          <button type="button" class="btn-submit" (click)="proximaEtapa()">Avançar >>></button>
+        </div>
+
+        <div *ngIf="etapa === 2">
+          <button type="button" class="btn-back" (click)="etapaAnterior()"><<< Voltar</button>
+
+          <div class="field">
+            <label for="cep">CEP</label>
+            <input type="text" id="cep" name="cep" [(ngModel)]="cep" required placeholder="85851-000" />
+            <p class="error" *ngIf="errorCep">{{ errorCep }}</p>
+          </div>
+
+          <div class="field">
+            <label for="logradouro">Logradouro</label>
+            <input type="text" id="logradouro" name="logradouro" [(ngModel)]="logradouro" required minlength="2" placeholder="Avenida Brasil" />
+            <p class="error" *ngIf="errorLogradouro">{{ errorLogradouro }}</p>
+          </div>
+
+          <div class="field">
+            <label for="numero">Número</label>
+            <input type="text" id="numero" name="numero" [(ngModel)]="numero" required minlength="1" placeholder="123" />
+            <p class="error" *ngIf="errorNumero">{{ errorNumero }}</p>
+          </div>
+
+           <div class="field">
+            <label for="complemento">Complemento</label>
+            <input type="text" id="complemento" name="complemento" [(ngModel)]="complemento" placeholder="Apartamento, bloco, etc." />
+          </div>
+
+          <div class="field">
+            <label for="bairro">Bairro</label>
+            <input type="text" id="bairro" name="bairro" [(ngModel)]="bairro" required minlength="2" placeholder="Centro" />
+            <p class="error" *ngIf="errorBairro">{{ errorBairro }}</p>
+          </div>
+
+          <div class="field">
+            <label for="cidade">Cidade</label>
+            <input type="text" id="cidade" name="cidade" [(ngModel)]="cidade" required minlength="2" placeholder="Foz do Iguaçu" />
+            <p class="error" *ngIf="errorCidade">{{ errorCidade }}</p>
+          </div>
+
+           <div class="field">
+            <label for="uf">UF</label>
+            <input type="text" id="uf" name="uf" [(ngModel)]="uf" required minlength="2" maxlength="2" placeholder="PR" />
+            <p class="error" *ngIf="errorUf">{{ errorUf }}</p>
+          </div>
+
+          <div class="field">
+            <label for="pais">País</label>
+            <input type="text" id="pais" name="pais" [(ngModel)]="pais" required minlength="2" placeholder="Brasil" />
+            <p class="error" *ngIf="errorPais">{{ errorPais }}</p>
+          </div>
+
+          <button type="submit" class="btn" [disabled]="isSubmitting">Finalizar Cadastro</button>
+        </div>
+        
+      </form>
+    </p-card>
+  </div>
+</div>
