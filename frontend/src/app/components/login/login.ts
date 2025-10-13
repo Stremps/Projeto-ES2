@@ -61,7 +61,7 @@ export class Login {
       senha: this.senhaUsuario
     };
 
-    const apiUrl = 'http://localhost:8080/api/auth/login';
+    const apiUrl = 'http://localhost:8081/api/auth/login';
 
     this.http.post<any>(apiUrl, credentials).subscribe({ // Espera uma resposta do tipo "any" (ou uma interface específica)
       next: (response) => {

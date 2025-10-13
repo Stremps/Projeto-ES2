@@ -118,7 +118,7 @@ export class Register1 {
       nomeTipoLogradouro: this.nomeTipoLogradouro
     };
 
-    const apiUrl = 'http://localhost:8080/api/auth/register';
+    const apiUrl = 'http://localhost:8081/api/auth/register';
 
     this.http.post(apiUrl, dadosCompletos, { responseType: 'text' }).subscribe({ // responseType: 'text' pois o retorno é uma string simples
       next: (response) => {
