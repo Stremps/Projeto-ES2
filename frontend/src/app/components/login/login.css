@@ -1,0 +1,127 @@
+.full-screen-container {
+  display: flex;
+  flex-direction: column;  /* Stack vertical para header e card */
+  justify-content: center; /* Centraliza verticalmente o grupo */
+  align-items: center;     /* Centraliza horizontalmente */
+  min-height: 100vh;
+  gap: 0.5rem;             /* Gap mínimo entre .website-name e .body-container; ajuste para 0 se quiser zero */
+  padding: 1rem;
+  background-color: #f8f9fa; /* Opcional: fundo */
+}
+
+.website-name {
+    font-size: x-large;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.25rem;
+}
+
+.body-container {
+  display: flex;
+  justify-content: center;  /* Centraliza horizontal */
+  align-items: center;      /* Centraliza vertical */
+  min-height: 0;        /* Altura mínima definida para compatibilidade */
+  padding: 1rem;            /* Espaçamento nas bordas em mobile */
+}
+
+.login-card .p-card-header {
+  font-size: 3rem;  /* Ajuste para maior, ex: 3rem se quiser ainda maior */
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.quick-links {
+  display: flex;
+  flex-direction: column;  /* Muda para vertical */
+  align-items: center;     /* Centraliza horizontalmente */
+  gap: 0.25rem;            /* Espaçamento entre links */
+  margin-bottom: 1rem;
+}
+
+.quick-links a {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.quick-links a:hover {
+  text-decoration: underline;
+}
+
+.field {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.field label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.field input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper .toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn:hover:not(:disabled) {
+  background: #333;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+h2 {
+  font-size: xx-large;  
+  text-align: center;
+  margin-bottom: 1rem;
+}

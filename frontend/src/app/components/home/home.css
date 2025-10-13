@@ -1,0 +1,10 @@
+.full-screen-container {
+  display: flex;
+  flex-direction: column;  /* Stack vertical para header e card */
+  justify-content: center; /* Centraliza verticalmente o grupo */
+  align-items: center;     /* Centraliza horizontalmente */
+  min-height: 100vh;
+  gap: 0.5rem;             /* Gap mínimo entre .website-name e .body-container; ajuste para 0 se quiser zero */
+  padding: 1rem;
+  background-color: #f8f9fa; /* Opcional: fundo */
+}

@@ -1,0 +1,65 @@
+<!-- <p>login works!</p>
+
+<div> 
+    <input type="text" [(ngModel)]="nomeUsuario" placeholder="Digite seu nome de usuário" title="Nome de usuário">
+    {{nomeUsuario}}
+</div> -->
+
+<div class = "full-screen-container">
+
+    <div class = "website-name">
+    <h1>
+        Nome do Site
+    </h1>
+</div>
+
+<div class="body-container">
+    
+    <p-card>
+        <h2>Login</h2>
+
+        <nav class="quick-links">
+            <a [routerLink]="['/register1']" routerLinkActive="link-ativo">Cadastrar </a>
+        </nav>
+
+        <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+            <div class="field">
+                
+                <label for="email">EMAIL</label>
+                <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                [(ngModel)]="nomeUsuario" 
+                required 
+                #emailCtrl="ngModel"
+                placeholder="joaosilva@email.com" 
+                />
+                <p class="error" *ngIf="errorEmail">{{ errorEmail }}</p>
+            </div>
+
+            <div class="field">
+                <label for="senha">SENHA</label>
+                <div class="password-wrapper">
+                <input 
+                    type="password" 
+                    id="senha" 
+                    name="senha" 
+                    [(ngModel)]="senhaUsuario" 
+                    required 
+                    minlength="8" 
+                    #senhaCtrl="ngModel"
+                    placeholder="***********************" 
+                />
+                <button type="button" class="toggle" (click)="onToggleSenha()" aria-label="Mostrar senha">👁</button>
+                </div>
+                <p class="error" *ngIf="errorSenha">{{ errorSenha }}</p>
+            </div>
+
+            <button type="submit" class="btn" [disabled]="isSubmitting || !loginForm.valid">
+                {{ isSubmitting ? 'Entrando...' : 'Login' }}
+            </button>
+        </form>
+    </p-card>
+</div>
+</div>
