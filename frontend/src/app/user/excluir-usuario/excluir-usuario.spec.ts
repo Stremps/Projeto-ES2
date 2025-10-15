@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { User } from './user';
+import { ExcluirUsuario } from './excluir-usuario';
 
-describe('User', () => {
-  let component: User;
-  let fixture: ComponentFixture<User>;
+describe('ExcluirUsuario', () => {
+  let component: ExcluirUsuario;
+  let fixture: ComponentFixture<ExcluirUsuario>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [User]
+      imports: [ExcluirUsuario]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(User);
+    fixture = TestBed.createComponent(ExcluirUsuario);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
