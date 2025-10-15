@@ -15,7 +15,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http'; // 1. IMPOR
   styleUrl: './register1.css'
 })
 export class Register1 {
-  // ... (todas as suas propriedades existentes permanecem as mesmas) ...
   etapa: number = 1;
   nomeParticipante: string = '';
   emailParticipante: string = '';

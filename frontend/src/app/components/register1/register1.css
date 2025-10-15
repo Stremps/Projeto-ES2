@@ -1,168 +1,530 @@
-.full-screen-container {
+/*-------------------------------------------*/
+/* Container de Fundo e Overlay */
+/*-------------------------------------------*/
+.background-container {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  background-image: url('../../../../public/images/Background-Home.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg, 
+    rgba(23, 78, 66, 0.85) 0%, 
+    rgba(35, 102, 88, 0.85) 50%, 
+    rgba(46, 125, 110, 0.75) 100%);
+  z-index: 1;
+}
+
+/*-------------------------------------------*/
+/* Layout Principal */
+/*-------------------------------------------*/
+.content-wrapper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 90%;
+  max-width: 1400px;
+  padding: 0;
+  gap: 4rem;
+  height: 100vh;
+}
+
+/*-------------------------------------------*/
+/* Lado Esquerdo: Logo e Texto */
+/*-------------------------------------------*/
+.left-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.logo-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  width: 100%;
+}
+
+.logo-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: auto;
+  opacity: 0.3;
+  z-index: 1;
+  filter: blur(1px);
+}
+
+.site-title {
+  position: relative;
+  z-index: 2;
+  font-size: 4rem;
+  font-weight: 900;
+  color: #7fffd4;
+  margin: 0;
+  line-height: 1;
+  letter-spacing: 3px;
+  text-align: center;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.slogan {
+  font-size: 1.1rem;
+  color: #ffffff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 300;
+  margin: 0;
+  text-align: center;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/*-------------------------------------------*/
+/* Lado Direito: Card de Cadastro */
+/*-------------------------------------------*/
+.right-section {
+  flex: 0 0 500px;
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
+.register-card {
+  background: rgba(55, 85, 78, 0.85);
+  backdrop-filter: blur(15px);
+  border-radius: 0;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  border: none;
+  border-left: 1px solid rgba(127, 255, 212, 0.2);
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  gap: 0.5rem;
-  padding: 1rem;
+  overflow-y: auto;
 }
 
-.website-name h1 {
-  margin: 0;
-  font-size: 2.5rem;
+.register-title {
+  font-size: 2rem;
   font-weight: 700;
+  color: #ffffff;
   text-align: center;
+  margin: 0 0 2rem 0;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-.body-container {
-  width: 100%;
-  max-width: 400px;
-}
-
-.login-card {
-  width: 100%;
-  margin: 0;
-}
-
-.login-card h2 {
-  text-align: center;
-  margin-bottom: 0.5rem;
-}
-
-.quick-links {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.quick-links a {
-  color: #000000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.quick-links a:hover {
-  text-decoration: underline;
-}
-
+/*-------------------------------------------*/
+/* Campos do Formulário */
+/*-------------------------------------------*/
 .field {
-  margin-bottom: 1rem;
-  text-align: left;
+  margin-bottom: 1.5rem;
+  width: 100%;
 }
 
 .field label {
   display: block;
-  font-size: 0.875rem;
-  font-weight: bold;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
   margin-bottom: 0.5rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.5px;
 }
 
 .field input {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 12px 16px;
+  border: 2px solid rgba(127, 255, 212, 0.3);
+  border-radius: 8px;
   font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  background: rgba(166, 235, 201, 0.95);
+  color: #1a4d3e;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .field input:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+  border-color: #7fffd4;
+  box-shadow: 0 0 0 3px rgba(127, 255, 212, 0.2);
+  background: rgba(166, 235, 201, 1);
 }
 
+.field input::placeholder {
+  color: rgba(26, 77, 62, 0.6);
+  font-family: 'Poppins', sans-serif;
+}
+
+/*-------------------------------------------*/
+/* Campos em Linha (Lado a Lado) */
+/*-------------------------------------------*/
+.field-row {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.field-half {
+  flex: 1;
+}
+
+.field-small {
+  flex: 0 0 30%;
+}
+
+.field-large {
+  flex: 1;
+}
+
+/*-------------------------------------------*/
+/* PrimeNG Select Customização - VERSÃO FINAL */
+/*-------------------------------------------*/
+
+/* Esconde a estrutura padrão do PrimeNG e recria */
+:host ::ng-deep .p-select {
+  width: 100% !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* Container interno do select */
+:host ::ng-deep .p-select .p-inputwrapper {
+  width: 100% !important;
+}
+
+/* Label/texto do select */
+:host ::ng-deep .p-select .p-select-label {
+  padding: 12px 45px 12px 16px !important;
+  border: 2px solid rgba(127, 255, 212, 0.3) !important;
+  border-radius: 8px !important;
+  font-size: 1rem !important;
+  font-family: 'Poppins', sans-serif !important;
+  background: rgba(166, 235, 201, 0.95) !important;
+  color: #1a4d3e !important;
+  transition: all 0.3s ease !important;
+  box-sizing: border-box !important;
+  min-height: 48px !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
+}
+
+/* Placeholder */
+:host ::ng-deep .p-select .p-select-label.p-placeholder {
+  color: rgba(26, 77, 62, 0.6) !important;
+}
+
+/* Botão dropdown (seta) */
+:host ::ng-deep .p-select .p-select-dropdown {
+  background: transparent !important;
+  border: none !important;
+  color: #1a4d3e !important;
+  width: 40px !important;
+  height: 40px !important;
+  position: absolute !important;
+  right: 4px !important;
+  top: 4px !important;
+  bottom: 4px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 4px !important;
+  z-index: 2 !important;
+  pointer-events: auto !important;
+}
+
+/* Ícone da seta */
+:host ::ng-deep .p-select .p-select-dropdown .p-icon {
+  color: #1a4d3e !important;
+  font-size: 1.2rem !important;
+}
+
+/* Hover */
+:host ::ng-deep .p-select:not(.p-disabled):hover .p-select-label {
+  border-color: rgba(127, 255, 212, 0.5) !important;
+}
+
+/* Focus */
+:host ::ng-deep .p-select:not(.p-disabled).p-focus .p-select-label {
+  outline: none !important;
+  border-color: #7fffd4 !important;
+  box-shadow: 0 0 0 3px rgba(127, 255, 212, 0.2) !important;
+  background: rgba(166, 235, 201, 1) !important;
+}
+
+/* Painel dropdown */
+:host ::ng-deep .p-select-overlay {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border: 2px solid rgba(127, 255, 212, 0.4) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+  margin-top: 8px !important;
+  max-height: 300px !important;
+  overflow: auto !important;
+}
+
+/* Lista de opções */
+:host ::ng-deep .p-select-list {
+  padding: 0.5rem 0 !important;
+}
+
+/* Item individual */
+:host ::ng-deep .p-select-option {
+  padding: 12px 16px !important;
+  color: #1a4d3e !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1rem !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+  background: transparent !important;
+}
+
+/* Hover no item */
+:host ::ng-deep .p-select-option:not(.p-disabled):hover {
+  background: rgba(166, 235, 201, 0.5) !important;
+}
+
+/* Item selecionado */
+:host ::ng-deep .p-select-option.p-select-option-selected {
+  background: rgba(166, 235, 201, 0.8) !important;
+  font-weight: 600 !important;
+}
+
+/* Disabled */
+:host ::ng-deep .p-select.p-disabled .p-select-label {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  background: rgba(166, 235, 201, 0.5) !important;
+}
+
+/* Rotação da seta quando aberto */
+:host ::ng-deep .p-select.p-select-open .p-select-dropdown .p-icon {
+  transform: rotate(180deg) !important;
+}
+
+:host ::ng-deep .p-select .p-select-dropdown .p-icon {
+  transition: transform 0.3s ease !important;
+}
+
+/* Remove scrollbar do overlay se necessário */
+:host ::ng-deep .p-select-overlay::-webkit-scrollbar {
+  width: 8px;
+}
+
+:host ::ng-deep .p-select-overlay::-webkit-scrollbar-track {
+  background: rgba(166, 235, 201, 0.2);
+  border-radius: 4px;
+}
+
+:host ::ng-deep .p-select-overlay::-webkit-scrollbar-thumb {
+  background: rgba(127, 255, 212, 0.5);
+  border-radius: 4px;
+}
+
+:host ::ng-deep .p-select-overlay::-webkit-scrollbar-thumb:hover {
+  background: rgba(127, 255, 212, 0.7);
+}
+
+
+/*-------------------------------------------*/
+/* Campo Senha com Toggle */
+/*-------------------------------------------*/
 .password-wrapper {
   position: relative;
+  width: 100%;
 }
 
-.password-wrapper .toggle {
+.password-wrapper input {
+  padding-right: 45px;
+}
+
+.toggle-password {
   position: absolute;
-  right: 10px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  padding: 4px;
+  transition: transform 0.2s ease;
+  color: #1a4d3e;
 }
 
-:host ::ng-deep .p-dropdown {
-  width: 100%;
+.toggle-password:hover {
+  transform: translateY(-50%) scale(1.1);
 }
 
-:host ::ng-deep .p-dropdown .p-dropdown-label {
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
+/*-------------------------------------------*/
+/* Mensagens de Erro */
+/*-------------------------------------------*/
 .error {
-  color: #dc3545;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
+  display: block;
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
 }
 
-.btn {
+/*-------------------------------------------*/
+/* Botões */
+/*-------------------------------------------*/
+.btn-next,
+.btn-submit {
   width: 100%;
-  padding: 0.75rem;
-  background: #000;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
+  padding: 16px 28px;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  background: linear-gradient(-45deg, #f39c12, #f1c40f, #f39c12, #e67e22);
+  background-size: 400% 400%;
+  animation: gradient-animation 6s ease infinite;
+  color: #1a4d3e;
+  font-weight: 900;
+  box-shadow: 0 4px 12px rgba(243, 156, 18, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-next:hover:not(:disabled),
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(243, 156, 18, 0.6);
+}
+
+.btn-next:disabled,
+.btn-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.button-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 .btn-back {
-  width: 100%;
-  padding: 0.25rem;
-  margin-bottom: 10px;
-  background: #000;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: bold;
+  flex: 0 0 60px;
+  padding: 16px;
+  background: rgba(127, 255, 212, 0.2);
+  border: 2px solid rgba(127, 255, 212, 0.4);
+  border-radius: 8px;
   cursor: pointer;
+  color: #7fffd4;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.btn-back:hover:not(:disabled) {
+  background: rgba(127, 255, 212, 0.3);
+  transform: translateY(-2px);
 }
 
 .btn-submit {
-  width: 100%;
-   margin-top: 100px;
-  padding: 0.75rem;
-  background: #000;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
+  flex: 1;
 }
 
-.btn:hover:not(:disabled) {
-  background: #333;
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-.btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+/*-------------------------------------------*/
+/* Link de Login */
+/*-------------------------------------------*/
+.login-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #ffffff;
 }
 
-:host ::ng-deep .p-select {
-  width: 100%;
+.link-login {
+  color: #7fffd4;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
 }
 
-:host ::ng-deep .p-select .p-select-label {
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.link-login:hover {
+  color: #a6f4dc;
+  text-decoration: underline;
 }
 
-:host ::ng-deep .p-select-panel {
-  z-index: 9999 !important;
+/*-------------------------------------------*/
+/* Responsividade */
+/*-------------------------------------------*/
+@media (max-width: 968px) {
+  .content-wrapper {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    gap: 0;
+  }
+
+  .left-section {
+    padding: 3rem 2rem;
+  }
+
+  .site-title {
+    font-size: 3rem;
+  }
+
+  .right-section {
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+  }
+
+  .register-card {
+    border-radius: 0;
+    border-left: none;
+    border-top: 1px solid rgba(127, 255, 212, 0.2);
+  }
+
+  .field-row {
+    flex-direction: column;
+  }
 }
