@@ -1,0 +1,26 @@
+<div class="perfil-container">
+  <div class="perfil-card">
+    <h1>Meu Perfil</h1>
+
+    <div class="perfil-info" *ngIf="usuario">
+      <div class="info-group">
+        <label>Email:</label>
+        <p>{{ usuario.email }}</p>
+      </div>
+
+      <div class="info-group">
+        <label>Data de cadastro:</label>
+        <p>{{ usuario.created_at | date:'dd/MM/yyyy' }}</p>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button class="btn btn-primary" (click)="editarPerfil()">
+        Editar Perfil
+      </button>
+      <button class="btn btn-secondary" (click)="voltarHome()">
+        Voltar
+      </button>
+    </div>
+  </div>
+</div>

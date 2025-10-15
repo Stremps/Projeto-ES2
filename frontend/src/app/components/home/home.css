@@ -1,10 +1,77 @@
 .full-screen-container {
   display: flex;
-  flex-direction: column;  /* Stack vertical para header e card */
-  justify-content: center; /* Centraliza verticalmente o grupo */
-  align-items: center;     /* Centraliza horizontalmente */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
-  gap: 0.5rem;             /* Gap mínimo entre .website-name e .body-container; ajuste para 0 se quiser zero */
+  gap: 2rem;
   padding: 1rem;
-  background-color: #f8f9fa; /* Opcional: fundo */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.full-screen-container h1 {
+  color: white;
+  font-size: 36px;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.btn {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary {
+  background: #4CAF50;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #45a049;
+}
+
+.btn-secondary {
+  background: #2196F3;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #0b7dda;
+}
+
+.btn-danger {
+  background: #f44336;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #da190b;
+}
+
+.btn-logout {
+  background: #9e9e9e;
+  color: white;
+}
+
+.btn-logout:hover {
+  background: #757575;
 }

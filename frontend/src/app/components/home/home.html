@@ -1,7 +1,18 @@
 <div class="full-screen-container">
-    <h1>
-        Login Feito! Bem vindo!
-    </h1>
+    <h1>Login Feito! Bem vindo!</h1>
 
-    
+    <div class="button-container">
+        <button class="btn btn-primary" (click)="irParaPerfil()">
+            Meu Perfil
+        </button>
+        <button class="btn btn-secondary" (click)="editarPerfil()">
+            Editar Perfil
+        </button>
+        <button class="btn btn-danger" (click)="excluirConta()">
+            Excluir Conta
+        </button>
+        <button class="btn btn-logout" (click)="logout()">
+            Sair
+        </button>
+    </div>
 </div>

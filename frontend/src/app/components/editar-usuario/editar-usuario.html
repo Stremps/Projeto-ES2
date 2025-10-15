@@ -1,0 +1,56 @@
+<div class="editar-container">
+  <div class="editar-card">
+    <h1>Editar Perfil</h1>
+
+    <form (ngSubmit)="salvar()">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="email"
+          name="email"
+          disabled
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="novaSenha">Nova Senha</label>
+        <input
+          type="password"
+          id="novaSenha"
+          [(ngModel)]="novaSenha"
+          name="novaSenha"
+          placeholder="Deixe em branco para manter a senha atual"
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="confirmarSenha">Confirmar Nova Senha</label>
+        <input
+          type="password"
+          id="confirmarSenha"
+          [(ngModel)]="confirmarSenha"
+          name="confirmarSenha"
+          placeholder="Confirme a nova senha"
+          class="form-control"
+        />
+      </div>
+
+      <div *ngIf="mensagem" [class.erro]="erro" [class.sucesso]="!erro" class="mensagem">
+        {{ mensagem }}
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="btn btn-primary">
+          Salvar Alterações
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cancelar()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

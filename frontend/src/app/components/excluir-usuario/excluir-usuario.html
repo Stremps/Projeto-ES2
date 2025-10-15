@@ -1,0 +1,28 @@
+<div class="excluir-container">
+  <div class="excluir-card">
+    <div class="warning-icon">⚠️</div>
+    <h1>Excluir Conta</h1>
+
+    <div class="warning-message">
+      <p>Esta ação é irreversível. Todos os seus dados serão permanentemente excluídos.</p>
+    </div>
+
+    <div class="user-info" *ngIf="usuario">
+      <p><strong>Conta a ser excluída:</strong></p>
+      <p>{{ usuario.email }}</p>
+    </div>
+
+    <div *ngIf="mensagem" [class.erro]="erro" [class.sucesso]="!erro" class="mensagem">
+      {{ mensagem }}
+    </div>
+
+    <div class="button-group">
+      <button class="btn btn-danger" (click)="confirmarExclusao()">
+        Confirmar Exclusão
+      </button>
+      <button class="btn btn-secondary" (click)="cancelar()">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>
