@@ -26,7 +26,7 @@
 }
 
 .logo {
-  width: 50px;
+  width: 150px;
   height: auto;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)); /* Reutilizando drop-shadow */
 }
@@ -63,6 +63,9 @@
 
 /* Sub-Header: Tabs Todos, Inscritos, Meus */
 .sub-header {
+  display: flex; /* Adicionado para alinhar elementos horizontalmente */
+  justify-content: space-between; /* Abas à esquerda, botão à direita */
+  align-items: center; /* Alinhamento vertical central */
   background: rgba(0, 128, 100, 0.8); /* Verde mais escuro, inspirado em gradientes de pagina-inicial.css */
   padding: 0.5rem 2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -70,10 +73,10 @@
 
 .tab-nav {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start; /* Mudança de center para flex-start: abas alinhadas à esquerda */
   gap: 3rem;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0; /* Removido auto para não centralizar no flex pai */
 }
 
 .tab-nav a {
@@ -228,4 +231,23 @@
     padding: 1rem;
     height: 120px;
   }
+}
+
+.create-event-btn {
+  background: linear-gradient(135deg, rgba(0, 150, 136, 0.9), rgba(0, 128, 100, 0.9));
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  margin-left: auto; /* Garante que o botão fique à direita se necessário */
+}
+
+.create-event-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgba(127, 255, 212, 0.4), rgba(0, 150, 136, 0.9));
 }
