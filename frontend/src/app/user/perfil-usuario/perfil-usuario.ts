@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http'; // 1. Importa o HttpClient e o módulo
+import { Router } from '@angular/router';
 
 // 2. Adicione o HttpClientModule aos imports do Componente Standalone
 @Component({
@@ -11,6 +12,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http'; // 1. Impor
   styleUrl: './perfil-usuario.css'
 })
 export class PerfilUsuario implements OnInit {
+  constructor(private router: Router, private http: HttpClient) {}
 
   // Interface para estruturar os dados do usuário (ajustada para ser opcional inicialmente)
   // Nota: O campo 'senha' é mantido para exibição de '********', mas não deve vir do backend
@@ -21,9 +23,6 @@ export class PerfilUsuario implements OnInit {
   
   // URL de exemplo para o endpoint de busca de perfil
   private readonly apiUrl = 'http://localhost:8081/api/user/profile'; // Mude para seu endpoint real
-  
-  // 3. Injeta o HttpClient no construtor
-  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.loadUserProfile();
@@ -92,18 +91,14 @@ export class PerfilUsuario implements OnInit {
 
   // Métodos de navegação mockados para o menu lateral
   goToProfile(): void {
-    console.log('Navegar para Perfil');
-    // Em uma aplicação real: this.router.navigate(['/user/perfil-usuario']);
+    this.router.navigate(['/user']);
   }
 
   goToEdit(): void {
-    console.log('Navegar para Editar Perfil');
-    // Em uma aplicação real: this.router.navigate(['/user/editar-usuario']);
+    this.router.navigate(['/edit-user']);
   }
 
-  confirmDelete(): void {
-    // Usar um modal de confirmação no lugar de 'alert()'
-    console.log('Exibir modal de confirmação de exclusão de conta');
-    // Em uma aplicação real: this.modalService.openConfirmDeleteModal();
+  goToDelete(): void {
+    this.router.navigate(['/delete-user']);
   }
 }

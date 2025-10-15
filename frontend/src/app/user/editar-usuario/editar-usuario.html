@@ -18,9 +18,8 @@
         <aside class="sidebar">
             <!-- Botão Meu Perfil AGORA está inativo -->
             <button (click)="goToProfile()" class="sidebar-button">Meu Perfil</button>
-            <!-- Botão Editar Perfil AGORA está ativo -->
             <button (click)="goToEdit()" class="sidebar-button active-button">Editar Perfil</button>
-            <button (click)="confirmDelete()" class="sidebar-button delete-button">Excluir Conta</button>
+            <button (click)="goToDelete()" class="sidebar-button delete-button">Excluir Conta</button>
         </aside>
 
         <!-- Formulário de Edição -->
@@ -86,15 +85,18 @@
                         <input type="password" [(ngModel)]="user.senha" name="senha" class="input-field">
                     </div>
 
-                    <!-- Botões Salvar e Cancelar -->
+                    <!-- Botões Salvar e Cancelar - Unificados e alinhados -->
+                    <!-- Colocado no último data-block da linha para ocupar o espaço -->
                     <div class="data-block button-area">
-                        <!-- Botão Salvar - Cor vibrante/turquesa -->
+                        <!-- Botão Salvar (Principal) -->
                         <button type="submit" class="action-button save-button">SALVAR</button>
+                        <!-- Botão Cancelar (Menor, abaixo do Salvar) -->
+                        <button type="button" (click)="cancelEdit()" class="action-button cancel-button small-link">CANCELAR</button>
                     </div>
-                    <div class="data-block">
-                        <!-- Botão Cancelar - Cor secundária/rosa (baseado no protótipo) -->
-                        <button type="button" (click)="cancelEdit()" class="action-button cancel-button">CANCELAR</button>
-                    </div>
+                    
+                    <!-- Espaçador (para preencher o grid) -->
+                    <div class="data-block spacer"></div>
+                    
                 </div>
             </form>
         </main>

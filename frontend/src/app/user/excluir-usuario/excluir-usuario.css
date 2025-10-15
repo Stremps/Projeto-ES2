@@ -1,0 +1,187 @@
+/* IMPORTA O ESTILO BASE DO PERFIL (HEADER, SIDEBAR, GRID, FONTE POPPINS) */
+@import url('../perfil-usuario/perfil-usuario.css');
+
+/*-------------------------------------------*/
+/* ESTILOS ESPECÍFICOS DA TELA DE EXCLUSÃO */
+/*-------------------------------------------*/
+
+/* Remover possíveis alterações no cabeçalho para garantir padrão com perfil */
+.main-header {
+  /* Nenhuma modificação adicional aqui, herda do perfil-usuario.css */
+}
+
+/* Padronizar sidebar para igualar ao perfil */
+.sidebar {
+  width: 250px !important;;
+  background-color: rgba(66, 110, 94, 0.7);
+  padding-top: 50px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+/* Botão ativo "Excluir Conta" no menu lateral */
+.sidebar .delete-button.active-button-delete {
+  color: #000; /* Preto quando ativo */
+  background-color: rgba(255, 255, 255, 0.7);
+  border-left-color: transparent;
+}
+
+/* Container principal da página de exclusão */
+.profile-details.delete-page {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  position: relative;
+  flex-grow: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Título da exclusão */
+.delete-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--black-gray, #363732);
+}
+
+/* Conteúdo da exclusão */
+.delete-content {
+  max-width: 600px;
+  margin-bottom: 20px;
+}
+
+/* Aviso em destaque */
+.attention-alert {
+  color: #cc0000;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Estilos para o formulário de confirmação */
+.delete-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.confirmation-input-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.label-delete {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--black-gray, #363732);
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+
+.confirmation-input {
+  width: 250px;
+  font-weight: 600 !important;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+/* Botão de confirmação (exclusão) */
+.delete-confirm-button {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  background-color: #06d6a0; /* Verde-água */
+  color: var(--black-gray, #363732);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  text-transform: uppercase;
+  width: auto;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.delete-confirm-button:hover:not(:disabled) {
+  background-color: #00b386;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.delete-confirm-button:disabled {
+  background-color: #c7f1e6;
+  color: #6d6e6a;
+  cursor: not-allowed;
+  opacity: 0.8;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Mensagens de erro e sucesso */
+.error-message,
+.success-message {
+  font-weight: 600;
+  margin: 0;
+  padding: 5px 0;
+  text-align: left;
+}
+
+.error-message {
+  color: #cc0000;
+}
+
+.success-message {
+  color: #008000;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+  .profile-details.delete-page {
+    padding: 20px;
+    align-items: center;
+  }
+
+  .delete-title {
+    font-size: 1.5rem;
+  }
+
+  .delete-content {
+    text-align: center;
+  }
+
+  .confirmation-input-area {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .label-delete {
+    margin-bottom: 5px;
+  }
+
+  .confirmation-input {
+    width: 100%;
+  }
+
+  .delete-confirm-button {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-top: 20px;
+  }
+}

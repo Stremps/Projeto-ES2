@@ -43,15 +43,17 @@
     padding-bottom: 0;
 }
 
-/* Estilo para a área dos botões (Salvar/Cancelar) */
+/* * NOVO ESTILO DA ÁREA DE BOTÕES:
+ * Organiza os botões Salvar (maior) e Cancelar (menor) em coluna e à direita. 
+ */
 .button-area {
-    /* Posição dos botões na parte inferior, como no protótipo */
     margin-top: 20px;
-    /* Alinha os botões à direita na área de grid, se necessário */
-    grid-column: 3 / 4; 
+    grid-column: 3 / 4; /* Ocupa a terceira coluna */
     display: flex;
-    justify-content: flex-end;
-    gap: 15px;
+    flex-direction: column; /* Organiza em coluna (um abaixo do outro) */
+    align-items: center; /* CENTRALIZA os botões no bloco */
+    gap: 10px; /* Espaço entre os botões */
+    justify-content: flex-start;
 }
 
 /* Estilo base para os botões de ação */
@@ -64,7 +66,7 @@
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
     text-transform: uppercase;
-    min-width: 140px;
+    box-sizing: border-box;
 }
 
 .action-button:hover {
@@ -76,23 +78,39 @@
 .save-button {
     background-color: #06d6a0; /* Cor vibrante-turquoise do styles.css */
     color: var(--black-gray, #363732);
+    width: 180px; /* Tamanho Fixo para o botão SALVAR */
 }
 
-/* Botão Cancelar (Rosa/Magenta) */
+/* Botão Cancelar (Cor Secundária, Menor, Tipo Botão) */
 .cancel-button {
+    /* Cor de fundo secundária para parecer um botão, mas diferente */
     background-color: #ff69b4; /* Cor rosa/magenta, como no protótipo */
     color: #ffffff;
+    padding: 10px 20px; /* Padding um pouco menor */
+    font-size: 1rem; /* Fonte um pouco menor */
+    width: 160px; /* Tamanho Fixo MENOR para o botão CANCELAR */
+    
+    /* Estilos de botão normal */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transform: none;
+}
+
+.cancel-button:hover {
+    /* Mantém o efeito de hover do botão padrão */
+    background-color: #e55c9f; 
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* Ajustes de responsividade para o layout dos botões em mobile */
 @media (max-width: 768px) {
     .button-area {
         grid-column: span 1; /* Ocupa a coluna inteira em mobile */
-        justify-content: space-around;
-        flex-direction: row;
+        flex-direction: column; /* Mantém em coluna */
+        align-items: center; /* Centraliza em mobile */
         gap: 10px;
     }
-    .action-button {
-        flex-grow: 1;
+    .save-button, .cancel-button {
+        width: 80%; /* Ocupa 80% da largura em mobile */
     }
 }

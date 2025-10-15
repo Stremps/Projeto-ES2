@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Necessário para ngModel (formulários)
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 // Interface para estruturar os dados do usuário, agora editáveis
 interface EditableUserProfile {
@@ -28,6 +29,7 @@ interface EditableUserProfile {
   styleUrl: './editar-usuario.css'
 })
 export class EditarUsuario implements OnInit {
+  constructor(private router: Router, private http: HttpClient) {}
   
   // Objeto que será editado, inicializado com dados mockados
   user: EditableUserProfile = this.getMockUser();
@@ -37,8 +39,6 @@ export class EditarUsuario implements OnInit {
   // Endpoints de exemplo
   private readonly getProfileApiUrl = 'http://localhost:8081/api/user/profile'; // GET para carregar
   private readonly updateProfileApiUrl = 'http://localhost:8081/api/user/update'; // PUT para salvar
-
-  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     // Carrega os dados do usuário ao iniciar o componente
@@ -127,13 +127,17 @@ export class EditarUsuario implements OnInit {
   }
 
   // Métodos de navegação (simulados)
+
   goToProfile(): void {
-    console.log('Navegar para Perfil');
-    // Em uma aplicação real: this.router.navigate(['/user/perfil-usuario']);
+    this.router.navigate(['/user']);
   }
 
   goToEdit(): void {
-    console.log('Permanecer em Editar Perfil');
+    this.router.navigate(['/edit-user']);
+  }
+
+  goToDelete(): void {
+    this.router.navigate(['/delete-user']);
   }
 
   cancelEdit(): void {
@@ -141,8 +145,4 @@ export class EditarUsuario implements OnInit {
     this.goToProfile();
   }
 
-  confirmDelete(): void {
-    console.log('Navegar para Excluir Conta');
-    // Em uma aplicação real: this.router.navigate(['/user/excluir-usuario']);
-  }
 }
