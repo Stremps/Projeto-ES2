@@ -6,9 +6,9 @@ import { Router, RouterLink } from "@angular/router";
   selector: 'app-home',
   standalone: true,
   imports: [ CommonModule, RouterLink],
-  templateUrl: './home.html',
-  styleUrl: './home.css'
+  templateUrl: './pagina-inicial.html',
+  styleUrl: './pagina-inicial.css'
 })
-export class Home {
+export class PaginaInicial {
   constructor() {}
 }

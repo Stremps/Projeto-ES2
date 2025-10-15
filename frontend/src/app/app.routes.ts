@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { Login } from './components/login/login';
-import { Home } from './components/home/home';
+import { PaginaInicial } from './components/pagina-inicial/pagina-inicial';
 import { Register1 } from './components/register1/register1';
 import { RouterLink } from '@angular/router';
 
@@ -10,14 +10,14 @@ export const routes: Routes = [
         component: Login
     },
     {
-        path: 'home',
-        component: Home
+        path: 'pagina-inicial',
+        component: PaginaInicial
     },
     {
         path: 'register1',
         component: Register1
     },
     {
-        path: '**', redirectTo: 'login', pathMatch: 'full'
+        path: '**', redirectTo: 'pagina-inicial', pathMatch: 'full'
     }
 ];
