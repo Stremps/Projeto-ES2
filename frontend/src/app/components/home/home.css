@@ -1,96 +1,189 @@
 /*-------------------------------------------*/
-/* Container de Fundo e Overlay            */
+/* Container de Fundo e Overlay */
 /*-------------------------------------------*/
 .background-container {
-    position: relative;
-    height: 100vh;
-    width: 100vw;
-    background-image: url('../../../../public/images/Background-Home.png'); /* Substitua pelo caminho da sua imagem de fundo */
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  background-image: url('../../../../public/images/Background-Home.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(to bottom, rgba(20, 66, 52, 0.8), rgba(35, 102, 75, 0.8));
-    z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg, 
+    rgba(23, 78, 66, 0.85) 0%, 
+    rgba(35, 102, 88, 0.85) 50%, 
+    rgba(46, 125, 110, 0.75) 100%);
+  z-index: 1;
 }
 
 /*-------------------------------------------*/
-/* Conteúdo Central                        */
+/* Layout Principal */
 /*-------------------------------------------*/
-.content-container {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 2rem;
+.content-wrapper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1400px;
+  padding: 2rem;
+  gap: 4rem;
 }
 
-.logo-section {
-    display: flex;
-    align-items: center;
-    gap: 1rem; /* Espaço entre a imagem do logo e o texto */
+/*-------------------------------------------*/
+/* Lado Esquerdo: Logo e Texto */
+/*-------------------------------------------*/
+.left-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.logo-image {
-    width: 150px; /* Ajuste o tamanho do logo conforme necessário */
-    
-    height: auto;
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.logo-icon {
+  width: 120px;
+  height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
 .site-title {
-    font-size: 3.5rem; /* Tamanho ajustado para corresponder à imagem */
-    font-weight: bold;
-    color: #a9d4b3; /* Tom de verde claro */
-    margin: 0;
-    letter-spacing: 2px;
+  font-size: 4rem;
+  font-weight: 900;
+  color: #7fffd4;
+  margin: 0;
+  line-height: 1;
+  letter-spacing: 3px;
+  text-align: center;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .slogan {
-    font-size: 1rem;
-    margin-top: 0.5rem;
-    margin-bottom: 2.5rem; /* Aumenta o espaço antes dos botões */
-    letter-spacing: 1px;
+  font-size: 1.1rem;
+  color: #ffffff;
+  letter-spacing: 2px;
+  margin-top: 1rem;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-align: center;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 /*-------------------------------------------*/
-/* Botões de Ação                          */
+/* Lado Direito: Card de Login */
 /*-------------------------------------------*/
-.action-buttons {
-    display: flex;
+.right-section {
+  flex: 0 0 400px;
+}
+
+.login-card {
+  background: rgba(45, 75, 68, 0.75);
+  backdrop-filter: blur(1px);
+  border-radius: 12px;
+  padding: 5rem 2.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  border: 1px solid rgba(127, 255, 212, 0.2);
+}
+
+/*-------------------------------------------*/
+/* Botões de Ação */
+/*-------------------------------------------*/
+.btn-login,
+.btn-cadastrar {
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 16px 28px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  letter-spacing: 1.5px;
+}
+
+.btn-login {
+  background-color: #7fffd4;
+  color: #1a4d3e;
+  box-shadow: 0 4px 12px rgba(127, 255, 212, 0.3);
+}
+
+.btn-login:hover {
+  transform: translateY(-2px);
+  background-color: #a6f4dc;
+  box-shadow: 0 6px 16px rgba(127, 255, 212, 0.5);
+}
+
+.btn-cadastrar {
+  box-shadow: 0 4px 12px rgba(0, 201, 154, 0.3);
+}
+
+.btn-cadastrar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 201, 154, 0.5);
+}
+
+/*-------------------------------------------*/
+/* Responsividade */
+/*-------------------------------------------*/
+@media (max-width: 968px) {
+  .content-wrapper {
     flex-direction: column;
-    gap: 1rem; /* Espaço entre os botões */
+    text-align: center;
+  }
+
+  .left-section {
+    align-items: center;
+  }
+
+  .logo-container {
+    flex-direction: column;
+  }
+
+  .site-title {
+    font-size: 3rem;
+  }
+
+  .right-section {
+    flex: 0 0 auto;
     width: 100%;
-    max-width: 250px; /* Largura máxima para os botões */
+    max-width: 400px;
+  }
 }
 
-.action-buttons button {
-    font-size: 1rem;
-    font-weight: bold;
-    padding: 14px 28px;
-    border: none;
-    border-radius: 8px; /* Cantos levemente arredondados como na imagem */
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-    background-color: #6d8c75; /* Cor de fundo dos botões */
-    color: #ffffff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
+@media (max-width: 568px) {
+  .site-title {
+    font-size: 2.5rem;
+  }
 
-.action-buttons button:hover {
-    transform: translateY(-3px); /* Efeito de elevação suave */
-    background-color: #a9d4b3; /* Muda a cor no hover */
-    color: #333;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  .slogan {
+    font-size: 0.9rem;
+  }
+
+  .login-card {
+    padding: 2rem 1.5rem;
+  }
 }
