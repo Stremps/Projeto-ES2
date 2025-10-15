@@ -1,1 +1,51 @@
-<p>home works!</p>
+<div class="home-container">
+  <!-- Top Header: Logo, Home, Conta -->
+  <header class="top-header">
+    <div class="logo-section">
+      <img src="images/Infinity-Events.png" alt="Eventy Logo" class="logo" />
+    </div>
+    <nav class="top-nav">
+      <a routerLink="/home" [class.active]="true">Home</a>
+      <a routerLink="/account">Conta</a>
+    </nav>
+  </header>
+
+  <!-- Sub-Header: Tabs for Todos, Inscritos, Meus -->
+  <div class="sub-header">
+    <nav class="tab-nav">
+      <a routerLink="/events" [class.active]="activeTab === 'todos'" (click)="setActiveTab('todos')">
+        Todos os eventos
+      </a>
+      <a routerLink="/registered" [class.active]="activeTab === 'inscritos'" (click)="setActiveTab('inscritos')">
+        Eventos inscritos
+      </a>
+      <a routerLink="/my-events" [class.active]="activeTab === 'meus'" (click)="setActiveTab('meus')">
+        Meus eventos
+      </a>
+    </nav>
+  </div>
+
+  <!-- Search Bar - Moved to Left -->
+  <div class="search-section">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="Buscar"
+      class="search-input"
+    />
+  </div>
+
+  <!-- Events Grid -->
+  <main class="events-grid">
+    <div class="grid-container">
+      <div
+        *ngFor="let event of filteredEvents()"
+        class="event-card"
+        [ngClass]="'color-' + event.color"
+      >
+        <h3 class="event-title">{{ event.title }}</h3>
+        <p class="event-date">{{ event.date }}</p>
+      </div>
+    </div>
+  </main>
+</div>
