@@ -1,10 +1,96 @@
-.full-screen-container {
-  display: flex;
-  flex-direction: column;  /* Stack vertical para header e card */
-  justify-content: center; /* Centraliza verticalmente o grupo */
-  align-items: center;     /* Centraliza horizontalmente */
-  min-height: 100vh;
-  gap: 0.5rem;             /* Gap mínimo entre .website-name e .body-container; ajuste para 0 se quiser zero */
-  padding: 1rem;
-  background-color: #f8f9fa; /* Opcional: fundo */
+/*-------------------------------------------*/
+/* Container de Fundo e Overlay            */
+/*-------------------------------------------*/
+.background-container {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    background-image: url('../../../../public/images/Background-Home.png'); /* Substitua pelo caminho da sua imagem de fundo */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(20, 66, 52, 0.8), rgba(35, 102, 75, 0.8));
+    z-index: 1;
+}
+
+/*-------------------------------------------*/
+/* Conteúdo Central                        */
+/*-------------------------------------------*/
+.content-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Espaço entre a imagem do logo e o texto */
+}
+
+.logo-image {
+    width: 150px; /* Ajuste o tamanho do logo conforme necessário */
+    
+    height: auto;
+}
+
+.site-title {
+    font-size: 3.5rem; /* Tamanho ajustado para corresponder à imagem */
+    font-weight: bold;
+    color: #a9d4b3; /* Tom de verde claro */
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.slogan {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 2.5rem; /* Aumenta o espaço antes dos botões */
+    letter-spacing: 1px;
+}
+
+/*-------------------------------------------*/
+/* Botões de Ação                          */
+/*-------------------------------------------*/
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Espaço entre os botões */
+    width: 100%;
+    max-width: 250px; /* Largura máxima para os botões */
+}
+
+.action-buttons button {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 8px; /* Cantos levemente arredondados como na imagem */
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    background-color: #6d8c75; /* Cor de fundo dos botões */
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.action-buttons button:hover {
+    transform: translateY(-3px); /* Efeito de elevação suave */
+    background-color: #a9d4b3; /* Muda a cor no hover */
+    color: #333;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }

@@ -4,3 +4,67 @@ html, body {
     height: 100%;
     margin: 0
 }
+
+.vibrant-turquoise {
+  color: #06d6a0;
+}
+
+.pastel-green {
+  color: #a6ebc9;
+}
+
+.black-gray {
+  color: #363732;
+}
+
+/* 
+---------------------- ### ----------------------
+
+ESTILO BOTÃO GRADIENTE
+
+---------------------- ### ----------------------
+*/
+
+/* O estilo do botão, agora com o gradiente animado */
+.animated-gradient-button {
+    /* O gradiente e a animação foram movidos para cá */
+    background: linear-gradient(
+        -45deg,
+        #363b38, /* Cinza Escuro */
+        #b3e3cf, /* Verde Água Claro */
+        #00c99a, /* Verde Água Vibrante */
+        #b3e3cf  /* Repetindo uma cor para um loop suave */
+    );
+    background-size: 400% 400%;
+    animation: gradient-animation 10s ease infinite;
+
+    /* Estilos básicos do botão */
+    color: #363b38; /* Cor do texto */
+    border: none; /* Borda removida, pois não é mais necessária */
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Transição suave para todas as propriedades */
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Quando o mouse está sobre o botão */
+.animated-gradient-button:hover {
+    transform: scale(1.05); /* Efeito de escala para dar feedback */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Sombra para dar profundidade */
+}
+
+/* A definição da animação (@keyframes) - permanece a mesma */
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
