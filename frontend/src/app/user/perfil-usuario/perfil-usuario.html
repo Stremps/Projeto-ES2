@@ -1,1 +1,96 @@
-<p>perfil-usuario works!</p>
+<!-- Estrutura principal com header (simulação) e container de conteúdo -->
+<div class="perfil-container">
+
+    <!-- Simulação do Header (Navegação principal) -->
+    <header class="main-header">
+        <div class="logo-area">
+            <!-- Ícone da marca (Infinity Events) -->
+            <img src="images/Infinity-Events.png" alt="Logo" class="logo-icon">
+        </div>
+        <nav class="nav-links">
+            <!-- Ajustado para não sair da página -->
+            <a href="javascript:void(0)" class="nav-item">Home</a>
+            <a href="javascript:void(0)" class="nav-item">Conta</a>
+        </nav>
+    </header>
+
+    <!-- Área de Conteúdo principal (Menu Lateral + Detalhes do Perfil) -->
+    <div class="content-area">
+        <!-- Menu Lateral de Navegação -->
+        <aside class="sidebar">
+            <button (click)="goToProfile()" class="sidebar-button active-button">Meu Perfil</button>
+            <button (click)="goToEdit()" class="sidebar-button">Editar Perfil</button>
+            <button (click)="confirmDelete()" class="sidebar-button delete-button">Excluir Conta</button>
+        </aside>
+
+        <!-- Detalhes do Perfil -->
+        <main class="profile-details">
+            <!-- O protótipo usa um gradiente de cores como fundo. Usamos a classe 'background-gradient' para isso. -->
+            
+            <div class="grid-layout">
+                <!-- Linha 1 -->
+                <div class="data-block full-width">
+                    <p class="label">Nome Completo</p>
+                    <p class="value">{{ user.nomeCompleto }}</p>
+                </div>
+                <div class="data-block">
+                    <p class="label">Estado</p>
+                    <p class="value">{{ user.estado }}</p>
+                </div>
+                <div class="data-block">
+                    <p class="label">Cidade</p>
+                    <p class="value">{{ user.cidade }}</p>
+                </div>
+
+                <!-- Linha 2 -->
+                <div class="data-block">
+                    <p class="label">Telefone</p>
+                    <p class="value">{{ user.telefone }}</p>
+                </div>
+                <div class="data-block">
+                    <p class="label">Bairro</p>
+                    <p class="value">{{ user.bairro }}</p>
+                </div>
+                <div class="data-block">
+                    <p class="label">Rua</p>
+                    <p class="value bold-value">{{ user.rua }}</p>
+                </div>
+
+                <!-- Linha 3 -->
+                <div class="data-block">
+                    <p class="label">Cargo</p>
+                    <p class="value">{{ user.cargo }}</p>
+                </div>
+                <div class="data-block">
+                    <p class="label">Número</p>
+                    <p class="value">{{ user.numero }}</p>
+                </div>
+                <div class="data-block">
+                    <p class="label">CEP</p>
+                    <p class="value">{{ user.cep }}</p>
+                </div>
+
+                <!-- Linha 4 -->
+                <div class="data-block">
+                    <p class="label">Email</p>
+                    <p class="value">{{ user.email }}</p>
+                </div>
+                <div class="data-block full-width">
+                    <p class="label">Complemento</p>
+                    <p class="value bold-value">{{ user.complemento }}</p>
+                </div>
+
+                <!-- Linha 5 (Senha) -->
+                <div class="data-block">
+                    <p class="label">Senha</p>
+                    <p class="value">{{ user.senha }}</p>
+                </div>
+
+                <!-- Espaçador -->
+                <div class="data-block spacer"></div>
+                <div class="data-block spacer"></div>
+            </div>
+
+        </main>
+    </div>
+</div>

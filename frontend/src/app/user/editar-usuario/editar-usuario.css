@@ -1,0 +1,98 @@
+/* IMPORTA O ESTILO BASE DO PERFIL (HEADER, SIDEBAR, GRID, FONTE POPPINS) */
+@import url('../perfil-usuario/perfil-usuario.css');
+
+/*-------------------------------------------*/
+/* ESTILOS ESPECÍFICOS DO FORMULÁRIO DE EDIÇÃO */
+/*-------------------------------------------*/
+
+/* Estilo para todos os campos de input */
+.input-field {
+    /* Cor de fundo baseada no protótipo: um branco suave */
+    background-color: #f7f7f7; 
+    border: none;
+    border-radius: 8px; /* Cantos arredondados, como no protótipo */
+    padding: 10px 15px;
+    font-size: 1.1rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400; /* Texto digitado mais leve */
+    color: var(--black-gray, #363732);
+    width: 100%;
+    box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura */
+    
+    /* Substitui a linha de separação do modo de visualização */
+    margin-bottom: 20px; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
+    transition: box-shadow 0.3s, background-color 0.3s;
+}
+
+.input-field:focus {
+    outline: none;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 2px #8bd3dd; /* Cor de foco do Infinity Events */
+}
+
+/* Os blocos de dados no modo edição não precisam da linha de separação */
+.data-block {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Remove margens e linhas do layout de visualização */
+.profile-details .grid-layout .data-block .value {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* Estilo para a área dos botões (Salvar/Cancelar) */
+.button-area {
+    /* Posição dos botões na parte inferior, como no protótipo */
+    margin-top: 20px;
+    /* Alinha os botões à direita na área de grid, se necessário */
+    grid-column: 3 / 4; 
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+/* Estilo base para os botões de ação */
+.action-button {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-transform: uppercase;
+    min-width: 140px;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Botão Salvar (Verde/Turquesa Vibrante) */
+.save-button {
+    background-color: #06d6a0; /* Cor vibrante-turquoise do styles.css */
+    color: var(--black-gray, #363732);
+}
+
+/* Botão Cancelar (Rosa/Magenta) */
+.cancel-button {
+    background-color: #ff69b4; /* Cor rosa/magenta, como no protótipo */
+    color: #ffffff;
+}
+
+/* Ajustes de responsividade para o layout dos botões em mobile */
+@media (max-width: 768px) {
+    .button-area {
+        grid-column: span 1; /* Ocupa a coluna inteira em mobile */
+        justify-content: space-around;
+        flex-direction: row;
+        gap: 10px;
+    }
+    .action-button {
+        flex-grow: 1;
+    }
+}

@@ -1,0 +1,209 @@
+/* 1. IMPORTAÇÃO DA FONTE POPPINS (Para garantir que a fonte seja carregada) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/*-------------------------------------------*/
+/* Layout Principal e Header */
+/*-------------------------------------------*/
+.perfil-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* PADRONIZANDO A FONTE PARA POPPINS */
+    font-family: 'Poppins', sans-serif; 
+    color: var(--black-gray, #363732); 
+}
+
+/* Header de Navegação */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: var(--black-gray, #363732); /* Fundo cinza escuro, como no protótipo */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); 
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    height: 60px; 
+}
+
+.logo-icon {
+    height: 60px; /* Altura da logo */
+    object-fit: contain; 
+    padding-left: 0; 
+    margin-left: -15px; /* Puxa a logo um pouco mais para a esquerda */
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-item {
+    text-decoration: none;
+    font-weight: 600; /* Levemente mais ousado para navegação */
+    color: #ffffff; /* Texto branco no header escuro */
+    padding: 5px 0;
+    transition: color 0.3s;
+}
+
+.nav-item:hover {
+    color: #8bd3dd; /* Cor de hover suave */
+}
+
+/*-------------------------------------------*/
+/* Área de Conteúdo e Gradiente de Fundo */
+/*-------------------------------------------*/
+.content-area {
+    display: flex;
+    flex-grow: 1; 
+    /* Gradiente de fundo: Verde Suave (#a6ebc9) para Laranja Quente (#f8b400) */
+    background: linear-gradient(to bottom, #a6ebc9, #f8b400); 
+    padding: 0;
+}
+
+/*-------------------------------------------*/
+/* Sidebar (Menu Lateral) */
+/*-------------------------------------------*/
+.sidebar {
+    width: 250px;
+    /* Fundo verde escuro transparente do protótipo */
+    background-color: rgba(66, 110, 94, 0.7); 
+    padding-top: 50px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); 
+}
+
+.sidebar-button {
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: 600; /* Botões laterais em negrito */
+    color: #ffffff; 
+    border-radius: 8px;
+    border-left: 5px solid transparent; 
+}
+
+.sidebar-button:hover:not(.active-button) {
+    background-color: rgba(255, 255, 255, 0.1); 
+}
+
+.sidebar-button.active-button {
+    font-weight: 600; 
+    color: var(--black-gray, #363732); 
+    background-color: rgba(255, 255, 255, 0.7); 
+    border-left-color: transparent; 
+}
+
+.delete-button {
+    margin-top: 20px;
+    color: #ff8585; /* Vermelho mais suave (pastel) para Excluir Conta */
+}
+
+/*-------------------------------------------*/
+/* Detalhes do Perfil (Conteúdo Principal) */
+/*-------------------------------------------*/
+.profile-details {
+    flex-grow: 1;
+    padding: 50px; 
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; 
+    gap: 30px 50px; 
+}
+
+/* Bloco de dados (Label + Valor) */
+.data-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.data-block.full-width {
+    grid-column: span 1; 
+}
+
+.label {
+    font-size: 0.95rem; /* Levemente maior */
+    font-weight: 400; /* Mais leve que o valor */
+    color: var(--black-gray, #363732); 
+    margin: 0;
+    padding-bottom: 5px;
+}
+
+.value {
+    font-size: 1.1rem;
+    font-weight: 600; /* Todos os valores são semi-negrito */
+    color: var(--black-gray, #363732); 
+    margin: 0;
+    padding-bottom: 20px; 
+    border-bottom: 1px solid rgba(54, 55, 50, 0.2); 
+}
+
+/* O protótipo mostra alguns campos (Rua, Complemento, Cargo, etc.) com o mesmo peso dos demais valores */
+.value.bold-value {
+    font-weight: 600; /* Padronizado para 600 (semi-negrito) */
+}
+
+/* Ajustes para Responsividade (Mobile) */
+@media (max-width: 768px) {
+    .main-header {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .nav-links {
+        margin-top: 10px;
+        gap: 15px;
+    }
+
+    .content-area {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px 0;
+        flex-direction: row; 
+        justify-content: space-around;
+    }
+
+    .sidebar-button {
+        flex: 1;
+        text-align: center;
+        padding: 10px;
+        margin: 0 5px;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+    }
+    
+    .sidebar-button.active-button {
+        border-left: none;
+        border-bottom-color: #8bd3dd;
+    }
+
+    .profile-details {
+        padding: 20px;
+    }
+
+    .grid-layout {
+        grid-template-columns: 1fr; 
+        gap: 15px;
+    }
+    
+    .data-block.full-width {
+        grid-column: span 1;
+    }
+}

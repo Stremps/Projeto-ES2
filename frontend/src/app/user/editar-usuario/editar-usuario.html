@@ -1,1 +1,102 @@
-<p>editar-usuario works!</p>
+<!-- Estrutura principal com header (simulação) e container de conteúdo -->
+<div class="perfil-container">
+
+    <!-- Simulação do Header (Navegação principal) - Mantido igual ao perfil-usuario.html -->
+    <header class="main-header">
+        <div class="logo-area">
+            <img src="images/Infinity-Events.png" alt="Logo" class="logo-icon">
+        </div>
+        <nav class="nav-links">
+            <a href="javascript:void(0)" class="nav-item">Home</a>
+            <a href="javascript:void(0)" class="nav-item">Conta</a>
+        </nav>
+    </header>
+
+    <!-- Área de Conteúdo principal (Menu Lateral + Detalhes do Formulário) -->
+    <div class="content-area">
+        <!-- Menu Lateral de Navegação -->
+        <aside class="sidebar">
+            <!-- Botão Meu Perfil AGORA está inativo -->
+            <button (click)="goToProfile()" class="sidebar-button">Meu Perfil</button>
+            <!-- Botão Editar Perfil AGORA está ativo -->
+            <button (click)="goToEdit()" class="sidebar-button active-button">Editar Perfil</button>
+            <button (click)="confirmDelete()" class="sidebar-button delete-button">Excluir Conta</button>
+        </aside>
+
+        <!-- Formulário de Edição -->
+        <main class="profile-details">
+            <form (ngSubmit)="saveProfile()">
+                <div class="grid-layout">
+                    <!-- Linha 1 -->
+                    <div class="data-block full-width">
+                        <p class="label">Nome Completo</p>
+                        <input type="text" [(ngModel)]="user.nomeCompleto" name="nomeCompleto" required class="input-field">
+                    </div>
+                    <div class="data-block">
+                        <p class="label">Estado</p>
+                        <input type="text" [(ngModel)]="user.estado" name="estado" required class="input-field">
+                    </div>
+                    <div class="data-block">
+                        <p class="label">Cidade</p>
+                        <input type="text" [(ngModel)]="user.cidade" name="cidade" required class="input-field">
+                    </div>
+
+                    <!-- Linha 2 -->
+                    <div class="data-block">
+                        <p class="label">Telefone</p>
+                        <input type="text" [(ngModel)]="user.telefone" name="telefone" required class="input-field">
+                    </div>
+                    <div class="data-block">
+                        <p class="label">Bairro</p>
+                        <input type="text" [(ngModel)]="user.bairro" name="bairro" required class="input-field">
+                    </div>
+                    <div class="data-block">
+                        <p class="label">Rua</p>
+                        <input type="text" [(ngModel)]="user.rua" name="rua" required class="input-field">
+                    </div>
+
+                    <!-- Linha 3 -->
+                    <div class="data-block">
+                        <p class="label">Cargo</p>
+                        <input type="text" [(ngModel)]="user.cargo" name="cargo" required class="input-field">
+                    </div>
+                    <div class="data-block">
+                        <p class="label">Número</p>
+                        <input type="text" [(ngModel)]="user.numero" name="numero" required class="input-field">
+                    </div>
+                    <div class="data-block">
+                        <p class="label">CEP</p>
+                        <input type="text" [(ngModel)]="user.cep" name="cep" required class="input-field">
+                    </div>
+
+                    <!-- Linha 4 -->
+                    <div class="data-block">
+                        <p class="label">Email</p>
+                        <input type="email" [(ngModel)]="user.email" name="email" required class="input-field">
+                    </div>
+                    <div class="data-block full-width">
+                        <p class="label">Complemento</p>
+                        <input type="text" [(ngModel)]="user.complemento" name="complemento" class="input-field">
+                    </div>
+
+                    <!-- Linha 5 (Senha) -->
+                    <div class="data-block">
+                        <p class="label">Senha</p>
+                        <!-- Usamos type="password" para o campo de senha -->
+                        <input type="password" [(ngModel)]="user.senha" name="senha" class="input-field">
+                    </div>
+
+                    <!-- Botões Salvar e Cancelar -->
+                    <div class="data-block button-area">
+                        <!-- Botão Salvar - Cor vibrante/turquesa -->
+                        <button type="submit" class="action-button save-button">SALVAR</button>
+                    </div>
+                    <div class="data-block">
+                        <!-- Botão Cancelar - Cor secundária/rosa (baseado no protótipo) -->
+                        <button type="button" (click)="cancelEdit()" class="action-button cancel-button">CANCELAR</button>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+</div>
