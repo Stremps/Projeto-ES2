@@ -101,4 +101,8 @@ export class PerfilUsuario implements OnInit {
   goToDelete(): void {
     this.router.navigate(['/delete-user']);
   }
+
+  goHome() {
+    this.router.navigate(['/home']);
+  }
 }

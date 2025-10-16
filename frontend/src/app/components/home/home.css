@@ -1,24 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
 /* Container Principal */
 .home-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, rgba(23, 78, 66, 0.85) 0%, rgba(35, 102, 88, 0.85) 50%, rgba(46, 125, 110, 0.75) 100%);
-  color: white;
-  overflow-x: hidden;
+  background: linear-gradient(to bottom, #a6ebc9, #f8b400);
+  font-family: 'Poppins', sans-serif;
+  color: #363732;
 }
 
-/* Top Header: Logo, Home, Conta */
+/* Top Header */
 .top-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background: rgba(0, 150, 136, 0.95); /* Verde teal mais opaco, baseado em pagina-inicial.css */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  padding: 15px 30px;
+  background-color: #363732;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
+/* Logo */
 .logo-section {
   display: flex;
   align-items: center;
@@ -26,109 +26,89 @@
 }
 
 .logo {
-  width: 150px;
-  height: auto;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)); /* Reutilizando drop-shadow */
+  height: 60px;
+  width: auto;
 }
 
-.site-title {
-  font-size: 2.5rem;
-  font-weight: 900;
-  color: #7fffd4; /* Cor de destaque de pagina-inicial.css */
-  margin: 0;
-  letter-spacing: 2px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-}
-
+/* Navegação topo */
 .top-nav {
   display: flex;
   gap: 2rem;
 }
 
-.top-nav a {
-  color: white;
+.top-nav .nav-item {
+  color: #fff;
+  font-weight: 600;
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  transition: background 0.3s ease;
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 6px;
+  transition: color 0.3s, background 0.3s;
 }
 
-.top-nav a:hover,
-.top-nav a.active {
-  background: rgba(127, 255, 212, 0.4); /* Transparência de hover de pagina-inicial.css */
+.top-nav .nav-item.active, .top-nav .nav-item:hover {
+  color: #8bd3dd;
+  background: rgba(255,255,255,0.08);
 }
 
-/* Sub-Header: Tabs Todos, Inscritos, Meus */
+/* Sub-header Abas */
 .sub-header {
-  display: flex; /* Adicionado para alinhar elementos horizontalmente */
-  justify-content: space-between; /* Abas à esquerda, botão à direita */
-  align-items: center; /* Alinhamento vertical central */
-  background: rgba(0, 128, 100, 0.8); /* Verde mais escuro, inspirado em gradientes de pagina-inicial.css */
+  background: rgba(0, 128, 100, 0.8);
   padding: 0.5rem 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
 }
 
 .tab-nav {
   display: flex;
-  justify-content: flex-start; /* Mudança de center para flex-start: abas alinhadas à esquerda */
-  gap: 3rem;
-  max-width: 1200px;
-  margin: 0; /* Removido auto para não centralizar no flex pai */
+  align-items: center;
+  gap: 2rem;
 }
 
 .tab-nav a {
-  color: white;
-  text-decoration: none;
-  padding: 0.5rem 1.5rem;
-  border-radius: 8px;
-  transition: background 0.3s ease, transform 0.2s ease;
+  color: #fff;
   font-weight: 600;
-  font-size: 1.1rem;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  border-radius: 6px;
+  padding: 0.5rem 1.5rem;
+  margin-right: 2rem;
+  transition: background 0.2s, color 0.2s;
+  text-decoration: none;
 }
 
-.tab-nav a:hover,
-.tab-nav a.active {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px); /* Hover leve de pagina-inicial.css */
+.tab-nav a.active, .tab-nav a:hover {
+  background: rgba(255,255,255,0.16);
+  color: #a6ebc9;
 }
 
-/* Search Section - Moved to Left */
+/* Campo de Busca */
 .search-section {
   padding: 1.5rem 2rem 1rem;
   display: flex;
-  justify-content: flex-start; /* Alinhado à esquerda */
   align-items: center;
+  justify-content: flex-start;
 }
-
 .search-input {
-  width: 30%; /* Largura ajustada para esquerda */
-  min-width: 300px;
-  padding: 1rem 1.5rem;
   border: none;
   border-radius: 25px;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255,255,255,0.95);
   font-size: 1.1rem;
-  color: #363732; /* black-gray de styles.css */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  font-family: 'Horizon', sans-serif;
+  color: #363732;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 1rem 1.5rem;
+  width: 320px;
+  font-family: 'Poppins', sans-serif;
 }
-
 .search-input::placeholder {
-  color: #06d6a0; /* vibrant-turquoise de styles.css */
+  color: #06d6a0;
   font-style: italic;
+  letter-spacing: 1px;
 }
 
-/* Events Grid */
+/* Grid de Eventos */
 .events-grid {
   padding: 0 2rem 2rem;
   flex: 1;
 }
-
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -136,118 +116,53 @@
   max-width: 1200px;
   margin: 0 auto;
 }
-
 .event-card {
-  background: rgba(45, 75, 68, 0.8); /* Background de cards de pagina-inicial.css */
+  background: rgba(27, 55, 49, 0.88);
   border-radius: 12px;
   padding: 1.5rem;
-  text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); /* Shadow de pagina-inicial.css */
-  border: 1px solid rgba(127, 255, 212, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 150px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+  transition: box-shadow 0.25s, transform 0.22s, border 0.22s;
+  border: 2px solid transparent;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: flex-start;
 }
-
-.event-card:hover {
-  transform: translateY(-5px); /* Hover transform de pagina-inicial.css */
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+.event-card:hover,
+.highlight {
+  border-color: #bf97ff;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.24);
+  transition: box-shadow 0.3s, border-color 0.3s;
 }
-
 .event-title {
-  font-size: 1.2rem;
+  font-size: 1.18rem;
   font-weight: bold;
-  margin: 0 0 0.5rem;
-  color: white;
+  margin-bottom: 0.24rem;
+  color: #fff;
 }
-
+.event-location {
+  font-size: 1rem;
+  color: #a6ebc9;
+  margin-bottom: 0.3rem;
+}
 .event-date {
-  font-size: 0.9rem;
-  color: #a6ebc9; /* pastel-green de styles.css */
-  margin: 0;
+  font-size: 0.97rem;
+  color: #fff;
+  opacity: 0.85;
 }
-
-/* Cores para cards */
-.color-blue {
-  background: linear-gradient(135deg, rgba(30, 144, 255, 0.8), rgba(45, 75, 68, 0.8));
-  border-color: rgba(30, 144, 255, 0.3);
-}
-
-.color-orange {
-  background: linear-gradient(135deg, rgba(255, 165, 0, 0.8), rgba(45, 75, 68, 0.8));
-  border-color: rgba(255, 165, 0, 0.3);
-}
-
-/* Responsividade - Reutilizando e adaptando media queries de pagina-inicial.css */
 @media (max-width: 968px) {
-  .top-header {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-    padding: 1rem;
-  }
-
-  .top-nav {
-    gap: 1.5rem;
-  }
-
-  .tab-nav {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-  }
-
-  .search-input {
-    width: 70%;
-    min-width: auto;
-  }
-
   .grid-container {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 1rem;
   }
-}
-
-@media (max-width: 568px) {
-  .site-title {
-    font-size: 2rem;
-  }
-
-  .top-nav,
-  .tab-nav {
-    gap: 1rem;
-    font-size: 0.9rem;
-  }
-
   .search-input {
     width: 90%;
-    padding: 0.8rem;
-    font-size: 1rem;
-  }
-
-  .event-card {
-    padding: 1rem;
-    height: 120px;
+    min-width: auto;
   }
 }
-
-.create-event-btn {
-  background: linear-gradient(135deg, rgba(0, 150, 136, 0.9), rgba(0, 128, 100, 0.9));
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  font-size: 1.1rem;
-  text-transform: uppercase;
-  margin-left: auto; /* Garante que o botão fique à direita se necessário */
-}
-
-.create-event-btn:hover {
-  transform: translateY(-2px);
-  background: linear-gradient(135deg, rgba(127, 255, 212, 0.4), rgba(0, 150, 136, 0.9));
+/* Outras responsividades */
+@media (max-width: 568px) {
+  .site-title {font-size: 1.7rem;}
+  .top-header, .sub-header {flex-direction: column;}
+  .tab-nav, .top-nav {gap: 1rem;}
+  .event-card {padding: 0.9rem;}
 }

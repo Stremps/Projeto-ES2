@@ -145,4 +145,8 @@ export class EditarUsuario implements OnInit {
     this.goToProfile();
   }
 
+  goHome() {
+    this.router.navigate(['/home']);
+  }
+
 }

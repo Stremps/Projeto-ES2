@@ -1,5 +1,47 @@
 /* IMPORTA O ESTILO BASE DO PERFIL (HEADER, SIDEBAR, GRID, FONTE POPPINS) */
 @import url('../perfil-usuario/perfil-usuario.css');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #363732;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  font-family: 'Poppins', sans-serif;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  height: 60px;
+  width: auto;
+}
+
+.top-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.top-nav .nav-item {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  transition: color 0.3s, background 0.3s;
+}
+
+.top-nav .nav-item.active, .top-nav .nav-item:hover {
+  color: #8bd3dd;
+  background: rgba(255,255,255,0.08);
+}
+
 
 /*-------------------------------------------*/
 /* ESTILOS ESPECÍFICOS DO FORMULÁRIO DE EDIÇÃO */

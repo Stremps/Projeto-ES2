@@ -2,15 +2,26 @@
 <div class="perfil-container">
 
     <!-- Simulação do Header (Navegação principal) - Mantido igual ao perfil-usuario.html -->
-    <header class="main-header">
+    <!-- <header class="main-header">
         <div class="logo-area">
             <img src="images/Infinity-Events.png" alt="Logo" class="logo-icon">
         </div>
         <nav class="nav-links">
-            <a href="javascript:void(0)" class="nav-item">Home</a>
+            <a href="javascript:void(0)" (click)="goHome()" class="nav-item">Home</a>
+            <a href="javascript:void(0)" class="nav-item">Conta</a>
+        </nav>
+    </header> -->
+
+    <header class="top-header">
+        <div class="logo-section">
+            <img src="images/Infinity-Events.png" alt="Logo" class="logo">
+        </div>
+        <nav class="top-nav">
+            <a href="javascript:void(0)" (click)="goHome()" class="nav-item">Home</a>
             <a href="javascript:void(0)" class="nav-item">Conta</a>
         </nav>
     </header>
+
 
     <!-- Área de Conteúdo principal (Menu Lateral + Detalhes do Formulário) -->
     <div class="content-area">
