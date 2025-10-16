@@ -17,8 +17,12 @@ public class Logradouro {
     private TipoLogradouro tipoLogradouro;
 
     public Logradouro() {}
-    // getters/setters
 
+    public Logradouro(String idLogradouro, String nomeLogradouro, TipoLogradouro tipoLogradouro) {
+        this.idLogradouro = idLogradouro;
+        this.nomeLogradouro = nomeLogradouro;
+        this.tipoLogradouro = tipoLogradouro;
+    }
 
     public String getIdLogradouro() {
         return idLogradouro;

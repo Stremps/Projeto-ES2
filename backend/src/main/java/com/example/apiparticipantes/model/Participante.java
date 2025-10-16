@@ -1,6 +1,7 @@
 package com.example.apiparticipantes.model;
 
 import jakarta.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -9,7 +10,7 @@ public class Participante {
 
     @Id
     @Column(name = "id_participante", length = 255, nullable = false, updatable = false)
-    private String idParticipante; // Armazena o UUID como String
+    private String idParticipante;
 
     @Column(name = "nome_participante", length = 255, nullable = false)
     private String nomeParticipante;
@@ -25,15 +26,30 @@ public class Participante {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "cargo", nullable = false, length = 20)
-    private Cargo cargo; // ALUNO || PROFESSOR || EXTERNO
+    private Cargo cargo; // ADMIN, ALUNO, PROFESSOR, EXTERNO
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_endereco_participante")
-    private Endereco endereco; // Pode ser nulo (participante sem endereço ainda)
+    private Endereco endereco;
+
+    // 🔹 Relação com inscrições (aluno/professor/externo)
+    @OneToMany(mappedBy = "participante", cascade = CascadeType.ALL)
+    private List<InscricaoPalestra> inscricoesPalestras;
+
+    // O campo que você provavelmente adicionou e que causou o erro
+    @OneToMany(mappedBy = "criador") // O nome "criador" aqui DEVE ser o mesmo do campo em Evento.java
+    private List<Evento> eventosCriados;
 
     public Participante() {
-        // Gera automaticamente um UUID ao criar o participante
         this.idParticipante = UUID.randomUUID().toString();
+    }
+
+    public List<Evento> getEventosCriados() {
+        return eventosCriados;
+    }
+
+    public void setEventosCriados(List<Evento> eventosCriados) {
+        this.eventosCriados = eventosCriados;
     }
 
     // Getters e Setters
@@ -91,5 +107,12 @@ public class Participante {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+    public List<InscricaoPalestra> getInscricoesPalestras() {
+        return inscricoesPalestras;
+    }
+
+    public void setInscricoesPalestras(List<InscricaoPalestra> inscricoesPalestras) {
+        this.inscricoesPalestras = inscricoesPalestras;
     }
 }

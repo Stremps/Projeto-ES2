@@ -12,9 +12,12 @@ public class UnidadeFederacao {
     @Column(name = "nome_uf")
     private String nomeUf;
 
-    public UnidadeFederacao() {}
-    // getters/setters
+    public UnidadeFederacao() {} // Construtor vazio para o JPA
 
+    public UnidadeFederacao(String siglaUf, String nomeUf) { // Construtor com argumentos
+        this.siglaUf = siglaUf;
+        this.nomeUf = nomeUf;
+    }
 
     public String getSiglaUf() {
         return siglaUf;

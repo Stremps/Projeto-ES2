@@ -21,9 +21,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Participante p = participanteRepository.findByEmailParticipante(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Participante não encontrado com email: " + username));
+
         return User.withUsername(p.getEmailParticipante())
                 .password(p.getSenhaParticipante())
-                .authorities("USER") // simples
+                .authorities(p.getCargo().name())
                 .build();
     }
 }

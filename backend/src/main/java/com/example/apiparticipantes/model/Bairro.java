@@ -13,7 +13,11 @@ public class Bairro {
     private String nomeBairro;
 
     public Bairro() {}
-    // getters/setters
+
+    public Bairro(String idBairro, String nomeBairro) {
+        this.idBairro = idBairro;
+        this.nomeBairro = nomeBairro;
+    }
 
     public String getIdBairro() {
         return idBairro;

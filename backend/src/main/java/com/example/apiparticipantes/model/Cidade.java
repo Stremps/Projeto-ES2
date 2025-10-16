@@ -17,8 +17,12 @@ public class Cidade {
     private UnidadeFederacao unidadeFederacao;
 
     public Cidade() {}
-    // getters/setters
 
+    public Cidade(String idCidade, String nomeCidade, UnidadeFederacao unidadeFederacao) {
+        this.idCidade = idCidade;
+        this.nomeCidade = nomeCidade;
+        this.unidadeFederacao = unidadeFederacao;
+    }
 
     public String getIdCidade() {
         return idCidade;

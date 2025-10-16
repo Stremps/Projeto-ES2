@@ -61,6 +61,14 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Email já cadastrado");
         }
 
+        if (request.getCargo() == Cargo.ADMIN) {
+            return ResponseEntity.badRequest().body("Não é possível se registrar como ADMIN.");
+        }
+
+        if (participanteRepository.existsByEmailParticipante(request.getEmailParticipante())) {
+            return ResponseEntity.badRequest().body("Email já cadastrado");
+        }
+
         // ====== UF ======
         UnidadeFederacao uf = unidadeFederacaoRepository.findById(request.getSiglaUf())
                 .orElseGet(() -> {

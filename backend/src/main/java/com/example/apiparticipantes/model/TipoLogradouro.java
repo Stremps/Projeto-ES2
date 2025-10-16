@@ -13,8 +13,11 @@ public class TipoLogradouro {
     private String nomeTipoLogradouro;
 
     public TipoLogradouro() {}
-    // getters/setters
 
+    public TipoLogradouro(String idTipoLogradouro, String nomeTipoLogradouro) {
+        this.idTipoLogradouro = idTipoLogradouro;
+        this.nomeTipoLogradouro = nomeTipoLogradouro;
+    }
 
     public String getIdTipoLogradouro() {
         return idTipoLogradouro;

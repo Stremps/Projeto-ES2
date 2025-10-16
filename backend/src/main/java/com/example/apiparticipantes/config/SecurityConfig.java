@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 public class SecurityConfig {
@@ -58,7 +59,22 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        // 1. Rotas Públicas (acessíveis sem token)
                         .requestMatchers("/api/auth/**").permitAll()
+
+                        // 2. Rotas Específicas para Usuários Autenticados (qualquer cargo)
+                        .requestMatchers(HttpMethod.POST, "/api/vinculos-evento/*/inscrever-se").authenticated()
+                        .requestMatchers("/api/inscricoes-palestra/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/tipos-participacao").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/palestras/**").authenticated() // Cobre /api/palestras e /api/palestras/{id}/vagas
+
+                        // 3. Rotas Gerais para ADMIN (qualquer método: GET, POST, PUT, DELETE)
+                        .requestMatchers("/api/eventos/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/palestras/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/tipos-participacao/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/vinculos-evento/**").hasAuthority("ADMIN")
+
+                        // 4. Qualquer outra rota não especificada acima exige autenticação
                         .anyRequest().authenticated()
                 );
 
