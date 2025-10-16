@@ -60,7 +60,7 @@
     </div>
   }
 
-  @if (currentView === 'palestras' && selectedEvent) {
+  @if (currentView === 'palestras' && selectedEvent && selectedEvent.palestras) {
     <div class="palestras-container">
       <div class="palestras-header">
         <h3 class="event-name-label">Nome do Evento</h3>
@@ -69,56 +69,36 @@
       </div>
 
       <div class="palestras-list">
-        @if (currentView === 'palestras' && selectedEvent && selectedEvent.palestras) {
-          <div class="palestras-container">
-            <div class="palestras-header">
-              <h3 class="event-name-label">Nome do Evento</h3>
-              <h2 class="event-name">{{ selectedEvent.title }}</h2>
-              <h2 class="section-title">Atividades</h2>
-            </div>
-
-            <div class="palestras-list">
-              @for (palestra of selectedEvent.palestras; track palestra.id) {
-                <div class="palestra-card" [class.expanded]="palestra.isExpanded">
-                  <div class="palestra-card-header" (click)="togglePalestra(palestra)">
-                    <div class="palestra-basic-info">
-                      <h3>PALESTRA: {{ palestra.title }}</h3>
-                      <div class="palestra-short-details">
-                        <p>{{ palestra.date }}</p>
-                        <p>{{ palestra.time }}</p>
-                        <p>{{ palestra.room }}</p>
-                      </div>
-                    </div>
-                    <div class="expand-icon" [class.rotated]="palestra.isExpanded">
-                      ▼
-                    </div>
-                  </div>
-
-                  @if (palestra.isExpanded) {
-                    <div class="palestra-expanded-content">
-                      <div class="palestra-details-full">
-                        <p><strong>Número de Vagas:</strong> {{ palestra.slots }}</p>
-                        <p><strong>Palestrante:</strong> {{ palestra.speaker }}</p>
-                      </div>
-                      <div class="palestra-description">
-                        <h4>Descrição:</h4>
-                        <p>{{ palestra.description }}</p>
-                      </div>
-                    </div>
-                  }
+        @for (palestra of selectedEvent.palestras; track palestra.id) {
+          <div class="palestra-card" [class.expanded]="palestra.isExpanded">
+            <div class="palestra-card-header" (click)="togglePalestra(palestra)">
+              <div class="palestra-basic-info">
+                <h3>PALESTRA: {{ palestra.title }}</h3>
+                <div class="palestra-short-details">
+                  <p>{{ palestra.date }}</p>
+                  <p>{{ palestra.time }}</p>
+                  <p>{{ palestra.room }}</p>
                 </div>
-              }
+              </div>
+              <div class="expand-icon" [class.rotated]="palestra.isExpanded">
+                ▼
+              </div>
             </div>
 
-            <div class="action-footer">
-              <button class="nav-btn-footer left" (click)="backToEventDetails()">
-                <span class="arrow">←</span> Informações
-              </button>
-              <button class="btn-register">INSCREVER-SE</button>
-            </div>
+            @if (palestra.isExpanded) {
+              <div class="palestra-expanded-content">
+                <div class="palestra-details-full">
+                  <p><strong>Número de Vagas:</strong> {{ palestra.slots }}</p>
+                  <p><strong>Palestrante:</strong> {{ palestra.speaker }}</p>
+                </div>
+                <div class="palestra-description">
+                  <h4>Descrição:</h4>
+                  <p>{{ palestra.description }}</p>
+                </div>
+              </div>
+            }
           </div>
         }
-
       </div>
 
       <div class="action-footer">
