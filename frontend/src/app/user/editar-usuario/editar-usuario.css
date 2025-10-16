@@ -1,0 +1,158 @@
+/* IMPORTA O ESTILO BASE DO PERFIL (HEADER, SIDEBAR, GRID, FONTE POPPINS) */
+@import url('../perfil-usuario/perfil-usuario.css');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #363732;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  font-family: 'Poppins', sans-serif;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  height: 60px;
+  width: auto;
+}
+
+.top-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.top-nav .nav-item {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  transition: color 0.3s, background 0.3s;
+}
+
+.top-nav .nav-item.active, .top-nav .nav-item:hover {
+  color: #8bd3dd;
+  background: rgba(255,255,255,0.08);
+}
+
+
+/*-------------------------------------------*/
+/* ESTILOS ESPECÍFICOS DO FORMULÁRIO DE EDIÇÃO */
+/*-------------------------------------------*/
+
+/* Estilo para todos os campos de input */
+.input-field {
+    /* Cor de fundo baseada no protótipo: um branco suave */
+    background-color: #f7f7f7; 
+    border: none;
+    border-radius: 8px; /* Cantos arredondados, como no protótipo */
+    padding: 10px 15px;
+    font-size: 1.1rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400; /* Texto digitado mais leve */
+    color: var(--black-gray, #363732);
+    width: 100%;
+    box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura */
+    
+    /* Substitui a linha de separação do modo de visualização */
+    margin-bottom: 20px; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
+    transition: box-shadow 0.3s, background-color 0.3s;
+}
+
+.input-field:focus {
+    outline: none;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 2px #8bd3dd; /* Cor de foco do Infinity Events */
+}
+
+/* Os blocos de dados no modo edição não precisam da linha de separação */
+.data-block {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Remove margens e linhas do layout de visualização */
+.profile-details .grid-layout .data-block .value {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* * NOVO ESTILO DA ÁREA DE BOTÕES:
+ * Organiza os botões Salvar (maior) e Cancelar (menor) em coluna e à direita. 
+ */
+.button-area {
+    margin-top: 20px;
+    grid-column: 3 / 4; /* Ocupa a terceira coluna */
+    display: flex;
+    flex-direction: column; /* Organiza em coluna (um abaixo do outro) */
+    align-items: center; /* CENTRALIZA os botões no bloco */
+    gap: 10px; /* Espaço entre os botões */
+    justify-content: flex-start;
+}
+
+/* Estilo base para os botões de ação */
+.action-button {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Botão Salvar (Verde/Turquesa Vibrante) */
+.save-button {
+    background-color: #06d6a0; /* Cor vibrante-turquoise do styles.css */
+    color: var(--black-gray, #363732);
+    width: 180px; /* Tamanho Fixo para o botão SALVAR */
+}
+
+/* Botão Cancelar (Cor Secundária, Menor, Tipo Botão) */
+.cancel-button {
+    /* Cor de fundo secundária para parecer um botão, mas diferente */
+    background-color: #ff69b4; /* Cor rosa/magenta, como no protótipo */
+    color: #ffffff;
+    padding: 10px 20px; /* Padding um pouco menor */
+    font-size: 1rem; /* Fonte um pouco menor */
+    width: 160px; /* Tamanho Fixo MENOR para o botão CANCELAR */
+    
+    /* Estilos de botão normal */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transform: none;
+}
+
+.cancel-button:hover {
+    /* Mantém o efeito de hover do botão padrão */
+    background-color: #e55c9f; 
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Ajustes de responsividade para o layout dos botões em mobile */
+@media (max-width: 768px) {
+    .button-area {
+        grid-column: span 1; /* Ocupa a coluna inteira em mobile */
+        flex-direction: column; /* Mantém em coluna */
+        align-items: center; /* Centraliza em mobile */
+        gap: 10px;
+    }
+    .save-button, .cancel-button {
+        width: 80%; /* Ocupa 80% da largura em mobile */
+    }
+}

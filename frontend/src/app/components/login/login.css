@@ -1,127 +1,345 @@
-.full-screen-container {
+/*-------------------------------------------*/
+/* Container de Fundo e Overlay */
+/*-------------------------------------------*/
+.background-container {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  background-image: url('../../../../public/images/Background-Home.png');
+  background-size: cover;
+  background-position: center;
   display: flex;
-  flex-direction: column;  /* Stack vertical para header e card */
-  justify-content: center; /* Centraliza verticalmente o grupo */
-  align-items: center;     /* Centraliza horizontalmente */
-  min-height: 100vh;
-  gap: 0.5rem;             /* Gap mínimo entre .website-name e .body-container; ajuste para 0 se quiser zero */
-  padding: 1rem;
-  background-color: #f8f9fa; /* Opcional: fundo */
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
-.website-name {
-    font-size: x-large;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 0.25rem;
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg, 
+    rgba(23, 78, 66, 0.85) 0%, 
+    rgba(35, 102, 88, 0.85) 50%, 
+    rgba(46, 125, 110, 0.75) 100%);
+  z-index: 1;
 }
 
-.body-container {
+/*-------------------------------------------*/
+/* Layout Principal */
+/*-------------------------------------------*/
+.content-wrapper {
+  position: relative;
+  z-index: 2;
   display: flex;
-  justify-content: center;  /* Centraliza horizontal */
-  align-items: center;      /* Centraliza vertical */
-  min-height: 0;        /* Altura mínima definida para compatibilidade */
-  padding: 1rem;            /* Espaçamento nas bordas em mobile */
+  justify-content: space-between;
+  align-items: stretch;  /* ← MUDANÇA: Faz os filhos terem mesma altura */
+  width: 90%;
+  max-width: 1400px;
+  padding: 2rem;
+  gap: 4rem;
+  min-height: 70vh;  /* ← ADICIONA: Altura mínima para o wrapper */
 }
 
-.login-card .p-card-header {
-  font-size: 3rem;  /* Ajuste para maior, ex: 3rem se quiser ainda maior */
-  font-weight: 700;
+/*-------------------------------------------*/
+/* Lado Esquerdo: Logo e Texto */
+/*-------------------------------------------*/
+.left-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.logo-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  width: 100%;
+}
+
+.logo-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: auto;
+  opacity: 0.3;
+  z-index: 1;
+  filter: blur(1px);
+}
+
+.site-title {
+  position: relative;
+  z-index: 2;
+  font-size: 4rem;
+  font-weight: 900;
+  color: #7fffd4;
+  margin: 0;
+  line-height: 1;
+  letter-spacing: 3px;
   text-align: center;
-  line-height: 1.1;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-.quick-links {
+.slogan {
+  font-size: 1.1rem;
+  color: #ffffff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 300;
+  margin: 0;
+  text-align: center;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/*-------------------------------------------*/
+/* Lado Direito: Card de Login */
+/*-------------------------------------------*/
+.right-section {
+  flex: 0 0 500px;  /* ← MUDANÇA: Aumentado de 450px para 500px */
   display: flex;
-  flex-direction: column;  /* Muda para vertical */
-  align-items: center;     /* Centraliza horizontalmente */
-  gap: 0.25rem;            /* Espaçamento entre links */
-  margin-bottom: 1rem;
+  align-items: stretch;  /* ← ADICIONA: Faz o card preencher a altura */
 }
 
-.quick-links a {
-  color: #000000;
-  text-decoration: none;
-  cursor: pointer;
+.login-card {
+  /* ← MUDANÇA 1: Background mais forte e preenche toda área */
+  background: rgba(55, 85, 78, 0.85);
+  backdrop-filter: blur(15px);
+  border-radius: 12px;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(127, 255, 212, 0.2);
+  width: 100%;  /* ← ADICIONA: Preenche toda a largura disponível */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* ← ADICIONA: Centraliza conteúdo verticalmente */
 }
 
-.quick-links a:hover {
-  text-decoration: underline;
+.login-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  margin: 0 0 2rem 0;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
 }
 
+/*-------------------------------------------*/
+/* Campos do Formulário */
+/*-------------------------------------------*/
 .field {
-  margin-bottom: 1rem;
-  text-align: left;
+  margin-bottom: 1.5rem;
+  width: 100%;  /* ← ADICIONA: Garante largura total */
 }
 
 .field label {
   display: block;
-  font-size: 0.875rem;
-  font-weight: bold;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
   margin-bottom: 0.5rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.5px;
 }
 
 .field input {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 12px 16px;
+  border: 2px solid rgba(127, 255, 212, 0.3);
+  border-radius: 8px;
   font-size: 1rem;
+  font-family: 'Poppins', sans-serif;  /* ← MUDANÇA 2: Fonte Poppins */
+  background: rgba(166, 235, 201, 0.95);  /* ← MUDANÇA 3: Cor pastel-green (#a6ebc9) */
+  color: #1a4d3e;
+  transition: all 0.3s ease;
+  box-sizing: border-box;  /* ← ADICIONA: Garante padding não quebra alinhamento */
 }
 
 .field input:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+  border-color: #7fffd4;
+  box-shadow: 0 0 0 3px rgba(127, 255, 212, 0.2);
+  background: rgba(166, 235, 201, 1);  /* ← Mais opaco ao focar */
 }
 
+.field input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.field input::placeholder {
+  color: rgba(26, 77, 62, 0.6);  /* ← MUDANÇA: Placeholder mais visível */
+  font-family: 'Poppins', sans-serif;
+}
+
+/*-------------------------------------------*/
+/* Campo Senha com Toggle */
+/*-------------------------------------------*/
 .password-wrapper {
   position: relative;
+  width: 100%;  /* ← ADICIONA: Garante largura total */
 }
 
-.password-wrapper .toggle {
+.password-wrapper input {
+  padding-right: 45px;  /* ← ADICIONA: Espaço para o ícone de toggle */
+}
+
+.toggle-password {
   position: absolute;
-  right: 10px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  padding: 4px;
+  transition: transform 0.2s ease;
+  color: #1a4d3e;  /* ← ADICIONA: Cor do ícone */
 }
 
-.error {
-  color: #dc3545;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
+.toggle-password:hover {
+  transform: translateY(-50%) scale(1.1);
 }
 
-.btn {
-  width: 100%;
-  padding: 0.75rem;
-  background: #000;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.btn:hover:not(:disabled) {
-  background: #333;
-}
-
-.btn:disabled {
-  opacity: 0.6;
+.toggle-password:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
-h2 {
-  font-size: xx-large;  
+/*-------------------------------------------*/
+/* Mensagens de Erro */
+/*-------------------------------------------*/
+.error {
+  display: block;
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+/*-------------------------------------------*/
+/* Botão Entrar */
+/*-------------------------------------------*/
+.btn-entrar {
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 16px 28px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  background: linear-gradient(
+    -45deg,
+    #f39c12,
+    #f1c40f,
+    #f39c12,
+    #e67e22
+  );
+  background-size: 400% 400%;
+  animation: gradient-animation 6s ease infinite;
+  color: #1a4d3e;
+  font-weight: 900;
+  box-shadow: 0 4px 12px rgba(243, 156, 18, 0.4);
+}
+
+.btn-entrar:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(243, 156, 18, 0.6);
+}
+
+.btn-entrar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/*-------------------------------------------*/
+/* Link de Cadastro */
+/*-------------------------------------------*/
+.cadastro-link {
   text-align: center;
-  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #ffffff;
+}
+
+.link-cadastro {
+  color: #7fffd4;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.link-cadastro:hover {
+  color: #a6f4dc;
+  text-decoration: underline;
+}
+
+/*-------------------------------------------*/
+/* Responsividade */
+/*-------------------------------------------*/
+@media (max-width: 968px) {
+  .content-wrapper {
+    flex-direction: column;
+    text-align: center;
+    gap: 3rem;
+    align-items: center;  /* ← Centraliza em mobile */
+  }
+
+  .left-section {
+    align-items: center;
+  }
+
+  .site-title {
+    font-size: 3rem;
+  }
+
+  .right-section {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 568px) {
+  .site-title {
+    font-size: 2.5rem;
+  }
+
+  .slogan {
+    font-size: 0.9rem;
+  }
+
+  .login-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .login-title {
+    font-size: 1.5rem;
+  }
 }

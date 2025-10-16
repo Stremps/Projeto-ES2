@@ -1,0 +1,63 @@
+<div class="event-info">
+  <div class="event-header">
+    <h3 class="event-label">Nome do Evento</h3>
+    <h1 class="event-title">{{ event.title }}</h1>
+  </div>
+
+  <div class="info-grid-compact">
+    <div class="info-item-compact">
+      <label>Estado</label>
+      <p>{{ event.state }}</p>
+    </div>
+    <div class="info-item-compact">
+      <label>Cidade</label>
+      <p>{{ event.city }}</p>
+    </div>
+    
+    <div class="info-item-compact">
+      <label>Bairro</label>
+      <p>{{ event.bairro }}</p>
+    </div>
+    <div class="info-item-compact">
+      <label>Rua</label>
+      <p>{{ event.rua }}</p>
+    </div>
+    
+    <div class="info-item-compact">
+      <label>Número</label>
+      <p>{{ event.numero }}</p>
+    </div>
+    <div class="info-item-compact">
+      <label>CEP</label>
+      <p>{{ event.cep }}</p>
+    </div>
+    
+    <div class="info-item-compact">
+      <label>Data de Início</label>
+      <p>{{ event.startDate }}</p>
+    </div>
+    <div class="info-item-compact">
+      <label>Data de Término</label>
+      <p>{{ event.endDate }}</p>
+    </div>
+    
+    <div class="info-item-compact">
+      <label>Hora de Início</label>
+      <p>{{ event.startTime }}</p>
+    </div>
+    <div class="info-item-compact">
+      <label>Hora de Término</label>
+      <p>{{ event.endTime }}</p>
+    </div>
+    
+    <div class="info-item-compact full-width">
+      <label>Complemento</label>
+      <p>{{ event.complemento }}</p>
+    </div>
+  </div>
+
+  <div class="description">
+    <h3>Descrição</h3>
+    <p>{{ event.description }}</p>
+  </div>
+</div>

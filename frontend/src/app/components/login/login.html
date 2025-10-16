@@ -1,65 +1,75 @@
-<!-- <p>login works!</p>
+<div class="background-container">
+  <div class="overlay"></div>
+  
+  <div class="content-wrapper">
+    <!-- Lado Esquerdo: Logo e Texto -->
+    <div class="left-section">
+      <div class="logo-container">
+        <img src="images/Infinity-Events.png" alt="Logo" class="">
+      </div>
+      <p class="slogan">ONDE OS EVENTOS AMPLIAM HORIZONTES</p>
+    </div>
 
-<div> 
-    <input type="text" [(ngModel)]="nomeUsuario" placeholder="Digite seu nome de usuário" title="Nome de usuário">
-    {{nomeUsuario}}
-</div> -->
+    <!-- Lado Direito: Formulário de Login -->
+    <div class="right-section">
+      <div class="login-card">
+        <h2 class="login-title">Login</h2>
+        
+        <form (ngSubmit)="onSubmit()">
+          <!-- Campo Email -->
+          <div class="field">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              [(ngModel)]="nomeUsuario"
+              placeholder="JoaoSilva@email.com"
+              [disabled]="isSubmitting"
+            />
+            <span *ngIf="errorEmail" class="error">{{ errorEmail }}</span>
+          </div>
 
-<div class = "full-screen-container">
-
-    <div class = "website-name">
-    <h1>
-        Nome do Site
-    </h1>
-</div>
-
-<div class="body-container">
-    
-    <p-card>
-        <h2>Login</h2>
-
-        <nav class="quick-links">
-            <a [routerLink]="['/register1']" routerLinkActive="link-ativo">Cadastrar </a>
-        </nav>
-
-        <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-            <div class="field">
-                
-                <label for="email">EMAIL</label>
-                <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                [(ngModel)]="nomeUsuario" 
-                required 
-                #emailCtrl="ngModel"
-                placeholder="joaosilva@email.com" 
-                />
-                <p class="error" *ngIf="errorEmail">{{ errorEmail }}</p>
+          <!-- Campo Senha -->
+          <div class="field">
+            <label for="senha">Senha</label>
+            <div class="password-wrapper">
+              <input
+                [type]="mostrarSenha ? 'text' : 'password'"
+                id="senha"
+                name="senha"
+                [(ngModel)]="senhaUsuario"
+                placeholder="••••••••••••••••••"
+                [disabled]="isSubmitting"
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                (click)="onToggleSenha()"
+                [disabled]="isSubmitting"
+              >
+                {{ mostrarSenha ? '👁️' : '👁️‍🗨️' }}
+              </button>
             </div>
+            <span *ngIf="errorSenha" class="error">{{ errorSenha }}</span>
+          </div>
 
-            <div class="field">
-                <label for="senha">SENHA</label>
-                <div class="password-wrapper">
-                <input 
-                    type="password" 
-                    id="senha" 
-                    name="senha" 
-                    [(ngModel)]="senhaUsuario" 
-                    required 
-                    minlength="8" 
-                    #senhaCtrl="ngModel"
-                    placeholder="***********************" 
-                />
-                <button type="button" class="toggle" (click)="onToggleSenha()" aria-label="Mostrar senha">👁</button>
-                </div>
-                <p class="error" *ngIf="errorSenha">{{ errorSenha }}</p>
-            </div>
-
-            <button type="submit" class="btn" [disabled]="isSubmitting || !loginForm.valid">
-                {{ isSubmitting ? 'Entrando...' : 'Login' }}
-            </button>
+          <!-- Botão Entrar -->
+          <button 
+            type="submit" 
+            class="btn-entrar"
+            [disabled]="isSubmitting"
+          >
+            {{ isSubmitting ? 'Entrando...' : 'ENTRAR' }}
+          </button>
         </form>
-    </p-card>
-</div>
+
+        <!-- Link Cadastro -->
+        <div class="cadastro-link">
+          <span>Não tem uma conta? </span>
+          <a [routerLink]="['/register1']" routerLinkActive="link-ativo" class="link-cadastro">Cadastrar-se</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

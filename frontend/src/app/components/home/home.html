@@ -1,7 +1,159 @@
-<div class="full-screen-container">
-    <h1>
-        Login Feito! Bem vindo!
-    </h1>
+<div class="home-container">
+  <!-- Header Topo -->
+  <!-- <header class="top-header">
+    <div class="logo-section">
+      <img src="images/Infinity-Events.png" alt="Logo" class="logo"> -->
+      <!-- Opcional: <span class="site-title">InfinityEvents</span> -->
+    <!-- </div>
+    <nav class="top-nav">
+      <a routerLink="/home" class="nav-item active">Home</a>
+      <a routerLink="/user" class="nav-item">Conta</a>
+    </nav>
+  </header> -->
+  
+  <!-- Sub-header: Abas de Eventos -->
+  <!-- <div class="sub-header">
+    <nav class="tab-nav">
+      <a class="active" href="#">Todos os Eventos</a>
+      <a href="#">Eventos Inscritos</a>
+    </nav> -->
+    <!-- opcional: botão para criar evento, se quiser -->
+    <!-- <button class="create-event-btn">Criar Evento</button> -->
+  <!-- </div> -->
 
-    
+  <!-- Campo de busca -->
+  <!-- <section class="search-section">
+    <input type="text" class="search-input" placeholder="🔍 Buscar...">
+  </section> -->
+  
+  <!-- Grid de Eventos -->
+  <!-- <section class="events-grid">
+    <div class="grid-container">
+      <div class="event-card"> -->
+        <!-- <div class="event-title">BLUEKIDS OUTUBRO 2025</div> -->
+        <!-- <div class="event-location">Tubig Sports, São Paulo, SP</div> -->
+        <!-- <div class="event-date">18/12/2025 – 20/12/2025</div> -->
+
+  <header class="top-header">
+    <div class="logo-section">
+      <img src="images/Infinity-Events.png" alt="Logo" class="logo">
+    </div>
+    <nav class="top-nav">
+      <a href="#" class="active">Home</a>
+      <a href="#">Conta</a>
+    </nav>
+  </header>
+
+  @if (currentView === 'list') {
+    <div class="sub-header">
+      <nav class="tab-nav">
+        <a [class.active]="activeTab === 'todos'" (click)="setActiveTab('todos')">Todos os Eventos</a>
+        <a [class.active]="activeTab === 'inscritos'" (click)="setActiveTab('inscritos')">Eventos Inscritos</a>
+        <a [class.active]="activeTab === 'meus'" (click)="setActiveTab('meus')">Meus Eventos</a>
+      </nav>
+      @if (isAdmin) {
+        <button class="create-event-btn">Criar Evento</button>
+      }
+    </div>
+
+    <section class="search-section">
+      <input 
+        type="text" 
+        class="search-input" 
+        placeholder="Buscar..."
+        [(ngModel)]="searchTerm">
+    </section>
+
+    <section class="events-grid">
+      <div class="grid-container">
+        @for (event of filteredEvents; track event.id) {
+          <div 
+            class="event-card" 
+            [class.color-blue]="event.color === 'blue'"
+            [class.color-orange]="event.color === 'orange'"
+            (click)="openEventDetails(event)">
+            <h3 class="event-title">{{ event.title }}</h3>
+            <p class="event-date">{{ event.date }}</p>
+          </div>
+        }
+      </div>
+    </section>
+  }
+
+  @if (currentView === 'event-details' && selectedEvent) {
+    <div class="event-details-container">
+      <app-evento [event]="selectedEvent"></app-evento>
+      
+      <div class="navigation-footer">
+        <button class="nav-btn-footer left" (click)="backToList()">
+          <span class="arrow">←</span> Informações
+        </button>
+        <button class="nav-btn-footer right" (click)="openPalestras()">
+          Atividades <span class="arrow">→</span>
+        </button>
+      </div>
+      <div class="event-card">
+        <div class="event-title">NIGHTS RUN – OUTUBRO…</div>
+        <div class="event-location">Tubig Sports, São Paulo, SP</div>
+        <div class="event-date">18/12/2025 – 20/12/2025</div>
+      </div>
+      <div class="event-card highlight">
+        <div class="event-title">BLUEKIDS OUTUBRO 2025</div>
+        <div class="event-location">Tubig Sports, São Paulo, SP</div>
+        <div class="event-date">18/12/2025 – 20/12/2025</div>
+      </div>
+      <!-- Repita mais cards conforme necessário -->
+    </div>
+  </section>
+  }
+
+  @if (currentView === 'palestras' && selectedEvent && selectedEvent.palestras) {
+    <div class="palestras-container">
+      <div class="palestras-header">
+        <h3 class="event-name-label">Nome do Evento</h3>
+        <h2 class="event-name">{{ selectedEvent.title }}</h2>
+        <h2 class="section-title">Atividades</h2>
+      </div>
+
+      <div class="palestras-list">
+        @for (palestra of selectedEvent.palestras; track palestra.id) {
+          <div class="palestra-card" [class.expanded]="palestra.isExpanded">
+            <div class="palestra-card-header" (click)="togglePalestra(palestra)">
+              <div class="palestra-basic-info">
+                <h3>PALESTRA: {{ palestra.title }}</h3>
+                <div class="palestra-short-details">
+                  <p>{{ palestra.date }}</p>
+                  <p>{{ palestra.time }}</p>
+                  <p>{{ palestra.room }}</p>
+                </div>
+              </div>
+              <div class="expand-icon" [class.rotated]="palestra.isExpanded">
+                ▼
+              </div>
+            </div>
+
+            @if (palestra.isExpanded) {
+              <div class="palestra-expanded-content">
+                <div class="palestra-details-full">
+                  <p><strong>Número de Vagas:</strong> {{ palestra.slots }}</p>
+                  <p><strong>Palestrante:</strong> {{ palestra.speaker }}</p>
+                </div>
+                <div class="palestra-description">
+                  <h4>Descrição:</h4>
+                  <p>{{ palestra.description }}</p>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="action-footer">
+        <button class="nav-btn-footer left" (click)="backToEventDetails()">
+          <span class="arrow">←</span> Informações
+        </button>
+        <button class="btn-register">INSCREVER-SE</button>
+      </div>
+    </div>
+  }
 </div>

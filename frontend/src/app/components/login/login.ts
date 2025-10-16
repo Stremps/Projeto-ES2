@@ -42,7 +42,7 @@ export class Login {
     if (senha.length < 6) return 'Senha deve ter pelo menos 6 caracteres.';
     return null;
   }
-  onToggleSenha(): void { /* ... */ }
+  onToggleSenha(): void { this.mostrarSenha = !this.mostrarSenha; }
 
   // ATUALIZE O MÉTODO ONSUBMIT
   onSubmit(): void {

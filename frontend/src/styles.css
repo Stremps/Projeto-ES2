@@ -1,6 +1,78 @@
 @import "primeicons/primeicons.css";
 
 html, body {
-    height: 100%;
-    margin: 0
+  height: 100%;
+  margin: 0;
+}
+
+/*-------------------------------------------*/
+/* Fonte Horizon Personalizada */
+/*-------------------------------------------*/
+@font-face {
+  font-family: 'Horizon';
+  src: url('../assets/fonts/Horizon.woff2') format('woff2'),
+       url('../assets/fonts/Horizon.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.horizon-font {
+  font-family: 'Horizon', 'Impact', 'Arial Black', sans-serif;
+}
+
+/*-------------------------------------------*/
+/* Cores do Projeto */
+/*-------------------------------------------*/
+.vibrant-turquoise {
+  color: #06d6a0;
+}
+
+.pastel-green {
+  color: #a6ebc9;
+}
+
+.black-gray {
+  color: #363732;
+}
+
+/*-------------------------------------------*/
+/* ESTILO BOTÃO GRADIENTE */
+/*-------------------------------------------*/
+.animated-gradient-button {
+  background: linear-gradient(
+    -45deg,
+    #363b38,
+    #b3e3cf,
+    #00c99a,
+    #b3e3cf
+  );
+  background-size: 400% 400%;
+  animation: gradient-animation 10s ease infinite;
+  color: #363b38;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.animated-gradient-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

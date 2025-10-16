@@ -1,0 +1,63 @@
+<!-- Estrutura principal com header (simulação) e container de conteúdo -->
+<div class="perfil-container">
+
+    <header class="top-header">
+        <div class="logo-section">
+            <img src="images/Infinity-Events.png" alt="Logo" class="logo">
+        </div>
+        <nav class="top-nav">
+            <a href="javascript:void(0)" (click)="goHome()" class="nav-item">Home</a>
+            <a href="javascript:void(0)" class="nav-item">Conta</a>
+        </nav>
+    </header>
+
+    <!-- Área de Conteúdo principal (Menu Lateral + Detalhes) -->
+    <div class="content-area">
+        <!-- Menu Lateral de Navegação -->
+        <aside class="sidebar">
+            <button (click)="goToProfile()" class="sidebar-button">Meu Perfil</button>
+            <button (click)="goToEdit()" class="sidebar-button">Editar Perfil</button>
+            <button (click)="goToDelete()" class="sidebar-button delete-button">Excluir Conta</button>
+        </aside>
+
+        <!-- Detalhes da Exclusão -->
+        <main class="profile-details delete-page">
+            
+            <h1 class="delete-title">Você está prestes a excluir sua conta</h1>
+
+            <div class="delete-content">
+                <p class="delete-warning-text">Tem certeza que deseja excluir sua conta? Essa ação também apagará todo o seu histórico do sistema.</p>
+                <p class="attention-alert">Atenção: essa ação não pode ser desfeita!</p>
+            </div>
+            
+            <!-- Campo de confirmação de texto (Lado a lado, como no protótipo) -->
+            <form (ngSubmit)="deleteAccount()" class="delete-form">
+                
+                <div class="confirmation-input-area">
+                    <p class="label-delete">Digite a palavra chave para prosseguir:</p>
+                    <input 
+                        type="text" 
+                        [(ngModel)]="confirmationText" 
+                        name="confirmationText" 
+                        required 
+                        class="input-field confirmation-input"
+                        placeholder="DIGITE DELETE"
+                    >
+                </div>
+
+                <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+                <p *ngIf="successMessage" class="success-message">{{ successMessage }}</p>
+
+                <!-- Botão de Exclusão (principal) -->
+                <button 
+                    type="submit" 
+                    [disabled]="isLoading || !confirmationText" 
+                    class="action-button delete-confirm-button"
+                >
+                    {{ isLoading ? 'EXCLUINDO...' : 'EXCLUIR CONTA' }}
+                </button>
+            </form>
+
+        </main>
+    </div>
+</div>
