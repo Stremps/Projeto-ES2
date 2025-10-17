@@ -167,6 +167,19 @@
               </div>
             </div>
 
+            <!-- TipoLogradouro -->
+            <div class="field">
+              <label for="nomeTipoLogradouro">Tipo Logradouro</label>
+              <input
+                type="text"
+                id="nomeTipoLogradouro"
+                [(ngModel)]="nomeTipoLogradouro"
+                name="nomeTipoLogradouro"
+                placeholder="Rua"
+                [disabled]="isSubmitting"
+              />
+            </div>
+
             <!-- Bairro e Rua lado a lado -->
             <div class="field-row">
               <div class="field field-half">
@@ -183,13 +196,13 @@
               </div>
 
               <div class="field field-half">
-                <label for="rua">Rua</label>
+                <label for="rua">Logradouro</label>
                 <input
                   type="text"
                   id="rua"
                   [(ngModel)]="nomeLogradouro"
                   name="rua"
-                  placeholder="Av. das Cataratas"
+                  placeholder="Antonio Raposo"
                   [disabled]="isSubmitting"
                 />
                 <span *ngIf="errorNomeLogradouro" class="error">{{ errorNomeLogradouro }}</span>

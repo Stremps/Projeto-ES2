@@ -15,24 +15,16 @@ import { HttpClient, HttpClientModule } from '@angular/common/http'; // 1. IMPOR
   styleUrl: './register1.css'
 })
 export class Register1 {
+  // Fase Atual
   etapa: number = 1;
+
+  // Dados do Usuario
   nomeParticipante: string = '';
   emailParticipante: string = '';
   senhaParticipante: string = '';
   telefoneParticipante: string = '';
   cargo: string = '';
   mostrarSenha = false;
-  cargos: { label: string; value: string }[] = [
-    { label: 'Selecionar', value: '' },
-    { label: 'Aluno', value: 'ALUNO' },
-    { label: 'Professor', value: 'PROFESSOR' },
-    { label: 'Externo', value: 'EXTERNO' }
-  ];
-  errorNomeParticipante: string | null = null;
-  errorEmailParticipante: string | null = null;
-  errorSenhaParticipante: string | null = null;
-  errorTelefoneParticipante: string | null = null;
-  errorCargo: string | null = null;
   cep: string = '';
   nomeTipoLogradouro: string = '';
   nomeLogradouro: string = '';
@@ -41,6 +33,21 @@ export class Register1 {
   nomeBairro: string = '';
   nomeCidade: string = '';
   siglaUf: string = '';
+
+  // Cargos
+  cargos: { label: string; value: string }[] = [
+    { label: 'Selecionar', value: '' },
+    { label: 'Aluno', value: 'ALUNO' },
+    { label: 'Professor', value: 'PROFESSOR' },
+    { label: 'Externo', value: 'EXTERNO' }
+  ];
+
+  // Mensagem de erro
+  errorNomeParticipante: string | null = null;
+  errorEmailParticipante: string | null = null;
+  errorSenhaParticipante: string | null = null;
+  errorTelefoneParticipante: string | null = null;
+  errorCargo: string | null = null;
   errorCep: string | null = null;
   errorNomeTipoLogradouro: string | null = null;
   errorNomeLogradouro: string | null = null;
@@ -50,10 +57,10 @@ export class Register1 {
   errorSiglaUf: string | null = null;
   isSubmitting = false;
   
-  // 3. INJETE O HTTPCLIENT E O ROUTER NO CONSTRUTOR
+  
   constructor(private http: HttpClient, private router: Router) {}
 
-  // ... (todos os seus métodos de validação e navegação permanecem os mesmos) ...
+  // métodos de validação) ...
   validateNome = (nome: string) => !nome.trim() ? 'Nome é obrigatório.' : null;
   validateEmail = (email: string) => !email.trim() ? 'E-mail é obrigatório.' : null;
   validateSenha = (senha: string) => !senha ? 'Senha é obrigatória.' : null;
@@ -62,6 +69,7 @@ export class Register1 {
   validateCampoObrigatorio = (campo: string, nome: string) => !campo.trim() ? `${nome} é obrigatório.` : null;
   validateUf = (uf: string) => !uf.trim() ? 'UF é obrigatório.' : null;
   validateCep = (cep: string) => !cep.trim() ? 'CEP é obrigatório.' : null;
+  
   onToggleSenha() {
     this.mostrarSenha = !this.mostrarSenha;
   }
@@ -74,7 +82,11 @@ export class Register1 {
     this.errorTelefoneParticipante = this.validateTelefone(this.telefoneParticipante);
     this.errorCargo = this.validateCargo(this.cargo);
 
-    if (!this.errorNomeParticipante && !this.errorEmailParticipante && !this.errorSenhaParticipante && !this.errorTelefoneParticipante && !this.errorCargo) {
+    if (!this.errorNomeParticipante && 
+      !this.errorEmailParticipante && 
+      !this.errorSenhaParticipante && 
+      !this.errorTelefoneParticipante && 
+      !this.errorCargo) {
       this.etapa = 2;
     }
   }
@@ -85,7 +97,6 @@ export class Register1 {
 
   // 4. ATUALIZE O MÉTODO ONSUBMIT
   onSubmit() {
-    // ... (toda a lógica de validação da etapa 2 permanece a mesma)
     this.errorCep = this.validateCep(this.cep);
     this.errorNomeTipoLogradouro = this.validateCampoObrigatorio(this.nomeTipoLogradouro, 'Tipo de Logradouro');
     this.errorNomeLogradouro = this.validateCampoObrigatorio(this.nomeLogradouro, 'Logradouro');
@@ -95,6 +106,9 @@ export class Register1 {
     this.errorSiglaUf = this.validateUf(this.siglaUf);
 
     if (this.errorCep || this.errorNomeTipoLogradouro || this.errorNomeLogradouro || this.errorNumero || this.errorNomeBairro || this.errorNomeCidade || this.errorSiglaUf) {
+      console.log((this.errorCep ?? '') + (this.errorNomeTipoLogradouro ?? '') + 
+      (this.errorNomeLogradouro ?? '') + (this.errorNumero ?? '') + 
+      (this.errorNomeBairro ?? '') + (this.errorNomeCidade ?? '') + (this.errorSiglaUf ?? ''));
       return;
     }
 
