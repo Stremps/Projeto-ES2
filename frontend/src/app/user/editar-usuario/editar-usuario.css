@@ -19,8 +19,9 @@
 }
 
 .logo {
-  height: 60px;
-  width: auto;
+  width: 150px;
+  height: auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .top-nav {
