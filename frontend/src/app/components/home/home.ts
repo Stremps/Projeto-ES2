@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Evento } from '../evento/evento';
+import { Router, RouterLink } from "@angular/router";
 
 interface EventData {
   id: number;
@@ -38,7 +39,7 @@ interface Palestra {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, Evento],
+  imports: [CommonModule, FormsModule, Evento, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
