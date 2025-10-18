@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { Router, RouterLink } from "@angular/router";
+import { Auth } from '../../services/auth';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
@@ -26,6 +27,8 @@ export class Login {
   isSubmitting = false;
   errorEmail: string | null = null;
   errorSenha: string | null = null;
+
+  private authService = inject(Auth);
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -61,27 +64,18 @@ export class Login {
       senha: this.senhaUsuario
     };
 
-    const apiUrl = 'http://localhost:8081/api/auth/login';
-
-    this.http.post<any>(apiUrl, credentials).subscribe({ // Espera uma resposta do tipo "any" (ou uma interface específica)
-      next: (response) => {
-        console.log('Login bem-sucedido!', response);
-        
-        // **PARTE CRÍTICA: ARMAZENAR O TOKEN**
-        if (response && response.token) {
-          localStorage.setItem('token', response.token);
-          alert('Login realizado com sucesso!');
-          this.isSubmitting = false;
-          // Redireciona para /home conforme solicitado
-          this.router.navigate(['/home']);
-        } else {
-          // Caso a resposta não venha como esperado
-          this.errorSenha = 'Resposta de login inválida do servidor.';
-          this.isSubmitting = false;
-        }
+    // **AGORA USA O SERVIÇO DE AUTENTICAÇÃO**
+    this.authService.login(credentials).subscribe({
+      next: () => {
+        console.log('Login bem-sucedido!');
+        alert('Login realizado com sucesso!');
+        this.isSubmitting = false;
+        // Redireciona para a home após o login
+        this.router.navigate(['/home']);
       },
       error: (err) => {
         console.error('Erro ao fazer login:', err);
+        // Exibe uma mensagem de erro genérica. A API pode retornar detalhes no `err.error.message`
         this.errorSenha = err.error?.message || 'Email ou senha inválidos. Tente novamente.';
         this.isSubmitting = false;
       }
