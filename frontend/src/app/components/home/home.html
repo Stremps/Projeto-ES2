@@ -1,39 +1,4 @@
 <div class="home-container">
-  <!-- Header Topo -->
-  <!-- <header class="top-header">
-    <div class="logo-section">
-      <img src="images/Infinity-Events.png" alt="Logo" class="logo"> -->
-      <!-- Opcional: <span class="site-title">InfinityEvents</span> -->
-    <!-- </div>
-    <nav class="top-nav">
-      <a routerLink="/home" class="nav-item active">Home</a>
-      <a routerLink="/user" class="nav-item">Conta</a>
-    </nav>
-  </header> -->
-  
-  <!-- Sub-header: Abas de Eventos -->
-  <!-- <div class="sub-header">
-    <nav class="tab-nav">
-      <a class="active" href="#">Todos os Eventos</a>
-      <a href="#">Eventos Inscritos</a>
-    </nav> -->
-    <!-- opcional: botão para criar evento, se quiser -->
-    <!-- <button class="create-event-btn">Criar Evento</button> -->
-  <!-- </div> -->
-
-  <!-- Campo de busca -->
-  <!-- <section class="search-section">
-    <input type="text" class="search-input" placeholder="🔍 Buscar...">
-  </section> -->
-  
-  <!-- Grid de Eventos -->
-  <!-- <section class="events-grid">
-    <div class="grid-container">
-      <div class="event-card"> -->
-        <!-- <div class="event-title">BLUEKIDS OUTUBRO 2025</div> -->
-        <!-- <div class="event-location">Tubig Sports, São Paulo, SP</div> -->
-        <!-- <div class="event-date">18/12/2025 – 20/12/2025</div> -->
-
   <header class="top-header">
     <div class="logo-section">
       <img src="images/Infinity-Events.png" alt="Logo" class="logo">
@@ -41,9 +6,11 @@
     <nav class="top-nav">
       <a routerLink="/home" routerLinkActive="active" class="nav-item">Home</a>
       <a routerLink="/user" routerLinkActive="active" class="nav-item">Conta</a>
+      <a routerLink="/pagina-inicial" routerLinkActive="active" (click)="logout()">Sair</a>
     </nav>
   </header>
 
+  <!-- LISTA DE EVENTOS -->
   @if (currentView === 'list') {
     <div class="sub-header">
       <nav class="tab-nav">
@@ -61,32 +28,43 @@
         type="text" 
         class="search-input" 
         placeholder="Buscar..."
-        [(ngModel)]="searchTerm">
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="filterEvents()"> <!-- Chama o filtro a cada mudança -->
     </section>
 
-    <section class="events-grid">
-      <div class="grid-container">
-        @for (event of filteredEvents; track event.id) {
-          <div 
-            class="event-card" 
-            [class.color-blue]="event.color === 'blue'"
-            [class.color-orange]="event.color === 'orange'"
-            (click)="openEventDetails(event)">
-            <h3 class="event-title">{{ event.title }}</h3>
-            <p class="event-date">{{ event.date }}</p>
-          </div>
-        }
-      </div>
-    </section>
+    <!-- Adiciona feedback de loading e erro -->
+    @if (isLoading) {
+      <div class="feedback-message">Carregando eventos...</div>
+    } @else if (errorMessage) {
+      <div class="feedback-message error">{{ errorMessage }}</div>
+    } @else {
+      <section class="events-grid">
+        <div class="grid-container">
+          @for (event of filteredEvents; track event.id) {
+            <div 
+              class="event-card" 
+              [class.color-blue]="event.color === 'blue'"
+              [class.color-orange]="event.color === 'orange'"
+              (click)="openEventDetails(event)">
+              <h3 class="event-title">{{ event.title }}</h3>
+              <p class="event-date">{{ event.date }}</p>
+            </div>
+          } @empty {
+            <p class="feedback-message">Nenhum evento encontrado.</p>
+          }
+        </div>
+      </section>
+    }
   }
 
+  <!-- DETALHES DO EVENTO -->
   @if (currentView === 'event-details' && selectedEvent) {
     <div class="event-details-container">
       <app-evento [event]="selectedEvent"></app-evento>
       
       <div class="navigation-footer">
         <button class="nav-btn-footer left" (click)="backToList()">
-          <span class="arrow">←</span> Informações
+          <span class="arrow">←</span> Voltar para a lista
         </button>
         <button class="nav-btn-footer right" (click)="openPalestras()">
           Atividades <span class="arrow">→</span>
@@ -95,7 +73,8 @@
     </div>
   }
 
-  @if (currentView === 'palestras' && selectedEvent && selectedEvent.palestras) {
+  <!-- LISTA DE PALESTRAS -->
+  @if (currentView === 'palestras' && selectedEvent) {
     <div class="palestras-container">
       <div class="palestras-header">
         <h3 class="event-name-label">Nome do Evento</h3>
@@ -133,6 +112,8 @@
               </div>
             }
           </div>
+        } @empty {
+          <p class="feedback-message">Nenhuma atividade cadastrada para este evento.</p>
         }
       </div>
 

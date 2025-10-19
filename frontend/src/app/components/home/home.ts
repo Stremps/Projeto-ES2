@@ -1,14 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Evento } from '../evento/evento';
+import { EventoService } from '../../services/evento/evento-service';
+import { EventoResponseDto, PalestraResponseDto } from '../../interfaces/evento-interface';
 import { Router, RouterLink } from "@angular/router";
+import { Auth } from '../../services/auth';
 
-interface EventData {
+// Interface interna do componente para a visualização
+export interface EventData {
   id: number;
   title: string;
   date: string;
   color: 'blue' | 'orange';
+  // Detalhes do evento
   state?: string;
   city?: string;
   startDate?: string;
@@ -24,6 +29,7 @@ interface EventData {
   palestras?: Palestra[];
 }
 
+// Interface interna para palestras
 interface Palestra {
   id: number;
   title: string;
@@ -43,65 +49,100 @@ interface Palestra {
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   isAdmin = false;
   searchTerm: string = '';
   activeTab: string = 'todos';
   currentView: 'list' | 'event-details' | 'palestras' = 'list';
   selectedEvent: EventData | null = null;
 
-  events: EventData[] = [
-    { 
-      id: 1, 
-      title: 'BLUEKIDS OUTUBRO 2025', 
-      date: '18/12/2025 - 20/12/2025', 
-      color: 'blue',
-      state: 'PR',
-      city: 'Foz do Iguaçu',
-      startDate: '30/10/2025',
-      endDate: '02/11/2025',
-      startTime: '08:00',
-      endTime: '17:00',
-      bairro: 'Vila Yolanda',
-      rua: 'Av. das Cataratas',
-      numero: '150',
-      cep: '85873-190',
-      complemento: 'Em frente ao correio',
-      description: 'Comemoração do dia das crianças\n\nVenha participar! Nossas atividades incluem:\n• Brincadeiras e jogos\n• Muita comida\n• Atividades com os pais',
-      palestras: [
-        {
-          id: 1,
-          title: 'Alimentação Saudável',
-          date: '18/12/2025 - 20/12/2025',
-          time: '15:00 - 16:30',
-          room: 'Sala 2, Bloco 1',
-          speaker: 'João Silva',
-          description: 'Venha aprender sobre como alimentar a sua criança de forma saudável e lúdica!',
-          slots: 10,
-          isExpanded: false
-        },
-        {
-          id: 2,
-          title: 'Desenvolvimento Infantil',
-          date: '18/12/2025 - 20/12/2025',
-          time: '10:00 - 11:30',
-          room: 'Sala 1, Bloco 2',
-          speaker: 'Maria Santos',
-          description: 'Aprenda sobre as fases do desenvolvimento infantil e como estimular seu filho.',
-          slots: 15,
-          isExpanded: false
-        }
-      ]
-    },
-    { id: 2, title: 'NIGHTS RUN - OUTUBRO', date: '10/10 - 15/10', color: 'orange' },
-    { id: 3, title: 'BLUEKIDS OUTUBRO 2025', date: '10/10 - 15/10', color: 'blue' }
-  ];
+  // Gerenciamento de estado da UI
+  isLoading = true;
+  errorMessage: string | null = null;
 
-  get filteredEvents(): EventData[] {
-    return this.events.filter(event =>
-      event.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      this.searchTerm === ''
+  // Serviços injetados
+  private authService = inject(Auth);
+  private eventoService = inject(EventoService); // 5. Injetar o serviço de eventos
+  private router = inject(Router);
+
+  // Lista de eventos que será preenchida pela API
+  allEvents: EventData[] = [];
+  filteredEvents: EventData[] = [];
+
+  ngOnInit(): void {
+    this.loadEvents();
+  }
+
+  // 6. Método para carregar os eventos da API
+  loadEvents(): void {
+    this.isLoading = true;
+    this.errorMessage = null;
+
+    this.eventoService.getEventos().subscribe({
+      next: (eventosDto) => {
+        // 7. Mapear o DTO do backend para o formato do frontend
+        this.allEvents = eventosDto.map((dto, index) => this.mapDtoToEventData(dto, index));
+        this.filterEvents(); // Filtra os eventos após carregar
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Erro ao buscar eventos:', err);
+        this.errorMessage = 'Não foi possível carregar os eventos. Tente novamente mais tarde.';
+        this.isLoading = false;
+      }
+    });
+  }
+
+  // Atualizar a lógica de filtro para usar o novo array
+  filterEvents(): void {
+    const searchTermLower = this.searchTerm.toLowerCase();
+    this.filteredEvents = this.allEvents.filter(event =>
+      event.title.toLowerCase().includes(searchTermLower)
     );
+  }
+
+  // 8. Método auxiliar para mapear os dados
+  private mapDtoToEventData(dto: EventoResponseDto, index: number): EventData {
+    return {
+      id: dto.id,
+      title: dto.nome,
+      date: `${this.formatDate(dto.dataInicio)} - ${this.formatDate(dto.dataFim)}`,
+      color: index % 2 === 0 ? 'blue' : 'orange', // Alterna as cores
+      state: dto.endereco.uf,
+      city: dto.endereco.cidade,
+      startDate: this.formatDate(dto.dataInicio),
+      endDate: this.formatDate(dto.dataFim),
+      startTime: dto.horaInicio,
+      endTime: dto.horaFim,
+      bairro: dto.endereco.bairro,
+      rua: dto.endereco.logradouro,
+      numero: dto.endereco.numero,
+      cep: dto.endereco.cep,
+      complemento: dto.endereco.bairro, // Ajuste se tiver complemento no DTO
+      description: dto.descricao,
+      palestras: dto.palestras ? dto.palestras.map(this.mapPalestraDtoToPalestra) : []
+    };
+  }
+
+  private mapPalestraDtoToPalestra(palestraDto: PalestraResponseDto): Palestra {
+      return {
+          id: palestraDto.id,
+          title: palestraDto.titulo,
+          date: new Date(palestraDto.data).toLocaleDateString(),
+          time: `${palestraDto.horaInicio} - ${palestraDto.horaFim}`,
+          room: palestraDto.localInterno,
+          speaker: palestraDto.palestrante.nome,
+          description: "Descrição da palestra aqui...", // Adicionar se vier da API
+          slots: palestraDto.numeroVagas,
+          isExpanded: false
+      };
+  }
+
+  // Função simples para formatar a data
+  private formatDate(dateStr: string): string {
+    if (!dateStr) return '';
+    const [year, month, day] = dateStr.split('-');
+    return `${day}/${month}/${year}`;
   }
 
   setActiveTab(tab: string): void {
@@ -128,6 +169,9 @@ export class HomeComponent {
 
   togglePalestra(palestra: Palestra): void {
     palestra.isExpanded = !palestra.isExpanded;
-    console.log('🔄 Toggle:', palestra.title, '→', palestra.isExpanded);
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }
