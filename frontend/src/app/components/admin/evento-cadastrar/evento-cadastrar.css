@@ -1,0 +1,119 @@
+/* Container Principal do Formulário */
+.form-container {
+  padding: 1.5rem;
+  background: rgba(19, 74, 74, 0.95);
+  color: white;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 12px;
+}
+
+/* Cabeçalho do Formulário */
+.form-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.form-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #7fffd4;
+  text-transform: uppercase;
+}
+
+/* Grid de Inputs */
+.info-grid-compact {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem 1.5rem;
+}
+
+.info-item-compact {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-item-compact.full-width {
+  grid-column: 1 / -1;
+}
+
+/* Labels */
+.info-item-compact label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.5rem;
+}
+
+/* Inputs e Textarea */
+.input-field {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(127, 255, 212, 0.3);
+  border-radius: 6px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #7fffd4;
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 2px rgba(127, 255, 212, 0.2);
+}
+
+textarea.input-field {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Área de Ações (Botões) */
+.form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.action-button {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.save-button {
+  background-color: #f39c12; /* Laranja */
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #e67e22;
+  transform: translateY(-2px);
+}
+
+.cancel-button {
+  background-color: #e74c3c; /* Vermelho */
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .info-grid-compact {
+    grid-template-columns: 1fr;
+  }
+}

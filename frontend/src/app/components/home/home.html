@@ -6,7 +6,7 @@
     <nav class="top-nav">
       <a routerLink="/home" routerLinkActive="active" class="nav-item">Home</a>
       <a routerLink="/user" routerLinkActive="active" class="nav-item">Conta</a>
-      <a routerLink="/pagina-inicial" routerLinkActive="active" (click)="logout()">Sair</a>
+      <a routerLink="/pagina-inicial" routerLinkActive="active" (click)="logout()" class="nav-item">Sair</a>
     </nav>
   </header>
 
@@ -19,7 +19,7 @@
         <a [class.active]="activeTab === 'meus'" (click)="setActiveTab('meus')">Meus Eventos</a>
       </nav>
       @if (isAdmin) {
-        <button class="create-event-btn">Criar Evento</button>
+        <button routerLink="/pagina-inicial" routerLinkActive="active" class="create-event-btn">Criar Evento</button>
       }
     </div>
 

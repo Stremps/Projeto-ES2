@@ -1,0 +1,75 @@
+<div class="form-container">
+  <div class="form-header">
+    <h1 class="form-title">{{ formTitle }}</h1>
+  </div>
+
+  <form #eventoForm="ngForm" (ngSubmit)="onSubmit(eventoForm)" class="info-grid-compact">
+    <!-- Nome do Evento -->
+    <div class="info-item-compact full-width">
+      <label for="nome">Nome do Evento</label>
+      <input type="text" id="nome" name="nome" [(ngModel)]="formData.nome" required class="input-field">
+    </div>
+
+    <!-- Data de Início e Término -->
+    <div class="info-item-compact">
+      <label for="dataInicio">Data de Início</label>
+      <input type="date" id="dataInicio" name="dataInicio" [(ngModel)]="formData.dataInicio" required class="input-field">
+    </div>
+    <div class="info-item-compact">
+      <label for="dataFim">Data de Término</label>
+      <input type="date" id="dataFim" name="dataFim" [(ngModel)]="formData.dataFim" required class="input-field">
+    </div>
+
+    <!-- Hora de Início e Término -->
+    <div class="info-item-compact">
+      <label for="horaInicio">Hora de Início</label>
+      <input type="time" id="horaInicio" name="horaInicio" [(ngModel)]="formData.horaInicio" required class="input-field">
+    </div>
+    <div class="info-item-compact">
+      <label for="horaFim">Hora de Término</label>
+      <input type="time" id="horaFim" name="horaFim" [(ngModel)]="formData.horaFim" required class="input-field">
+    </div>
+
+    <!-- Endereço -->
+    <div class="info-item-compact">
+      <label for="siglaUf">Estado (UF)</label>
+      <input type="text" id="siglaUf" name="siglaUf" [(ngModel)]="formData.siglaUf" required class="input-field" maxlength="2">
+    </div>
+     <div class="info-item-compact">
+      <label for="nomeCidade">Cidade</label>
+      <input type="text" id="nomeCidade" name="nomeCidade" [(ngModel)]="formData.nomeCidade" required class="input-field">
+    </div>
+     <div class="info-item-compact">
+      <label for="nomeBairro">Bairro</label>
+      <input type="text" id="nomeBairro" name="nomeBairro" [(ngModel)]="formData.nomeBairro" required class="input-field">
+    </div>
+    <div class="info-item-compact">
+      <label for="nomeLogradouro">Rua</label>
+      <input type="text" id="nomeLogradouro" name="nomeLogradouro" [(ngModel)]="formData.nomeLogradouro" required class="input-field">
+    </div>
+     <div class="info-item-compact">
+      <label for="numero">Número</label>
+      <input type="text" id="numero" name="numero" [(ngModel)]="formData.numero" required class="input-field">
+    </div>
+    <div class="info-item-compact">
+      <label for="cep">CEP</label>
+      <input type="text" id="cep" name="cep" [(ngModel)]="formData.cep" required class="input-field">
+    </div>
+
+    <!-- Descrição e Complemento -->
+    <div class="info-item-compact full-width">
+      <label for="descricao">Descrição</label>
+      <textarea id="descricao" name="descricao" [(ngModel)]="formData.descricao" required class="input-field" rows="4"></textarea>
+    </div>
+    <div class="info-item-compact full-width">
+      <label for="complemento">Complemento</label>
+      <input type="text" id="complemento" name="complemento" [(ngModel)]="formData.complemento" class="input-field">
+    </div>
+
+    <!-- Botões -->
+    <div class="form-actions">
+      <button type="submit" class="action-button save-button" [disabled]="!eventoForm.valid">Salvar</button>
+      <button type="button" class="action-button cancel-button" (click)="onCancel()">Cancelar</button>
+    </div>
+  </form>
+</div>

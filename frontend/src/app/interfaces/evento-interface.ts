@@ -37,3 +37,32 @@ export interface EventoResponseDto {
   endereco: EnderecoResponseDto;
   palestras?: PalestraResponseDto[]; // Adicionado como opcional
 }
+
+export interface EventoRequest {
+  nome: string;
+  dataInicio: string;
+  dataFim: string;
+  horaInicio: string;
+  horaFim: string;
+  descricao: string;
+  cep: string;
+  complemento: string;
+  numero: string;
+  nomeBairro: string;
+  nomeCidade: string;
+  siglaUf: string;
+  nomeLogradouro: string;
+  nomeTipoLogradouro: string;
+}
+
+export interface PalestraRequest {
+  titulo: string;
+  data: string;
+  horaInicio: string;
+  horaFim: string;
+  descricao: string;
+  localInterno: string;
+  numeroVagas: number;
+  eventoId: number;
+  palestranteEmail: string;
+}

@@ -10,6 +10,17 @@ interface JwtResponse {
   type: string; // "Bearer"
 }
 
+// NOVO: Interface para o payload decodificado do JWT
+// Supondo que o backend inclua o cargo (role) no token.
+interface JwtPayload {
+  sub: string;
+  exp: number;
+  iat: number;
+  authorities?: string[]; // O Spring Security geralmente usa 'authorities'
+  role?: string; // Outra possibilidade comum
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +33,12 @@ export class Auth {
   private http = inject(HttpClient);
 
   // BehaviorSubject para emitir o estado de login (logado/deslogado)
-  private loggedIn = new BehaviorSubject<boolean>(this.isUserLoggedIn()); // Modificado para usar o novo método
+  private loggedIn = new BehaviorSubject<boolean>(this.isUserLoggedIn());
+  
+  // NOVO: BehaviorSubject para o cargo do usuário
+  private userRole = new BehaviorSubject<string | null>(this.getUserRole());
+  public userRole$ = this.userRole.asObservable();
+
 
   // Método para fazer login
   login(credentials: { email: string, senha: string }): Observable<JwtResponse> {
@@ -32,6 +48,7 @@ export class Auth {
           if (response && response.token) {
             this.setToken(response.token); // Armazena o token
             this.loggedIn.next(true); // Emite que o usuário está logado
+            this.userRole.next(this.getUserRole()); // ATUALIZADO: Emite o cargo do usuário
           }
         })
       );
@@ -58,7 +75,6 @@ export class Auth {
   }
 
   // Retorna o estado de login atual de forma síncrona (útil para guards)
-  // ATUALIZADO: Agora verifica a validade do token
   isUserLoggedIn(): boolean {
     const token = this.getToken();
     if (!token) {
@@ -86,11 +102,12 @@ export class Auth {
   logout(): void {
     localStorage.removeItem(this.TOKEN_KEY);
     this.loggedIn.next(false); // Emite que o usuário foi deslogado
+    this.userRole.next(null); // ATUALIZADO: Limpa o cargo do usuário
     this.router.navigate(['/login']); // Redireciona para a página de login
   }
 
-  // NOVO: Método para decodificar o token JWT
-  private getDecodedToken(): any | null {
+  // ATUALIZADO: Método para decodificar o token JWT com tipagem
+  private getDecodedToken(): JwtPayload | null {
     const token = this.getToken();
     if (!token) {
       return null;
@@ -103,5 +120,34 @@ export class Auth {
       console.error("Erro ao decodificar o token:", e);
       return null;
     }
+  }
+
+  // NOVO: Método para obter o cargo (role) do token
+  // OBS: Isto assume que o backend está incluindo o cargo no payload do JWT.
+  getUserRole(): string | null {
+    const decodedToken = this.getDecodedToken();
+    if (!decodedToken) {
+      return null;
+    }
+    
+    // O Spring Security normalmente usa um array 'authorities'
+    if (decodedToken.authorities && decodedToken.authorities.length > 0) {
+      // A role pode vir com o prefixo 'ROLE_', que pode ser removido se necessário.
+      // Neste caso, o backend parece salvar diretamente o nome do Enum (ex: "ADMIN").
+      return decodedToken.authorities[0];
+    }
+    
+    // Outra possibilidade é uma propriedade 'role'
+    if (decodedToken.role) {
+      return decodedToken.role;
+    }
+
+    return null;
+  }
+
+  // NOVO: Método para verificar se o usuário é ADMIN
+  isUserAdmin(): boolean {
+    const role = this.getUserRole();
+    return role === 'ADMIN';
   }
 }

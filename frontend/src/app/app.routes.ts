@@ -7,6 +7,8 @@ import { PerfilUsuario } from './user/perfil-usuario/perfil-usuario';
 import { EditarUsuario } from './user/editar-usuario/editar-usuario';
 import { ExcluirUsuario } from './user/excluir-usuario/excluir-usuario';
 import { authGuard } from './guards/auth-guard';
+import { EventoCadastrar } from './components/admin/evento-cadastrar/evento-cadastrar';
+import { PalestraCadastrar } from './components/admin/palestra-cadastrar/palestra-cadastrar';
 
 export const routes: Routes = [
     {
@@ -27,6 +29,7 @@ export const routes: Routes = [
         component: HomeComponent,
         canActivate: [authGuard]
     },
+    // USER
     {
         path: 'user',
         component: PerfilUsuario,
@@ -40,6 +43,17 @@ export const routes: Routes = [
     {
         path: 'delete-user',
         component: ExcluirUsuario,
+        canActivate: [authGuard]
+    },
+    // ADMIN
+    {
+        path: 'criar-evento',
+        component: EventoCadastrar,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'criar-palestra',
+        component: PalestraCadastrar,
         canActivate: [authGuard]
     },
     {

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Evento } from '../evento/evento';
@@ -6,6 +6,7 @@ import { EventoService } from '../../services/evento/evento-service';
 import { EventoResponseDto, PalestraResponseDto } from '../../interfaces/evento-interface';
 import { Router, RouterLink } from "@angular/router";
 import { Auth } from '../../services/auth';
+import { Subscription } from 'rxjs';
 
 // Interface interna do componente para a visualização
 export interface EventData {
@@ -49,7 +50,7 @@ interface Palestra {
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   isAdmin = false;
   searchTerm: string = '';
   activeTab: string = 'todos';
@@ -62,27 +63,38 @@ export class HomeComponent implements OnInit {
 
   // Serviços injetados
   private authService = inject(Auth);
-  private eventoService = inject(EventoService); // 5. Injetar o serviço de eventos
+  private eventoService = inject(EventoService);
   private router = inject(Router);
+
+  // Subscription para o cargo do usuário
+  private roleSubscription: Subscription | undefined;
 
   // Lista de eventos que será preenchida pela API
   allEvents: EventData[] = [];
   filteredEvents: EventData[] = [];
 
   ngOnInit(): void {
+    // ATUALIZADO: Verifica se o usuário é admin de forma reativa
+    this.roleSubscription = this.authService.userRole$.subscribe(role => {
+      this.isAdmin = role === 'ADMIN';
+    });
     this.loadEvents();
   }
 
-  // 6. Método para carregar os eventos da API
+  ngOnDestroy(): void {
+    // Limpa a subscription para evitar memory leaks
+    this.roleSubscription?.unsubscribe();
+  }
+
+  // Método para carregar os eventos da API
   loadEvents(): void {
     this.isLoading = true;
     this.errorMessage = null;
 
     this.eventoService.getEventos().subscribe({
       next: (eventosDto) => {
-        // 7. Mapear o DTO do backend para o formato do frontend
         this.allEvents = eventosDto.map((dto, index) => this.mapDtoToEventData(dto, index));
-        this.filterEvents(); // Filtra os eventos após carregar
+        this.filterEvents(); 
         this.isLoading = false;
       },
       error: (err) => {
@@ -93,7 +105,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  // Atualizar a lógica de filtro para usar o novo array
+  // Lógica de filtro para usar o novo array
   filterEvents(): void {
     const searchTermLower = this.searchTerm.toLowerCase();
     this.filteredEvents = this.allEvents.filter(event =>
@@ -101,7 +113,7 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  // 8. Método auxiliar para mapear os dados
+  // Método auxiliar para mapear os dados
   private mapDtoToEventData(dto: EventoResponseDto, index: number): EventData {
     return {
       id: dto.id,

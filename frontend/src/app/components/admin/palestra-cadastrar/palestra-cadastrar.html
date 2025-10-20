@@ -1,0 +1,59 @@
+<div class="form-container">
+  <div class="form-header">
+    <h1 class="form-title">{{ formTitle }}</h1>
+  </div>
+
+  <form #palestraForm="ngForm" (ngSubmit)="onSubmit(palestraForm)" class="info-grid-compact">
+    <!-- Título Palestra -->
+    <div class="info-item-compact full-width">
+      <label for="titulo">Título Palestra</label>
+      <input type="text" id="titulo" name="titulo" [(ngModel)]="formData.titulo" required class="input-field">
+    </div>
+
+    <!-- Palestrante (Email) -->
+    <div class="info-item-compact full-width">
+      <label for="palestranteEmail">Palestrante (E-mail)</label>
+      <input type="email" id="palestranteEmail" name="palestranteEmail" [(ngModel)]="formData.palestranteEmail" required class="input-field" placeholder="email.do.palestrante@exemplo.com">
+    </div>
+
+    <!-- Data -->
+    <div class="info-item-compact">
+      <label for="data">Data de Início</label>
+      <input type="date" id="data" name="data" [(ngModel)]="formData.data" required class="input-field">
+    </div>
+
+    <!-- Número de Vagas -->
+    <div class="info-item-compact">
+      <label for="numeroVagas">Número de vagas</label>
+      <input type="number" id="numeroVagas" name="numeroVagas" [(ngModel)]="formData.numeroVagas" required class="input-field" min="0">
+    </div>
+
+    <!-- Hora de Início e Término -->
+    <div class="info-item-compact">
+      <label for="horaInicio">Hora de Início</label>
+      <input type="time" id="horaInicio" name="horaInicio" [(ngModel)]="formData.horaInicio" required class="input-field">
+    </div>
+    <div class="info-item-compact">
+      <label for="horaFim">Hora de Término</label>
+      <input type="time" id="horaFim" name="horaFim" [(ngModel)]="formData.horaFim" required class="input-field">
+    </div>
+
+    <!-- Local Palestra -->
+    <div class="info-item-compact full-width">
+      <label for="localInterno">Local Palestra</label>
+      <input type="text" id="localInterno" name="localInterno" [(ngModel)]="formData.localInterno" required class="input-field">
+    </div>
+
+    <!-- Descrição -->
+    <div class="info-item-compact full-width">
+      <label for="descricao">Descrição</label>
+      <textarea id="descricao" name="descricao" [(ngModel)]="formData.descricao" required class="input-field" rows="4"></textarea>
+    </div>
+
+    <!-- Botões -->
+    <div class="form-actions">
+      <button type="submit" class="action-button save-button" [disabled]="!palestraForm.valid">Salvar</button>
+      <button type="button" class="action-button cancel-button" (click)="onCancel()">Cancelar</button>
+    </div>
+  </form>
+</div>
