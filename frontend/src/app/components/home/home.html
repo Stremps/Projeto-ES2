@@ -16,7 +16,7 @@
       <nav class="tab-nav">
         <a [class.active]="activeTab === 'todos'" (click)="setActiveTab('todos')">Todos os Eventos</a>
         <a [class.active]="activeTab === 'inscritos'" (click)="setActiveTab('inscritos')">Eventos Inscritos</a>
-        <a [class.active]="activeTab === 'meus'" (click)="setActiveTab('meus')">Meus Eventos</a>
+        <!-- <a [class.active]="activeTab === 'meus'" (click)="setActiveTab('meus')">Meus Eventos</a> NÃO SERÁ USADO -->
       </nav>
       @if (isAdmin) {
         <button routerLink="/criar-evento" routerLinkActive="active" class="create-event-btn">Criar Evento</button>
