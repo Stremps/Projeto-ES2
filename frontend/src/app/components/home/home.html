@@ -19,7 +19,7 @@
         <a [class.active]="activeTab === 'meus'" (click)="setActiveTab('meus')">Meus Eventos</a>
       </nav>
       @if (isAdmin) {
-        <button routerLink="/pagina-inicial" routerLinkActive="active" class="create-event-btn">Criar Evento</button>
+        <button routerLink="/criar-evento" routerLinkActive="active" class="create-event-btn">Criar Evento</button>
       }
     </div>
 
