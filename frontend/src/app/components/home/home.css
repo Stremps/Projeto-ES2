@@ -370,13 +370,21 @@
   letter-spacing: 2px;
 }
 
+.palestras-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid rgba(127, 255, 212, 0.3);
+  padding-bottom: 1rem;
+}
+
+
 .section-title {
   font-size: 1.5rem;
   font-weight: 700;
   color: white;
   margin: 0;
   text-transform: uppercase;
-  text-align: center;
 }
 
 /* Palestras List */

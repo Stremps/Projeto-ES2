@@ -16,7 +16,6 @@
       <nav class="tab-nav">
         <a [class.active]="activeTab === 'todos'" (click)="setActiveTab('todos')">Todos os Eventos</a>
         <a [class.active]="activeTab === 'inscritos'" (click)="setActiveTab('inscritos')">Eventos Inscritos</a>
-        <!-- <a [class.active]="activeTab === 'meus'" (click)="setActiveTab('meus')">Meus Eventos</a> NÃO SERÁ USADO -->
       </nav>
       @if (isAdmin) {
         <button routerLink="/criar-evento" routerLinkActive="active" class="create-event-btn">Criar Evento</button>
@@ -79,7 +78,15 @@
       <div class="palestras-header">
         <h3 class="event-name-label">Nome do Evento</h3>
         <h2 class="event-name">{{ selectedEvent.title }}</h2>
-        <h2 class="section-title">Atividades</h2>
+        <div class="palestras-title-bar">
+          <h2 class="section-title">Atividades</h2>
+          <!-- BOTÃO PARA CADASTRAR PALESTRA -->
+          @if (isAdmin) {
+            <button class="create-event-btn" [routerLink]="['/criar-palestra', selectedEvent.id]">
+              Cadastrar Palestra
+            </button>
+          }
+        </div>
       </div>
 
       <div class="palestras-list">

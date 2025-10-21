@@ -1,42 +1,33 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { EventoRequest } from '../../../interfaces/evento-interface';
+import { EventoService } from '../../../services/evento/evento-service';
 
 @Component({
   selector: 'app-evento-cadastrar',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './evento-cadastrar.html',
-  styleUrl: './evento-cadastrar.css'
+  styleUrls: ['./evento-cadastrar.css']
 })
-export class EventoCadastrar {
-  // Recebe o evento existente para edição ou um objeto vazio para criação
-  @Input() evento: EventoRequest | null = null;
-  
-  // Emite o evento para ser salvo (criado ou atualizado)
-  @Output() save = new EventEmitter<EventoRequest>();
-  
-  // Emite um evento para cancelar a operação
-  @Output() cancel = new EventEmitter<void>();
+export class EventoCadastrar implements OnInit {
+  private eventoService = inject(EventoService);
+  private router = inject(Router);
 
-  // Modelo de dados para o formulário
+  // A lógica de edição seria em outra rota, por exemplo, 'editar-evento/:id'.
   formData: EventoRequest = this.createEmptyRequest();
-
-  // Título do formulário (Criar ou Editar)
   formTitle: string = 'Criar Evento';
+  isSubmitting = false;
+  errorMessage: string | null = null;
 
   ngOnInit(): void {
-    if (this.evento) {
-      this.formTitle = 'Editar Evento';
-      // Clona o objeto para evitar modificar o original diretamente
-      this.formData = { ...this.evento };
-    } else {
-      this.formTitle = 'Criar Evento';
-      this.formData = this.createEmptyRequest();
-    }
+    // Como esta é a tela de cadastro, apenas inicializamos um formulário vazio.
+    this.formTitle = 'Criar Evento';
+    this.formData = this.createEmptyRequest();
   }
 
-  // Função para criar um objeto de requisição vazio
   private createEmptyRequest(): EventoRequest {
     return {
       nome: '',
@@ -55,16 +46,31 @@ export class EventoCadastrar {
       nomeTipoLogradouro: 'Rua' // Valor padrão
     };
   }
-  
-  // Manipulador de submissão do formulário
+
   onSubmit(form: NgForm): void {
-    if (form.valid) {
-      this.save.emit(this.formData);
+    if (!form.valid || this.isSubmitting) {
+      return;
     }
+
+    this.isSubmitting = true;
+    this.errorMessage = null;
+
+    this.eventoService.criarEvento(this.formData).subscribe({
+      next: (response) => {
+        console.log('Evento criado com sucesso:', response);
+        alert('Evento criado com sucesso!');
+        this.isSubmitting = false;
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        console.error('Erro ao criar evento:', err);
+        this.errorMessage = `Ocorreu um erro ao criar o evento: ${err.error?.message || 'Verifique os dados e tente novamente.'}`;
+        this.isSubmitting = false;
+      }
+    });
   }
 
-  // Manipulador para o botão cancelar
   onCancel(): void {
-    this.cancel.emit();
+    this.router.navigate(['/home']);
   }
 }

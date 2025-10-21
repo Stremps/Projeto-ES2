@@ -52,7 +52,7 @@ export const routes: Routes = [
         canActivate: [authGuard]
     },
     {
-        path: 'criar-palestra',
+        path: 'criar-palestra/:eventoId',
         component: PalestraCadastrar,
         canActivate: [authGuard]
     },

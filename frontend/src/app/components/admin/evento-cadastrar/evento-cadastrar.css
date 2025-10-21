@@ -4,7 +4,7 @@
   background: rgba(19, 74, 74, 0.95);
   color: white;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 2rem auto;
   border-radius: 12px;
 }
 
@@ -110,6 +110,26 @@ textarea.input-field {
   background-color: #c0392b;
   transform: translateY(-2px);
 }
+
+/* Estilo para a mensagem de erro */
+.error-message {
+  background-color: #e74c3c; /* Vermelho */
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Botão desabilitado */
+.action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 
 /* Responsividade */
 @media (max-width: 768px) {

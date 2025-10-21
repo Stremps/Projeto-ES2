@@ -3,6 +3,11 @@
     <h1 class="form-title">{{ formTitle }}</h1>
   </div>
 
+  <!-- Exibição de Erro -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
   <form #eventoForm="ngForm" (ngSubmit)="onSubmit(eventoForm)" class="info-grid-compact">
     <!-- Nome do Evento -->
     <div class="info-item-compact full-width">
@@ -68,8 +73,10 @@
 
     <!-- Botões -->
     <div class="form-actions">
-      <button type="submit" class="action-button save-button" [disabled]="!eventoForm.valid">Salvar</button>
-      <button type="button" class="action-button cancel-button" (click)="onCancel()">Cancelar</button>
+      <button type="submit" class="action-button save-button" [disabled]="!eventoForm.valid || isSubmitting">
+        {{ isSubmitting ? 'Salvando...' : 'Salvar' }}
+      </button>
+      <button type="button" class="action-button cancel-button" (click)="onCancel()" [disabled]="isSubmitting">Cancelar</button>
     </div>
   </form>
 </div>
