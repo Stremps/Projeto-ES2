@@ -26,6 +26,9 @@ interface JwtPayload {
 })
 export class Auth {
   private readonly TOKEN_KEY = 'auth_token';
+
+  private readonly ADMIN_EMAIL = 'admin@sistema.com';
+
   // A URL base da API. Ajuste se necessário.
   private readonly API_URL = 'http://localhost:8081/api/auth';
 
@@ -35,10 +38,9 @@ export class Auth {
   // BehaviorSubject para emitir o estado de login (logado/deslogado)
   private loggedIn = new BehaviorSubject<boolean>(this.isUserLoggedIn());
   
-  // NOVO: BehaviorSubject para o cargo do usuário
-  private userRole = new BehaviorSubject<string | null>(this.getUserRole());
-  public userRole$ = this.userRole.asObservable();
-
+  // ATUALIZADO: BehaviorSubject para o status de admin
+  private isAdmin = new BehaviorSubject<boolean>(this.isUserAdmin());
+  public isAdmin$ = this.isAdmin.asObservable();
 
   // Método para fazer login
   login(credentials: { email: string, senha: string }): Observable<JwtResponse> {
@@ -48,7 +50,7 @@ export class Auth {
           if (response && response.token) {
             this.setToken(response.token); // Armazena o token
             this.loggedIn.next(true); // Emite que o usuário está logado
-            this.userRole.next(this.getUserRole()); // ATUALIZADO: Emite o cargo do usuário
+            this.isAdmin.next(this.isUserAdmin()); // ATUALIZADO: Emite o novo status de admin
           }
         })
       );
@@ -102,7 +104,7 @@ export class Auth {
   logout(): void {
     localStorage.removeItem(this.TOKEN_KEY);
     this.loggedIn.next(false); // Emite que o usuário foi deslogado
-    this.userRole.next(null); // ATUALIZADO: Limpa o cargo do usuário
+    this.isAdmin.next(false); // ATUALIZADO: Limpa o status de admin
     this.router.navigate(['/login']); // Redireciona para a página de login
   }
 
@@ -120,6 +122,12 @@ export class Auth {
       console.error("Erro ao decodificar o token:", e);
       return null;
     }
+  }
+
+  // NOVO: Método para obter o email (subject) do token
+  getUserEmail(): string | null {
+    const decodedToken = this.getDecodedToken();
+    return decodedToken ? decodedToken.sub : null;
   }
 
   // NOVO: Método para obter o cargo (role) do token
@@ -145,9 +153,12 @@ export class Auth {
     return null;
   }
 
-  // NOVO: Método para verificar se o usuário é ADMIN
+  // ATUALIZADO: Método para verificar se o usuário é ADMIN pelo e-mail
   isUserAdmin(): boolean {
-    const role = this.getUserRole();
-    return role === 'ADMIN';
+    // Conforme solicitado, a verificação de admin é feita pelo e-mail contido no token.
+    // Uma abordagem mais robusta seria verificar um 'role' ou 'authority' no token,
+    // mas isso depende do que o backend envia.
+    const email = this.getUserEmail();
+    return email === this.ADMIN_EMAIL;
   }
 }

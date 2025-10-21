@@ -66,8 +66,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   private eventoService = inject(EventoService);
   private router = inject(Router);
 
-  // Subscription para o cargo do usuário
-  private roleSubscription: Subscription | undefined;
+  // Subscription para o status de admin do usuário
+  private adminStatusSubscription: Subscription | undefined;
 
   // Lista de eventos que será preenchida pela API
   allEvents: EventData[] = [];
@@ -75,15 +75,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // ATUALIZADO: Verifica se o usuário é admin de forma reativa
-    this.roleSubscription = this.authService.userRole$.subscribe(role => {
-      this.isAdmin = role === 'ADMIN';
+    this.adminStatusSubscription = this.authService.isAdmin$.subscribe(isAdmin => {
+      this.isAdmin = isAdmin;
     });
     this.loadEvents();
   }
 
   ngOnDestroy(): void {
     // Limpa a subscription para evitar memory leaks
-    this.roleSubscription?.unsubscribe();
+    this.adminStatusSubscription?.unsubscribe();
   }
 
   // Método para carregar os eventos da API
