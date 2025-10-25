@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tipos-participacao")
-@CrossOrigin(origins = "*")
+
 @PreAuthorize("hasAuthority('ADMIN')") // Apenas ADMIN pode gerenciar
 public class TipoParticipacaoController {
 

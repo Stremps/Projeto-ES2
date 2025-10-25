@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/palestras")
-@CrossOrigin(origins = "*")
+
 public class PalestraController {
 
     // Injeção de todas as dependências necessárias

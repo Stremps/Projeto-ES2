@@ -7,7 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tipo-logradouros")
-@CrossOrigin(origins = "*")
+
 public class TipoLogradouroController {
     private final TipoLogradouroRepository tipoLogradouroRepository;
 

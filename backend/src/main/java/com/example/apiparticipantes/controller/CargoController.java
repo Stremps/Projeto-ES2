@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/cargos")
-@CrossOrigin(origins = "*") // opcional, caso use frontend separado
+ // opcional, caso use frontend separado
 public class CargoController {
 
     @GetMapping

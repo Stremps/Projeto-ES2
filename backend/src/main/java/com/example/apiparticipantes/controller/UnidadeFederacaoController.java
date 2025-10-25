@@ -7,7 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/unidades-federacao")
-@CrossOrigin(origins = "*")
+
 public class UnidadeFederacaoController {
 
     private final UnidadeFederacaoRepository ufRepository;

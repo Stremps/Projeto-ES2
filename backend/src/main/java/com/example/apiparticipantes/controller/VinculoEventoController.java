@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/vinculos-evento")
-@CrossOrigin(origins = "*")
+
 public class VinculoEventoController {
 
     private final VinculoEventoRepository vinculoEventoRepository;

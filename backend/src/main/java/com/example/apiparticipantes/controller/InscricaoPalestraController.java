@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/inscricoes-palestra")
-@CrossOrigin(origins = "*")
+
 public class InscricaoPalestraController {
 
     private final InscricaoPalestraRepository inscricaoRepository;

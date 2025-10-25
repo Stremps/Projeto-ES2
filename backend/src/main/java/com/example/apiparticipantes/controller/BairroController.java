@@ -7,7 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/bairros")
-@CrossOrigin(origins = "*")
+
 public class BairroController {
 
     private final BairroRepository bairroRepository;
