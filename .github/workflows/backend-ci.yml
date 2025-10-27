@@ -1,0 +1,47 @@
+# Nome do Workflow que vai aparecer no Github Actions
+name: Backend CI - Spring Boot Build and Test
+
+# Define os eventos que disparam este workflow
+on:
+  push:
+    branches: [ developer ]
+
+  pull_request:
+    branches: [ developer ]
+
+  workflow_dispatch:
+
+# Define os trabalhos
+jobs:
+  build-and-test-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Passo 1: Checkout do código
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Passo 2: Configurar o JDK 17
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+      
+      # Passo 3: Tornar o Maven Wrapper (mvnw) executável
+      - name: Make Maven Wrapper executable
+        run: chmod +x mvnw
+        working-directory: ./backend
+
+      # Passo 4: Construir com Mavem Wrapper
+      - name: Build with Maven Wrapper
+        run: ./mvnw package --batch-mode
+        working-directory: ./backend
+
+      # Passo 5: Listar conteúdo da pasta target (para veririficar o JAR)
+      - name: List target directory contents
+        run: ls -l target/
+        workflow-directory: ./backend
+        if: always()
+      
