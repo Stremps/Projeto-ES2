@@ -42,6 +42,6 @@ jobs:
       # Passo 5: Listar conteúdo da pasta target (para veririficar o JAR)
       - name: List target directory contents
         run: ls -l target/
-        workflow-directory: ./backend
+        working-directory: ./backend
         if: always()
       
