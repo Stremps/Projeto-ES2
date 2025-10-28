@@ -1,0 +1,48 @@
+# Nome do Workflow que vai aparecer no Github Actions
+name: Frontend CI - Angular Build and Test
+
+# Define os eventos que disparam este workflow
+on:
+  push:
+    branches: [ developer, main ]
+
+  pull_request:
+    branches: [ developer, main ]
+  
+  workflow_dispatch:
+
+# Define os trabalhos
+jobs:
+  build-and-test-frontend:
+    runs-on: ubuntu-latest
+
+    # Passos executados dentro do job
+    steps:
+      # Passo 1: Checkout do código
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Passo 2: Configurar o Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Pareado ao que é usado no dockerfile
+          cache: 'npm' # Habilita o gerenciador de pacotes
+          cache-dependency-path: frontend/package-lock.json # Onde o cache deve procurar o arquivo de lock
+
+      # Passo 3: Instalar Dependências (npm ci)
+      - name: Install dependencies
+        run: npm ci # Usamos ci (Clean Install) ao invés de somente install
+        working-directory: ./frontend
+
+      # Passo 4: Executar testes unitários
+      - name: Run unit tests
+        # '--watch=false' diz ao Angular para rodar os testes apenas uma vez e sair
+        # --browsers=ChromeHeadless diz ao Angular para usar o Chrome em modo sem interface gráfica
+        run: npm test -- --watch=false --browsers=ChromeHeadless
+        working-directory: ./frontend
+
+      # Passo 5: Executar Build de Produção
+      - name: Build for production
+        run: npm run build
+        working-directory: ./frontend
