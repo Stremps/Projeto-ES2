@@ -36,7 +36,7 @@ jobs:
 
       # Passo 4: Construir com Mavem Wrapper
       - name: Build with Maven Wrapper
-        run: ./backend/mvnw package --batch-mode -f backend/pom.xml
+        run: ./backend/mvnw package -DskipTests --batch-mode -f backend/pom.xml # -DskipTests para não rodar os testes que precisam do BD
 
       # Passo 5: Listar conteúdo da pasta target (para veririficar o JAR)
       - name: List target directory contents
