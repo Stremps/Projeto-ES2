@@ -18,22 +18,25 @@ jobs:
 
     # Container de serviço para o job
     services:
-      image: postgres:15
-      
-      # Variáveis de ambiente para configurar o container postgres
-      env:
-        POSTGRES_DB: ${{ secrets.TEST_DB_NAME }}
-        POSTGRES_USER: ${{ secrets.TEST_DB_USERNAME }}
-        POSTGRES_PASSWORD: ${{ secrets.TST_DB_PASSWORD }}
 
-      # Verificação se a porta 5432 está aceitando conexões TCP
-      ports:
-        - 5432/tcp
-      options: >-
-        --health-cmd pg_isready
-        --health-intreval 10s
-        --health-timeout 5s
-        --health-retires 5
+      # Hostname do serviço
+      postgres:
+        image: postgres:15
+        
+        # Variáveis de ambiente para configurar o container postgres
+        env:
+          POSTGRES_DB: ${{ secrets.TEST_DB_NAME }}
+          POSTGRES_USER: ${{ secrets.TEST_DB_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
+
+        # Verificação se a porta 5432 está aceitando conexões TCP
+        ports:
+          - 5432/tcp
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       # Passo 1: Checkout do código (clona o repositório para dentro do runner)
@@ -59,7 +62,7 @@ jobs:
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${{ secrets.TEST_DB_NAME }}
           SPRING_DATASOURCE_USERNAME: ${{ secrets.TEST_DB_USERNAME }}
-          SPRING_DATASOURCE_PASSWORD: ${{ secrets.TST_DB_PASSWORD }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
 
         run: ./backend/mvnw package --batch-mode -f backend/pom.xml
 
