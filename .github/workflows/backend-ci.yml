@@ -63,7 +63,7 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${{ secrets.TEST_DB_NAME }}
           SPRING_DATASOURCE_USERNAME: ${{ secrets.TEST_DB_USERNAME }}
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
-
+          SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect # Dialeto específico para PostgresSQL
         run: ./backend/mvnw package --batch-mode -f backend/pom.xml
 
       # Passo 5: Listar conteúdo da pasta target (para veririficar o JAR)
