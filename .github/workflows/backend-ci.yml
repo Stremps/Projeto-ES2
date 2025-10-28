@@ -4,10 +4,10 @@ name: Backend CI - Spring Boot Build and Test
 # Define os eventos que disparam este workflow
 on:
   push:
-    branches: [ developer ]
+    branches: [ developer, main ]
 
   pull_request:
-    branches: [ developer ]
+    branches: [ developer, main ]
 
   workflow_dispatch:
 
@@ -16,8 +16,27 @@ jobs:
   build-and-test-backend:
     runs-on: ubuntu-latest
 
+    # Container de serviço para o job
+    services:
+      image: postgres:15
+      
+      # Variáveis de ambiente para configurar o container postgres
+      env:
+        POSTGRES_DB: ${{ secrets.TEST_DB_NAME }}
+        POSTGRES_USER: ${{ secrets.TEST_DB_USERNAME }}
+        POSTGRES_PASSWORD: ${{ secrets.TST_DB_PASSWORD }}
+
+      # Verificação se a porta 5432 está aceitando conexões TCP
+      ports:
+        - 5432/tcp
+      options: >-
+        --health-cmd pg_isready
+        --health-intreval 10s
+        --health-timeout 5s
+        --health-retires 5
+
     steps:
-      # Passo 1: Checkout do código
+      # Passo 1: Checkout do código (clona o repositório para dentro do runner)
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -36,10 +55,25 @@ jobs:
 
       # Passo 4: Construir com Mavem Wrapper
       - name: Build with Maven Wrapper
-        run: ./backend/mvnw package -DskipTests --batch-mode -f backend/pom.xml # -DskipTests para não rodar os testes que precisam do BD
+        
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${{ secrets.TEST_DB_NAME }}
+          SPRING_DATASOURCE_USERNAME: ${{ secrets.TEST_DB_USERNAME }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.TST_DB_PASSWORD }}
+
+        run: ./backend/mvnw package --batch-mode -f backend/pom.xml
 
       # Passo 5: Listar conteúdo da pasta target (para veririficar o JAR)
       - name: List target directory contents
         run: ls -l backend/target/
         if: always()
+
+      # Passo 6: Upload do Artefato JAR (!! VER MELHOR COM A ESCALA DO PROJETO !!)
+      #- name: Upload JAR artifact
+      #  uses: actions/upload-artifact@v4
+      #  if: success()
+      #  with:
+      #    name: backend-jar
+      #    path: backend/target/apiparticipantes-*.jar
+      #    retention-days: 7
       
