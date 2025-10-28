@@ -40,7 +40,6 @@ Thumbs.db
 target/
 !**/src/main/**/target/
 !**/src/test/**/target/
-.mvn/
 *.jar
 *.war
 hs_err_pid*
