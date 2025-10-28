@@ -29,9 +29,9 @@ jobs:
           POSTGRES_USER: ${{ secrets.TEST_DB_USERNAME }}
           POSTGRES_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
 
-        # Verificação se a porta 5432 está aceitando conexões TCP
+        # Mapeamento explícito da porta interna 5432 para uma porta no host (runner)
         ports:
-          - 5432/tcp
+          - 5432:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -60,7 +60,7 @@ jobs:
       - name: Build with Maven Wrapper
         
         env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${{ secrets.TEST_DB_NAME }}
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:${{ job.services.postgres.ports['5432'] }}/${{ secrets.TEST_DB_NAME }}
           SPRING_DATASOURCE_USERNAME: ${{ secrets.TEST_DB_USERNAME }}
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
           SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect # Dialeto específico para PostgresSQL
