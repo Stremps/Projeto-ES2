@@ -4,7 +4,7 @@ import { PaginaInicial } from './pagina-inicial';
 
 describe('PaginaInicial', () => {
   let component: PaginaInicial;
-  let fixture: ComponentFixture<Home>;
+  let fixture: ComponentFixture<PaginaInicial>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

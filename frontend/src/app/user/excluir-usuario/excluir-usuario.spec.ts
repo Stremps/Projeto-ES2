@@ -26,7 +26,7 @@ describe('ExcluirUsuario', () => {
   
   it('should require a password before calling deleteAccount', () => {
     spyOn(component, 'deleteAccount');
-    component.confirmationPassword = '';
+    component.confirmationText = '';
     
     // Tenta submeter o formulário sem senha
     const form = fixture.nativeElement.querySelector('form');
