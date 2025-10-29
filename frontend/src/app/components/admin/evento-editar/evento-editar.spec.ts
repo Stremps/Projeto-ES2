@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { EventoEditar } from './evento-editar';
 
 describe('EventoEditar', () => {
@@ -8,9 +7,8 @@ describe('EventoEditar', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EventoEditar]
-    })
-    .compileComponents();
+      imports: [EventoEditar],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EventoEditar);
     component = fixture.componentInstance;

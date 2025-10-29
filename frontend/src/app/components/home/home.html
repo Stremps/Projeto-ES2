@@ -59,8 +59,20 @@
   <!-- DETALHES DO EVENTO -->
   @if (currentView === 'event-details' && selectedEvent) {
     <div class="event-details-container">
-      <app-evento [event]="selectedEvent"></app-evento>
-      
+      <div class="event-info-block">
+        <div class="evento-inner">
+          <app-evento [event]="selectedEvent"></app-evento>
+        </div>      
+      @if (isAdmin) {
+        <button 
+          class="create-event-btn" 
+          [routerLink]="['/editar-evento', selectedEvent.id]"
+          routerLinkActive="active">
+          Editar Evento
+        </button>
+      }
+      </div>
+
       <div class="navigation-footer">
         <button class="nav-btn-footer left" (click)="backToList()">
           <span class="arrow">←</span> Voltar para a lista

@@ -295,6 +295,30 @@
   padding: 2rem;
 }
 
+.event-info-block {
+  position: relative;
+  min-height: 340px; /* ajuste conforme necessário */
+  padding-bottom: 3rem; /* para caixa do botão não sobrepor conteúdo */
+}
+
+.evento-inner {
+  padding-bottom: 2.5rem; /* espaço extra para o botão não sobrepor informação */
+}
+
+/* NOVO ESTILO: Aplica o posicionamento absoluto ao botão de edição REAL (que usa a classe create-event-btn) */
+.event-info-block .create-event-btn { 
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 99;
+  /* Herda estilos de cor/tamanho de .create-event-btn */
+}
+
+.event-info-block .create-event-btn:hover {
+  transform: scale(1.05);
+}
+
+
 @keyframes fadeIn {
   from {
     opacity: 0;

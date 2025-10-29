@@ -9,6 +9,7 @@ import { ExcluirUsuario } from './user/excluir-usuario/excluir-usuario';
 import { authGuard } from './guards/auth-guard';
 import { EventoCadastrar } from './components/admin/evento-cadastrar/evento-cadastrar';
 import { PalestraCadastrar } from './components/admin/palestra-cadastrar/palestra-cadastrar';
+import { EventoEditar } from './components/admin/evento-editar/evento-editar';
 
 export const routes: Routes = [
     {
@@ -55,6 +56,11 @@ export const routes: Routes = [
         path: 'criar-palestra/:eventoId',
         component: PalestraCadastrar,
         canActivate: [authGuard]
+    },
+    {
+        path: 'editar-evento/:id',
+        component: EventoEditar,
+        canActivate: [authGuard] 
     },
     {
         path: '**', redirectTo: 'pagina-inicial', pathMatch: 'full'
