@@ -26,7 +26,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # Pareado ao que é usado no dockerfile
+          node-version: '22.20' # Pareado ao que é usado no dockerfile
           cache: 'npm' # Habilita o gerenciador de pacotes
           cache-dependency-path: frontend/package-lock.json # Onde o cache deve procurar o arquivo de lock
 
@@ -38,7 +38,7 @@ jobs:
       # Passo 4: Executar testes unitários
       - name: Run unit tests
         # '--watch=false' diz ao Angular para rodar os testes apenas uma vez e sair
-        # --browsers=ChromeHeadless diz ao Angular para usar o Chrome em modo sem interface gráfica
+        # '--browsers=ChromeHeadless' diz ao Angular para usar o Chrome em modo sem interface gráfica
         run: npm test -- --watch=false --browsers=ChromeHeadless
         working-directory: ./frontend
 
