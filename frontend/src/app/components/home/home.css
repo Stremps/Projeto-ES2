@@ -318,6 +318,25 @@
   transform: scale(1.05);
 }
 
+.delete-event-btn {
+  background: linear-gradient(135deg, #ff4c4c, #cc0000); /* Vermelho */
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-left: 1rem;
+}
+
+.delete-event-btn:hover {
+  transform: scale(1.05);
+}
+
 
 @keyframes fadeIn {
   from {

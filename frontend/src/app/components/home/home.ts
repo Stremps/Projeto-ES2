@@ -113,6 +113,27 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
+  onDeleteEvent(): void {
+    if (!this.selectedEvent) return;
+
+    const confirmed = confirm(`Tem certeza que deseja deletar o evento "${this.selectedEvent.title}"?`);
+    if (!confirmed) return;
+
+    this.eventoService.excluirEvento(this.selectedEvent.id).subscribe({
+      next: () => {
+        alert('Evento deletado com sucesso!');
+        this.selectedEvent = null;
+        this.loadEvents(); // recarrega a lista de eventos atualizada
+        this.currentView = 'list'; // volta para a lista de eventos
+      },
+      error: (err) => {
+        alert('Erro ao deletar o evento. Tente novamente mais tarde.');
+        console.error(err);
+      }
+    });
+  }
+
+
   // Método auxiliar para mapear os dados
   private mapDtoToEventData(dto: EventoResponseDto, index: number): EventData {
     return {
@@ -186,4 +207,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   logout(): void {
     this.authService.logout();
   }
+
+
 }
