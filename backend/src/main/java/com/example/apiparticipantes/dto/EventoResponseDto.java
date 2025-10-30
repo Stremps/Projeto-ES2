@@ -9,6 +9,8 @@ public class EventoResponseDto {
     private String nome;
     private LocalDate dataInicio;
     private LocalTime horaInicio;
+    private LocalDate dataFim;
+    private LocalTime horaFim;
     private String descricao;
     private PalestranteResponseDto criador;
     private EnderecoResponseDto endereco;
@@ -24,6 +26,8 @@ public class EventoResponseDto {
                 evento.getCriador().getNomeParticipante()
         );
         this.endereco = new EnderecoResponseDto(evento.getEndereco());
+        this.dataFim = evento.getDataFim();
+        this.horaFim = evento.getHoraFim();
     }
 
     // Getters e Setters
@@ -51,12 +55,28 @@ public class EventoResponseDto {
         this.dataInicio = dataInicio;
     }
 
+    public LocalDate getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(LocalDate dataFim) {
+        this.dataFim = dataFim;
+    }
+
     public LocalTime getHoraInicio() {
         return horaInicio;
     }
 
     public void setHoraInicio(LocalTime horaInicio) {
         this.horaInicio = horaInicio;
+    }
+
+    public LocalTime getHoraFim() {
+        return horaFim;
+    }
+
+    public void setHoraFim(LocalTime horaFim) {
+        this.horaFim = horaFim;
     }
 
     public String getDescricao() {

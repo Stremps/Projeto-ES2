@@ -94,11 +94,9 @@ public class EventoController {
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<EventoResponseDto> editarEvento(@PathVariable Long id, @RequestBody EventoRequest request) {
-        // 1. Busca o evento existente no banco de dados
         Evento eventoExistente = eventoRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento não encontrado."));
 
-        // 2. Atualiza os dados do evento com as informações da requisição
         eventoExistente.setNome(request.getNome());
         eventoExistente.setDataInicio(request.getDataInicio());
         eventoExistente.setDataFim(request.getDataFim());
@@ -106,16 +104,28 @@ public class EventoController {
         eventoExistente.setHoraFim(request.getHoraFim());
         eventoExistente.setDescricao(request.getDescricao());
 
-        // A lógica de endereço pode ser mais complexa (atualizar ou criar novo).
-        // Por simplicidade, vamos apenas atualizar os campos do endereço existente.
-        Endereco endereco = eventoExistente.getEndereco();
-        endereco.setCep(request.getCep());
-        // ... atualize os outros campos do endereço se necessário
+        UnidadeFederacao uf = unidadeFederacaoRepository.findById(request.getSiglaUf()).orElseGet(() -> unidadeFederacaoRepository.save(new UnidadeFederacao(request.getSiglaUf(), request.getSiglaUf())));
+        Cidade cidade = cidadeRepository.findByNomeCidade(request.getNomeCidade()).orElseGet(() -> cidadeRepository.save(new Cidade(UUID.randomUUID().toString(), request.getNomeCidade(), uf)));
+        Bairro bairro = bairroRepository.findByNomeBairro(request.getNomeBairro()).orElseGet(() -> bairroRepository.save(new Bairro(UUID.randomUUID().toString(), request.getNomeBairro())));
+        TipoLogradouro tipoLogradouro = tipoLogradouroRepository.findByNomeTipoLogradouro(request.getNomeTipoLogradouro()).orElseGet(() -> tipoLogradouroRepository.save(new TipoLogradouro(UUID.randomUUID().toString(), request.getNomeTipoLogradouro())));
+        Logradouro logradouro = logradouroRepository.findByNomeLogradouro(request.getNomeLogradouro()).orElseGet(() -> logradouroRepository.save(new Logradouro(UUID.randomUUID().toString(), request.getNomeLogradouro(), tipoLogradouro)));
 
-        // 3. Salva o evento atualizado
+        Endereco endereco = eventoExistente.getEndereco();
+
+
+        endereco.setCep(request.getCep());
+        endereco.setComplemento(request.getComplemento());
+        endereco.setNumero(request.getNumero());
+        endereco.setBairro(bairro);
+        endereco.setCidade(cidade);
+        endereco.setLogradouro(logradouro);
+
+
+        enderecoRepository.save(endereco);
+
+
         Evento eventoSalvo = eventoRepository.save(eventoExistente);
 
-        // 4. Retorna a resposta com o DTO
         return ResponseEntity.ok(new EventoResponseDto(eventoSalvo));
     }
 

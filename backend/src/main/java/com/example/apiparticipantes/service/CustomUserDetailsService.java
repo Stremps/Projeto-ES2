@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+// Adicione esta importação para a nova exceção
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +23,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Participante p = participanteRepository.findByEmailParticipante(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Participante não encontrado com email: " + username));
+
+        if (!p.isAtivo()) {
+            // Lança uma exceção específica para contas desativadas
+            throw new DisabledException("Utilizador está inativo.");
+        }
+        // --- FIM DA VERIFICAÇÃO ---
 
         return User.withUsername(p.getEmailParticipante())
                 .password(p.getSenhaParticipante())

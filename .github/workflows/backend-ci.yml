@@ -57,13 +57,32 @@ jobs:
         working-directory: ./backend
 
       # Passo 4: Construir com Mavem Wrapper
-      - name: Build with Maven Wrapper
-        
+      - name: Build and Test with Maven Wrapper
         env:
+          # --- Variáveis da Base de Dados (Para o Service Container) ---
+          # Conecta-se como o 'testuser' à 'testdb'
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:${{ job.services.postgres.ports['5432'] }}/${{ secrets.TEST_DB_NAME }}
           SPRING_DATASOURCE_USERNAME: ${{ secrets.TEST_DB_USERNAME }}
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
-          SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect # Dialeto específico para PostgresSQL
+          SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+
+          # --- Variáveis de JPA (Usando valores de Teste) ---
+          # Usa 'update' e o schema 'public', não 'schema_es2'
+          SPRING_JPA_HIBERNATE_DDL_AUTO: ${{ secrets.SPRING_JPA_HIBERNATE_DDL_AUTO }}
+          SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA: ${{ secrets.SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA }}
+
+          # --- Variáveis de Email (Usando valores de Teste/Dummy) ---
+          SPRING_MAIL_HOST: ${{ secrets.SPRING_MAIL_HOST }}
+          SPRING_MAIL_PORT: ${{ secrets.SPRING_MAIL_PORT }}
+          SPRING_MAIL_USERNAME: ${{ secrets.SPRING_MAIL_USERNAME }}
+          SPRING_MAIL_PASSWORD: ${{ secrets.SPRING_MAIL_PASSWORD }}
+          SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: ${{ secrets.SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH }}
+          SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: ${{ secrets.SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE }}
+
+          # --- Variáveis de JWT (Usando valores de Teste) ---
+          APP_JWT_SECRET: ${{ secrets.APP_JWT_SECRET }}
+          APP_JWT_EXPIRATION_MS: ${{ secrets.APP_JWT_EXPIRATION_MS }}
+
         run: ./backend/mvnw package --batch-mode -f backend/pom.xml
 
       # Passo 5: Listar conteúdo da pasta target (para veririficar o JAR)

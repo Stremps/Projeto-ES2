@@ -55,6 +55,7 @@ public class VinculoEventoController {
         novoVinculo.setEvento(evento);
         novoVinculo.setTipoParticipacao(tipoParticipacao);
         novoVinculo.setDataInicio(evento.getDataInicio());
+        novoVinculo.setDataFim(evento.getDataFim());
 
         VinculoEvento vinculoSalvo = vinculoEventoRepository.save(novoVinculo);
 

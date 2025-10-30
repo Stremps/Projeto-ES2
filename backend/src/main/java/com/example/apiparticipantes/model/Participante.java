@@ -24,6 +24,9 @@ public class Participante {
     @Column(name = "senha_participante", nullable = false)
     private String senhaParticipante;
 
+    @Column(name = "ativo", nullable = false)
+    private boolean ativo = true; // Aqui é o DELETE por meio da Lógica de exclusão (o mais usado hoje em dia nas empresas). Por padrão, o participante está ativo
+
     @Enumerated(EnumType.STRING)
     @Column(name = "cargo", nullable = false, length = 20)
     private Cargo cargo; // ADMIN, ALUNO, PROFESSOR, EXTERNO
@@ -42,6 +45,7 @@ public class Participante {
 
     public Participante() {
         this.idParticipante = UUID.randomUUID().toString();
+        this.ativo = true; // Assume que os novos part. sejam ativos
     }
 
     public List<Evento> getEventosCriados() {
@@ -114,5 +118,13 @@ public class Participante {
 
     public void setInscricoesPalestras(List<InscricaoPalestra> inscricoesPalestras) {
         this.inscricoesPalestras = inscricoesPalestras;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 }

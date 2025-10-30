@@ -6,39 +6,50 @@ import com.example.apiparticipantes.service.CustomUserDetailsService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod; // Importar HttpMethod
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity; // Importar EnableWebSecurity
-import org.springframework.security.config.http.SessionCreationPolicy; // Importar SessionCreationPolicy
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity; // <-- ADICIONADO
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration; // Importar CorsConfiguration
-import org.springframework.web.cors.CorsConfigurationSource; // Importar CorsConfigurationSource
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource; // Importar UrlBasedCorsConfigurationSource
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.http.HttpMethod;
 
-import java.util.Arrays; // Importar Arrays
-import java.util.List; // Importar List
+import com.example.apiparticipantes.service.TokenBlacklistService;
+
+// Imports de CORS adicionados do arquivo funcional
+import org.springframework.web.cors.CorsConfiguration; // <-- ADICIONADO
+import org.springframework.web.cors.CorsConfigurationSource; // <-- ADICIONADO
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource; // <-- ADICIONADO
+import java.util.Arrays; // <-- ADICIONADO
 
 @Configuration
-@EnableWebSecurity // Adicionar esta anotação pode ajudar
+@EnableWebSecurity // <-- ADICIONADO (Importante para habilitar a segurança web)
+@EnableMethodSecurity // <-- MANTIDO (Bom para @PreAuthorize)
 public class SecurityConfig {
 
     private final CustomUserDetailsService userDetailsService;
     private final JwtTokenProvider tokenProvider;
+    private final TokenBlacklistService tokenBlacklistService;
 
-    public SecurityConfig(CustomUserDetailsService userDetailsService, JwtTokenProvider tokenProvider) {
+    public SecurityConfig(CustomUserDetailsService userDetailsService,
+                          JwtTokenProvider tokenProvider,
+                          TokenBlacklistService tokenBlacklistService) {
         this.userDetailsService = userDetailsService;
         this.tokenProvider = tokenProvider;
+        this.tokenBlacklistService = tokenBlacklistService; // <-- Lógica nova mantida
     }
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter(tokenProvider, userDetailsService);
+        // Usa a nova implementação com blacklist
+        return new JwtAuthenticationFilter(tokenProvider, userDetailsService, tokenBlacklistService);
     }
 
     @Bean
@@ -59,6 +70,7 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
+    // <-- BEAN DE CORS ADICIONADO DO ARQUIVO FUNCIONAL -->
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -78,34 +90,39 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // HABILITA A CONFIGURAÇÃO CORS PRIMEIRO
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                // HABILITA A CONFIGURAÇÃO CORS (como no arquivo funcional)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // <-- ADICIONADO
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Permite requisições OPTIONS ANTES de qualquer outra regra
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        // Rotas Públicas
+                        // Permite requisições OPTIONS (essencial para CORS pre-flight)
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // <-- ADICIONADO
+
+                        // 1. Rotas Públicas (mantidas do 'novo')
                         .requestMatchers("/api/auth/**").permitAll()
-                        // Rotas Autenticadas (exemplos mantidos)
+                        .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/logout").authenticated() // Lógica nova mantida
+                        .requestMatchers(HttpMethod.GET, "/api/address/lookup/**").permitAll() // Lógica nova mantida
+
+                        // 2. Rotas Específicas para Usuários Autenticados (mantidas do 'novo')
+                        .requestMatchers(HttpMethod.GET,"/api/eventos").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/vinculos-evento/*/inscrever-se").authenticated()
                         .requestMatchers("/api/inscricoes-palestra/**").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/tipos-participacao").authenticated() // GET para listar tipos pode ser autenticado ou publico, depende da regra
+                        .requestMatchers(HttpMethod.GET, "/api/tipos-participacao").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/palestras/**").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/eventos").authenticated() // Permitir GET de eventos para usuários logados
-                        .requestMatchers(HttpMethod.GET, "/api/eventos/**").authenticated() // Permitir GET de evento específico para usuários logados
+                        .requestMatchers(HttpMethod.GET, "/api/participantes/me").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/participantes/me").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/participantes/me").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/participantes/*").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/participantes/*").authenticated()
 
-                        // Rotas de Admin (manter PUT, POST, DELETE etc. apenas para ADMIN)
-                        .requestMatchers(HttpMethod.POST, "/api/eventos").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/eventos/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/eventos/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/palestras").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/palestras/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/palestras/**").hasAuthority("ADMIN")
-                        .requestMatchers("/api/tipos-participacao/**").hasAuthority("ADMIN") // POST, PUT, DELETE de tipos
-                        .requestMatchers(HttpMethod.GET, "/api/vinculos-evento").hasAuthority("ADMIN") // Listar todos os vinculos
+                        // 3. Rotas Gerais para ADMIN (mantidas do 'novo')
+                        .requestMatchers("/api/eventos/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/palestras/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/tipos-participacao/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/vinculos-evento/**").hasAuthority("ADMIN")
 
-                        // Qualquer outra rota exige autenticação
+                        // 4. Qualquer outra rota não especificada acima exige autenticação
                         .anyRequest().authenticated()
                 );
 
