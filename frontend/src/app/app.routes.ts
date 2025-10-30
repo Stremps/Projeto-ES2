@@ -10,6 +10,7 @@ import { authGuard } from './guards/auth-guard';
 import { EventoCadastrar } from './components/admin/evento-cadastrar/evento-cadastrar';
 import { PalestraCadastrar } from './components/admin/palestra-cadastrar/palestra-cadastrar';
 import { EventoEditar } from './components/admin/evento-editar/evento-editar';
+import { CargoCadastrar } from './components/admin/cargo-cadastrar/cargo-cadastrar';
 
 export const routes: Routes = [
     {
@@ -61,6 +62,11 @@ export const routes: Routes = [
         path: 'editar-evento/:id',
         component: EventoEditar,
         canActivate: [authGuard] 
+    },
+    {
+        path: 'cargos', // Nova rota
+        component: CargoCadastrar, // Usa o seu componente
+        canActivate: [authGuard],
     },
     {
         path: '**', redirectTo: 'pagina-inicial', pathMatch: 'full'

@@ -1,0 +1,58 @@
+<!-- Container principal do formulário -->
+<div class="form-container">
+  <div class="form-card">
+    <h2 class="form-title">Adicionar Novo Cargo</h2> <!-- Título simplificado -->
+    <p class="form-subtitle">Digite o nome do novo cargo que deseja adicionar ao sistema.</p> <!-- Subtítulo simplificado -->
+
+    <!-- Formulário para adicionar novo cargo -->
+    <!-- Adiciona novalidate para usar a validação customizada -->
+    <form #cargoForm="ngForm" (ngSubmit)="onSubmit(cargoForm)" novalidate>
+      <div class="form-group">
+        <label for="nomeCargo">Nome do Novo Cargo:</label>
+        <input
+          type="text"
+          id="nomeCargo"
+          name="nomeCargo"
+          class="form-control"
+          placeholder="Ex: VISITANTE"
+          [(ngModel)]="novoCargo.nome"
+          required
+          #nomeCargoInput="ngModel"
+          [disabled]="isLoading()"
+          [class.is-invalid]="nomeCargoInput.invalid && (nomeCargoInput.dirty || nomeCargoInput.touched)"
+          aria-describedby="nomeCargoHelp"
+        />
+        <!-- Mensagem de validação local -->
+        @if (nomeCargoInput.invalid && (nomeCargoInput.dirty || nomeCargoInput.touched)) {
+          <div id="nomeCargoHelp" class="invalid-feedback">
+            @if (nomeCargoInput.errors?.['required']) {
+              O nome do cargo é obrigatório.
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Mensagens de Feedback Globais (Erro ou Sucesso da API) -->
+      @if (errorMessage()) {
+        <div class="alert alert-danger">{{ errorMessage() }}</div>
+      }
+      @if (successMessage()) {
+        <div class="alert alert-success">{{ successMessage() }}</div>
+      }
+
+      <!-- Botões de Ação -->
+      <div class="form-actions button-row"> <!-- Adiciona button-row para alinhar com Cancelar -->
+        <button type="button" class="btn btn-secondary" (click)="onCancel()" [disabled]="isLoading()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="!cargoForm.valid || !novoCargo.nome?.trim() || isLoading()">
+          {{ isLoading() ? 'Salvando...' : 'Salvar Novo Cargo' }}
+        </button>
+      </div>
+    </form>
+
+    <!-- Seção da lista de cargos foi removida -->
+
+  </div>
+</div>
+
