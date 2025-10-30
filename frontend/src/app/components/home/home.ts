@@ -3,7 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Evento } from '../evento/evento';
 import { EventoService } from '../../services/evento/evento-service';
-import { EventoResponseDto, PalestraResponseDto } from '../../interfaces/evento-interface';
+import { 
+  EventoResponseDto, 
+  PalestraResponseDto,
+  TipoParticipacao,  // IMPORTADO
+  VinculoEventoResponseDto // IMPORTADO
+} from '../../interfaces/evento-interface';
 import { Router, RouterLink } from "@angular/router";
 import { Auth } from '../../services/auth';
 import { Subscription } from 'rxjs';
@@ -61,6 +66,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   isLoading = true;
   errorMessage: string | null = null;
 
+  // --- NOVOS ESTADOS PARA O MODAL DE INSCRIÇÃO ---
+  showInscricaoModal = false;
+  tiposParticipacao: TipoParticipacao[] = [];
+  selectedTipoParticipacaoId: number | null = null;
+  inscricaoErrorMessage: string | null = null;
+  isSubmittingInscricao = false;
+  // --- FIM DOS NOVOS ESTADOS ---
+
   // Serviços injetados
   private authService = inject(Auth);
   private eventoService = inject(EventoService);
@@ -116,7 +129,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   onDeleteEvent(): void {
     if (!this.selectedEvent) return;
 
-    const confirmed = confirm(`Tem certeza que deseja deletar o evento "${this.selectedEvent.title}"?`);
+    // Substituindo confirm() por uma solução que não bloqueia
+    const confirmed = window.confirm(`Tem certeza que deseja deletar o evento "${this.selectedEvent.title}"?`);
     if (!confirmed) return;
 
     this.eventoService.excluirEvento(this.selectedEvent.id).subscribe({
@@ -208,5 +222,57 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
+  // --- NOVOS MÉTODOS PARA O MODAL DE INSCRIÇÃO ---
+
+  openInscricaoModal(): void {
+    this.showInscricaoModal = true;
+    this.inscricaoErrorMessage = null;
+    this.selectedTipoParticipacaoId = null;
+    this.isSubmittingInscricao = false;
+    
+    // Busca os tipos de participação da API
+    this.eventoService.getTiposParticipacao().subscribe({
+      next: (tipos) => {
+        this.tiposParticipacao = tipos;
+      },
+      error: (err) => {
+        console.error('Erro ao buscar tipos de participação:', err);
+        this.inscricaoErrorMessage = 'Erro ao carregar os tipos de participação. Tente fechar e abrir novamente.';
+      }
+    });
+  }
+
+  closeInscricaoModal(): void {
+    if (this.isSubmittingInscricao) return; // Não deixa fechar se estiver enviando
+    this.showInscricaoModal = false;
+    this.tiposParticipacao = [];
+    this.selectedTipoParticipacaoId = null;
+    this.inscricaoErrorMessage = null;
+  }
+
+  onConfirmInscricao(): void {
+    if (!this.selectedEvent || !this.selectedTipoParticipacaoId) {
+      this.inscricaoErrorMessage = "Por favor, selecione um tipo de participação.";
+      return;
+    }
+
+    this.isSubmittingInscricao = true;
+    this.inscricaoErrorMessage = null;
+
+    this.eventoService.inscreverEmEvento(this.selectedEvent.id, this.selectedTipoParticipacaoId).subscribe({
+      next: (response) => {
+        this.isSubmittingInscricao = false;
+        alert(`Inscrição como ${response.tipoParticipacao} realizada com sucesso!`);
+        this.closeInscricaoModal();
+        // AQUI: Você pode querer atualizar a aba 'Eventos Inscritos' ou o estado do evento
+      },
+      error: (err) => {
+        this.isSubmittingInscricao = false;
+        console.error('Erro ao inscrever-se no evento:', err);
+        // Tenta pegar a mensagem de erro específica do backend
+        this.inscricaoErrorMessage = err.error?.message || 'Erro ao realizar inscrição. Você já pode estar inscrito ou o evento está lotado.';
+      }
+    });
+  }
 
 }

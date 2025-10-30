@@ -65,11 +65,11 @@
 
           <!-- NOVO CARD: Gerenciar Cargos -->
           <div class="admin-card">
-            <h3>Gerenciar Cargos</h3>
-            <p>Adicione ou edite os tipos de cargos de participantes (ex: Aluno, Professor).</p>
+            <h3>Gerenciar Tipos de Participação</h3>
+            <p>Adicione ou edite os tipos de participação (ex: OUVINTE, PALESTRANTE).</p>
             <!-- Botão que leva para a nova rota de gerenciamento de cargos -->
             <button class="create-event-btn" routerLink="/cargos">
-              Gerenciar Cargos
+              Gerenciar Tipos
             </button>
           </div>
 
@@ -106,6 +106,14 @@
         <button class="nav-btn-footer left" (click)="backToList()">
           <span class="arrow">←</span> Voltar para a lista
         </button>
+
+        <!-- BOTÃO DE INSCRIÇÃO NO EVENTO ADICIONADO -->
+        @if (!isAdmin) {
+          <button class="btn-register" (click)="openInscricaoModal()">
+            INSCREVER-SE NO EVENTO
+          </button>
+        }
+
         <button class="nav-btn-footer right" (click)="openPalestras()">
           Atividades <span class="arrow">→</span>
         </button>
@@ -168,8 +176,49 @@
         <button class="nav-btn-footer left" (click)="backToEventDetails()">
           <span class="arrow">←</span> Informações
         </button>
-        <button class="btn-register">INSCREVER-SE</button>
+        <!-- Este botão agora é para palestras, o de evento está na tela anterior -->
+        <button class="btn-register">INSCREVER-SE NAS PALESTRAS</button>
       </div>
     </div>
   }
+
+  <!-- 
+    MODAL DE INSCRIÇÃO NO EVENTO 
+    (ADICIONADO NO FINAL, FORA DOS @if(currentView) )
+  -->
+  @if (showInscricaoModal && selectedEvent) {
+    <div class="modal-overlay" (click)="closeInscricaoModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        
+        <h2 class="modal-title">Inscrever-se em: {{ selectedEvent.title }}</h2>
+        <p class="modal-subtitle">Selecione como você deseja participar deste evento.</p>
+        
+        <div class="form-group">
+          <label for="tipoParticipacao">Tipo de Participação</label>
+          <select class="modal-select" [(ngModel)]="selectedTipoParticipacaoId" name="tipoParticipacao">
+            <option [ngValue]="null" disabled>Selecione um tipo...</option>
+            @for (tipo of tiposParticipacao; track tipo.id) {
+              <option [ngValue]="tipo.id">{{ tipo.nome }}</option>
+            }
+          </select>
+        </div>
+  
+        @if (inscricaoErrorMessage) {
+          <div class="modal-error">{{ inscricaoErrorMessage }}</div>
+        }
+  
+        <div class="modal-actions">
+          <button class="btn-cancel" (click)="closeInscricaoModal()" [disabled]="isSubmittingInscricao">
+            Cancelar
+          </button>
+          <button class="btn-confirm" (click)="onConfirmInscricao()" [disabled]="!selectedTipoParticipacaoId || isSubmittingInscricao">
+            {{ isSubmittingInscricao ? 'Inscrevendo...' : 'Confirmar Inscrição' }}
+          </button>
+        </div>
+        
+      </div>
+    </div>
+  }
+  <!-- FIM DO MODAL -->
+
 </div>

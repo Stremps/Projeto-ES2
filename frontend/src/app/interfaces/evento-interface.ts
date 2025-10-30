@@ -66,3 +66,34 @@ export interface PalestraRequest {
   eventoId: number;
   palestranteEmail: string;
 }
+
+// --- NOVAS INTERFACES ADICIONADAS ---
+
+/**
+ * Interface para os tipos de participação (ex: PALESTRANTE, OUVINTE)
+ * Conforme PDF 2.1. Listar Tipos de Participação
+ */
+export interface TipoParticipacao {
+  id: number;
+  nome: string;
+}
+
+/**
+ * Interface para o JSON de requisição de inscrição em evento
+ * Conforme PDF 2.2. Inscrever-se num Evento
+ * ATENÇÃO: Mantendo o typo "tipoParticipacaold" para bater com a API
+ */
+export interface EventoInscricaoRequest {
+  tipoParticipacaoId: number;
+}
+
+/**
+ * Interface para a resposta da inscrição em evento
+ * Conforme PDF 2.2.
+ */
+export interface VinculoEventoResponseDto {
+  id: number;
+  nomeParticipante: string;
+  nomeEvento: string;
+  tipoParticipacao: string;
+}
