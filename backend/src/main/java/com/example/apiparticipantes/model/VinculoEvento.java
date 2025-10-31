@@ -3,6 +3,7 @@ package com.example.apiparticipantes.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "vinculo_evento")
@@ -30,6 +31,13 @@ public class VinculoEvento {
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_participacao", referencedColumnName = "id_participacao")
     private TipoParticipacao tipoParticipacao;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 20)
+    private StatusInscricao status;
+
+    @Column(name = "data_solicitacao", nullable = false)
+    private LocalDateTime dataSolicitacao;
 
     // Getters e Setters
     public Long getId() {
@@ -78,5 +86,21 @@ public class VinculoEvento {
 
     public void setTipoParticipacao(TipoParticipacao tipoParticipacao) {
         this.tipoParticipacao = tipoParticipacao;
+    }
+
+    public StatusInscricao getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusInscricao status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getDataSolicitacao() {
+        return dataSolicitacao;
+    }
+
+    public void setDataSolicitacao(LocalDateTime dataSolicitacao) {
+        this.dataSolicitacao = dataSolicitacao;
     }
 }

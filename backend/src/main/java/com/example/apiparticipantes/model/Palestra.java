@@ -1,4 +1,3 @@
-// Crie este novo arquivo em: src/main/java/com/example/apiparticipantes/model/Palestra.java
 package com.example.apiparticipantes.model;
 
 import jakarta.persistence.*;
