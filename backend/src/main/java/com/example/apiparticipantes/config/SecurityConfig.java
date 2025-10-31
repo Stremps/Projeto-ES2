@@ -111,6 +111,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/participantes/*").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/participantes/*").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/participantes/*").hasAuthority("ADMIN")
+
                         // A rota GET /api/vinculos-evento (listar todos) também deve ser admin
                         // (Ela já está coberta pelo @PreAuthorize no seu controller, mas é bom ser explícito)
                         .requestMatchers(HttpMethod.GET, "/api/vinculos-evento").hasAuthority("ADMIN")

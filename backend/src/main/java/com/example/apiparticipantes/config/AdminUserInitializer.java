@@ -15,10 +15,10 @@ public class AdminUserInitializer {
     public CommandLineRunner initAdminUser(ParticipanteRepository participanteRepository, PasswordEncoder passwordEncoder) {
         return args -> {
             // Verifica se o admin já existe
-            if (!participanteRepository.existsByEmailParticipante("admin@sistema.com")) {
+            if (!participanteRepository.existsByEmailParticipante("infinityeventses2@gmail.com")) {
                 Participante admin = new Participante();
                 admin.setNomeParticipante("Administrador");
-                admin.setEmailParticipante("admin@sistema.com");
+                admin.setEmailParticipante("infinityeventses2@gmail.com");
                 // IMPORTANTE: Use uma senha forte e guarde-a em um local seguro (ex: variáveis de ambiente)
                 admin.setSenhaParticipante(passwordEncoder.encode("admin123"));
                 admin.setCargo(Cargo.ADMIN);
