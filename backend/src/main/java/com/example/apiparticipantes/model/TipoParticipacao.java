@@ -15,6 +15,9 @@ public class TipoParticipacao {
     @Column(name = "tipo_participacao", nullable = false, unique = true)
     private String nome; // Ex: "Organizador", "Palestrante", "Ouvinte"
 
+    @Column(name = "requer_aprovacao", nullable = false)
+    private boolean requerAprovacao = false;
+
     // Getters e Setters
     public Long getId() {
         return id;
@@ -30,5 +33,13 @@ public class TipoParticipacao {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public boolean isRequerAprovacao() {
+        return requerAprovacao;
+    }
+
+    public void setRequerAprovacao(boolean requerAprovacao) {
+        this.requerAprovacao = requerAprovacao;
     }
 }
