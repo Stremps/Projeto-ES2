@@ -131,7 +131,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/tipos-participacao").authenticated()
 
                         // Usuário pode se INSCREVER
-                        .requestMatchers(HttpMethod.POST, "/api/vinculos-evento/*/inscrever-se").authenticated()
+                        //.requestMatchers(HttpMethod.POST, "/api/vinculos-evento/*/inscrever-se").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/vinculos-evento/*/inscrever-se").hasAuthority("PROFESSOR")
                         .requestMatchers("/api/inscricoes-palestra/**").authenticated() // POST para se inscrever, GET para ver as suas
 
                         // 4. QUALQUER OUTRA ROTA
