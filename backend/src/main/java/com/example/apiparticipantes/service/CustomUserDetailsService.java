@@ -30,6 +30,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         //    throw new DisabledException("Utilizador está inativo.");
         // }
         // --- FIM DO TESTE ---
+        // ----- ⚡ PASSO DE DEPURAÇÃO ⚡ -----
+        // Vamos imprimir o cargo que o Java está a ler da BD
+        String cargoDoUsuario = p.getCargo().name();
+        System.out.println("==================================================================");
+        System.out.println("DEPURAÇÃO: O cargo encontrado para " + username + " é: [" + cargoDoUsuario + "]");
+        System.out.println("==================================================================");
+        // ----- FIM DA DEPURAÇÃO -----
 
         return User.withUsername(p.getEmailParticipante())
                 .password(p.getSenhaParticipante())
