@@ -49,3 +49,4 @@ docker-compose.override.yml
 
 # Outros
 coverage/
+*.sql
