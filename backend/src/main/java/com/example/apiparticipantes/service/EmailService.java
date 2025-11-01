@@ -13,12 +13,12 @@ public class EmailService {
     // Adicionar Logger para registar erros ou sucessos
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
     private final JavaMailSender mailSender;
-    @Value("${spring.mail.username}")
-    private String adminEmail;
-
-    // ⚡ 3. INJETAR A URL DO FRONTEND
-    @Value("${app.frontend.url}")
-    private String frontendUrl;
+//    @Value("${spring.mail.username}")
+//    private String adminEmail;
+//
+//    // ⚡ 3. INJETAR A URL DO FRONTEND
+//    @Value("${app.frontend.url}")
+//    private String frontendUrl;
 
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
@@ -106,28 +106,28 @@ public class EmailService {
         }
     }
 
-    public void sendAdminNotificationEmail(String nomeParticipante, String emailParticipante, String nomeEvento, String tipoParticipacao, Long idVinculo) {
-        try {
-            // Construir o link para o frontend
-            String linkDeGerenciamento = frontendUrl + "/admin/gerenciar/" + idVinculo; // Ajusta este link se a tua rota no frontend for diferente
-
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(adminEmail); // <-- Usa o e-mail do admin!
-            message.setSubject("Nova Solicitação Pendente de Aprovação - Infinity Events");
-
-            message.setText("Olá Administrador,\n\n" +
-                    "Um participante solicitou um novo vínculo que requer sua aprovação:\n\n" +
-                    "Participante: " + nomeParticipante + " (" + emailParticipante + ")\n" +
-                    "Evento: " + nomeEvento + "\n" +
-                    "Tipo de Vínculo: " + tipoParticipacao + "\n\n" +
-                    "Para aprovar ou rejeitar, acesse o link abaixo:\n" +
-                    linkDeGerenciamento + "\n\n" + // <-- O link para o frontend
-                    "Equipe Infinity Events");
-
-            mailSender.send(message);
-            logger.info("E-mail de 'notificação de admin' enviado com sucesso para {}", adminEmail);
-        } catch (Exception e) {
-            logger.error("Erro ao enviar e-mail de 'notificação de admin' para {}: {}", adminEmail, e.getMessage());
-        }
-    }
+//    public void sendAdminNotificationEmail(String nomeParticipante, String emailParticipante, String nomeEvento, String tipoParticipacao, Long idVinculo) {
+//        try {
+//            // Construir o link para o frontend
+//            String linkDeGerenciamento = frontendUrl + "/admin/gerenciar/" + idVinculo; // Ajusta este link se a tua rota no frontend for diferente
+//
+//            SimpleMailMessage message = new SimpleMailMessage();
+//            message.setTo(adminEmail); // <-- Usa o e-mail do admin!
+//            message.setSubject("Nova Solicitação Pendente de Aprovação - Infinity Events");
+//
+//            message.setText("Olá Administrador,\n\n" +
+//                    "Um participante solicitou um novo vínculo que requer sua aprovação:\n\n" +
+//                    "Participante: " + nomeParticipante + " (" + emailParticipante + ")\n" +
+//                    "Evento: " + nomeEvento + "\n" +
+//                    "Tipo de Vínculo: " + tipoParticipacao + "\n\n" +
+//                    "Para aprovar ou rejeitar, acesse o link abaixo:\n" +
+//                    linkDeGerenciamento + "\n\n" + // <-- O link para o frontend
+//                    "Equipe Infinity Events");
+//
+//            mailSender.send(message);
+//            logger.info("E-mail de 'notificação de admin' enviado com sucesso para {}", adminEmail);
+//        } catch (Exception e) {
+//            logger.error("Erro ao enviar e-mail de 'notificação de admin' para {}: {}", adminEmail, e.getMessage());
+//        }
+//    }
 }

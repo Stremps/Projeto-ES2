@@ -90,13 +90,13 @@ public class VinculoEventoController {
                     evento.getNome(),
                     tipoParticipacao.getNome()
             );
-            emailService.sendAdminNotificationEmail(
-                    participante.getNomeParticipante(),
-                    participante.getEmailParticipante(),
-                    evento.getNome(),
-                    tipoParticipacao.getNome(),
-                    novoVinculo.getId() // <-- Passar o ID que acabou de ser gerado
-            );
+//            emailService.sendAdminNotificationEmail(
+//                    participante.getNomeParticipante(),
+//                    participante.getEmailParticipante(),
+//                    evento.getNome(),
+//                    tipoParticipacao.getNome(),
+//                    novoVinculo.getId() // <-- Passar o ID que acabou de ser gerado
+//            );
         }
         // (Você pode adicionar um 'else' aqui para enviar e-mail de confirmação imediata se quiser)
         // --- FIM DA CHAMADA ---
