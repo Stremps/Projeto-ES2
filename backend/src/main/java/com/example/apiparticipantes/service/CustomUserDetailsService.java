@@ -24,11 +24,12 @@ public class CustomUserDetailsService implements UserDetailsService {
         Participante p = participanteRepository.findByEmailParticipante(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Participante não encontrado com email: " + username));
 
-        if (!p.isAtivo()) {
-            // Lança uma exceção específica para contas desativadas
-            throw new DisabledException("Utilizador está inativo.");
-        }
-        // --- FIM DA VERIFICAÇÃO ---
+        // --- TESTE TEMPORÁRIO: IGNORAR A VERIFICAÇÃO DE ATIVO ---
+        // if (!p.isAtivo()) {
+        //    // Lança uma exceção específica para contas desativadas
+        //    throw new DisabledException("Utilizador está inativo.");
+        // }
+        // --- FIM DO TESTE ---
 
         return User.withUsername(p.getEmailParticipante())
                 .password(p.getSenhaParticipante())
