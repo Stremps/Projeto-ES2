@@ -1,50 +1,33 @@
 package com.example.apiparticipantes.dto;
 
 import com.example.apiparticipantes.model.VinculoEvento;
+import java.time.LocalDate;
 
 public class VinculoEventoResponseDto {
     private Long id;
-    private String nomeParticipante;
-    private String nomeEvento;
-    private String tipoParticipacao;
+    private String participanteNome;
+    private String eventoNome;
+    private String tipoParticipacaoNome;
+    private String status; // <-- Adicionamos o Status
+    private LocalDate dataInicio;
+    private LocalDate dataFim;
 
     public VinculoEventoResponseDto(VinculoEvento vinculo) {
         this.id = vinculo.getId();
-        this.nomeParticipante = vinculo.getParticipante().getNomeParticipante();
-        this.nomeEvento = vinculo.getEvento().getNome();
-        this.tipoParticipacao = vinculo.getTipoParticipacao().getNome();
+        this.participanteNome = vinculo.getParticipante().getNomeParticipante();
+        this.eventoNome = vinculo.getEvento().getNome();
+        this.tipoParticipacaoNome = vinculo.getTipoParticipacao().getNome();
+        this.status = vinculo.getStatus().toString(); // <-- Adicionamos o Status
+        this.dataInicio = vinculo.getDataInicio();
+        this.dataFim = vinculo.getDataFim();
     }
 
-    // Getters e Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNomeParticipante() {
-        return nomeParticipante;
-    }
-
-    public void setNomeParticipante(String nomeParticipante) {
-        this.nomeParticipante = nomeParticipante;
-    }
-
-    public String getNomeEvento() {
-        return nomeEvento;
-    }
-
-    public void setNomeEvento(String nomeEvento) {
-        this.nomeEvento = nomeEvento;
-    }
-
-    public String getTipoParticipacao() {
-        return tipoParticipacao;
-    }
-
-    public void setTipoParticipacao(String tipoParticipacao) {
-        this.tipoParticipacao = tipoParticipacao;
-    }
+    // Getters (só getters são necessários para resposta)
+    public Long getId() { return id; }
+    public String getParticipanteNome() { return participanteNome; }
+    public String getEventoNome() { return eventoNome; }
+    public String getTipoParticipacaoNome() { return tipoParticipacaoNome; }
+    public String getStatus() { return status; }
+    public LocalDate getDataInicio() { return dataInicio; }
+    public LocalDate getDataFim() { return dataFim; }
 }

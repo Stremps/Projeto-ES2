@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity; // <-- ADICIONADO
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -23,15 +23,14 @@ import org.springframework.http.HttpMethod;
 
 import com.example.apiparticipantes.service.TokenBlacklistService;
 
-// Imports de CORS adicionados do arquivo funcional
-import org.springframework.web.cors.CorsConfiguration; // <-- ADICIONADO
-import org.springframework.web.cors.CorsConfigurationSource; // <-- ADICIONADO
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource; // <-- ADICIONADO
-import java.util.Arrays; // <-- ADICIONADO
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import java.util.Arrays;
 
 @Configuration
-@EnableWebSecurity // <-- ADICIONADO (Importante para habilitar a segurança web)
-@EnableMethodSecurity // <-- MANTIDO (Bom para @PreAuthorize)
+@EnableWebSecurity
+@EnableMethodSecurity // Essencial para @PreAuthorize funcionar!
 public class SecurityConfig {
 
     private final CustomUserDetailsService userDetailsService;
@@ -43,12 +42,11 @@ public class SecurityConfig {
                           TokenBlacklistService tokenBlacklistService) {
         this.userDetailsService = userDetailsService;
         this.tokenProvider = tokenProvider;
-        this.tokenBlacklistService = tokenBlacklistService; // <-- Lógica nova mantida
+        this.tokenBlacklistService = tokenBlacklistService;
     }
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        // Usa a nova implementação com blacklist
         return new JwtAuthenticationFilter(tokenProvider, userDetailsService, tokenBlacklistService);
     }
 
@@ -70,19 +68,17 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // <-- BEAN DE CORS ADICIONADO DO ARQUIVO FUNCIONAL -->
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Permite as origens do frontend (desenvolvimento e produção)
+        // Permite as origens do frontend
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://localhost:8080"));
-        // Permite os métodos HTTP mais comuns
+        // Permite os métodos HTTP
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        // Permite cabeçalhos comuns, incluindo Authorization para o JWT
+        // Permite cabeçalhos
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        // Aplica a configuração a todas as rotas da API
         source.registerCorsConfiguration("/api/**", configuration);
         return source;
     }
@@ -90,39 +86,55 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // HABILITA A CONFIGURAÇÃO CORS (como no arquivo funcional)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // <-- ADICIONADO
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Permite requisições OPTIONS (essencial para CORS pre-flight)
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // <-- ADICIONADO
 
-                        // 1. Rotas Públicas (mantidas do 'novo')
+                        // 1. ROTAS PÚBLICAS
+                        // Permite requisições OPTIONS (para CORS)
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        // Permite todas as rotas de autenticação (login, register, forgot-password, etc.)
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/auth/logout").authenticated() // Lógica nova mantida
-                        .requestMatchers(HttpMethod.GET, "/api/address/lookup/**").permitAll() // Lógica nova mantida
+                        // Permite a busca de endereços (se for público, como busca por CEP)
+                        .requestMatchers(HttpMethod.GET, "/api/address/lookup/**").permitAll()
 
-                        // 2. Rotas Específicas para Usuários Autenticados (mantidas do 'novo')
+
+                        // 2. ROTAS DE "ADMIN"
+                        // As rotas de ADMIN (POST, PUT, DELETE em palestras, eventos, etc.)
+                        // já estão protegidas pelo @PreAuthorize("hasAuthority('ADMIN')")
+                        // nos seus controllers, graças ao @EnableMethodSecurity.
+
+                        // CORREÇÃO DA FALHA DE SEGURANÇA:
+                        // Apenas ADMIN pode ver/editar/deletar OUTROS participantes
+                        .requestMatchers(HttpMethod.GET, "/api/participantes").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/participantes/*").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/participantes/*").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/participantes/*").hasAuthority("ADMIN")
+
+                        // A rota GET /api/vinculos-evento (listar todos) também deve ser admin
+                        // (Ela já está coberta pelo @PreAuthorize no seu controller, mas é bom ser explícito)
+                        .requestMatchers(HttpMethod.GET, "/api/vinculos-evento").hasAuthority("ADMIN")
+
+
+                        // 3. ROTAS DE USUÁRIO (AUTENTICADO)
+                        // Usuário faz logout
+                        .requestMatchers(HttpMethod.POST, "/api/auth/logout").authenticated()
+                        // Usuário gerencia o PRÓPRIO perfil
+                        .requestMatchers("/api/participantes/me").authenticated() // Cobre GET, PUT, DELETE do /me
+
+                        // Usuário pode LER (GET) dados do evento
                         .requestMatchers(HttpMethod.GET,"/api/eventos").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/vinculos-evento/*/inscrever-se").authenticated()
-                        .requestMatchers("/api/inscricoes-palestra/**").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/eventos/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/palestras").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/palestras/**").authenticated() // Inclui /vagas
                         .requestMatchers(HttpMethod.GET, "/api/tipos-participacao").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/palestras/**").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/participantes/me").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/api/participantes/me").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/api/participantes/me").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/participantes/*").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/api/participantes/*").authenticated()
 
-                        // 3. Rotas Gerais para ADMIN (mantidas do 'novo')
-                        .requestMatchers("/api/eventos/**").hasAuthority("ADMIN")
-                        .requestMatchers("/api/palestras/**").hasAuthority("ADMIN")
-                        .requestMatchers("/api/tipos-participacao/**").hasAuthority("ADMIN")
-                        .requestMatchers("/api/vinculos-evento/**").hasAuthority("ADMIN")
+                        // Usuário pode se INSCREVER
+                        .requestMatchers(HttpMethod.POST, "/api/vinculos-evento/*/inscrever-se").authenticated()
+                        .requestMatchers("/api/inscricoes-palestra/**").authenticated() // POST para se inscrever, GET para ver as suas
 
-                        // 4. Qualquer outra rota não especificada acima exige autenticação
+                        // 4. QUALQUER OUTRA ROTA
                         .anyRequest().authenticated()
                 );
 
