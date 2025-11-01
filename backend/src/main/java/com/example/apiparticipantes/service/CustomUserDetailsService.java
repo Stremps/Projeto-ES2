@@ -25,10 +25,10 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Participante não encontrado com email: " + username));
 
         // --- TESTE TEMPORÁRIO: IGNORAR A VERIFICAÇÃO DE ATIVO ---
-        // if (!p.isAtivo()) {
-        //    // Lança uma exceção específica para contas desativadas
-        //    throw new DisabledException("Utilizador está inativo.");
-        // }
+         if (!p.isAtivo()) {
+            // Lança uma exceção específica para contas desativadas
+            throw new DisabledException("Utilizador está inativo.");
+         }
         // --- FIM DO TESTE ---
         // ----- ⚡ PASSO DE DEPURAÇÃO ⚡ -----
         // Vamos imprimir o cargo que o Java está a ler da BD
