@@ -49,6 +49,15 @@ public class EventoController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<EventoResponseDto> buscarEventoPorId(@PathVariable Long id) {
+        Evento eventoEncontrado = eventoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento não encontrado."));
+
+        EventoResponseDto respostaDto = new EventoResponseDto(eventoEncontrado);
+        return ResponseEntity.ok(respostaDto);
+    }
+
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<EventoResponseDto> criarEvento(@RequestBody EventoRequest request) {
