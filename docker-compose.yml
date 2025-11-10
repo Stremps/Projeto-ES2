@@ -36,9 +36,10 @@ services:
       # Variáveis do JWT
       APP_JWT_SECRET: ${APP_JWT_SECRET}
       APP_JWT_EXPIRATION_MS: ${APP_JWT_EXPIRATION_MS}
+      APP_FRONTEND_URL: ${APP_FRONTEND_URL}
     depends_on:
       - database
-
+      
   frontend-prod:
     build:
       context: ./frontend

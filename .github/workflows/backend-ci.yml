@@ -82,6 +82,9 @@ jobs:
           # --- Variáveis de JWT (Usando valores de Teste) ---
           APP_JWT_SECRET: ${{ secrets.APP_JWT_SECRET }}
           APP_JWT_EXPIRATION_MS: ${{ secrets.APP_JWT_EXPIRATION_MS }}
+          
+          # --- NOVA Variável de Frontend URL ---
+          APP_FRONTEND_URL: ${{ secrets.APP_FRONTEND_URL }}
 
         run: ./backend/mvnw package --batch-mode -f backend/pom.xml
 
