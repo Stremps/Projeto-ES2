@@ -54,7 +54,7 @@ jobs:
     # Permissões necessárias para enviar pacotes para o GitHub Container Registry
     permissions:
       contents: read
-      package: write
+      packages: write
 
     
     steps:
@@ -79,11 +79,10 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images:
-            images: ghcr.io/${{ github.repository }}/frontend
-            tags: |
-              type=ref,event=branch
-              type=raw,value=latest,enable={{is_default_branch}}
+          images: ghcr.io/${{ github.repository }}/frontend
+          tags: |
+            type=ref,event=branch
+            type=raw,value=latest,enable={{is_default_branch}}
       
       # Passo 5: Build e Push dentro contexto do frontend de produção
       - name: Build and push Docker image
