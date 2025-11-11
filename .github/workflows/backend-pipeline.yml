@@ -101,4 +101,49 @@ jobs:
       #    name: backend-jar
       #    path: backend/target/apiparticipantes-*.jar
       #    retention-days: 7
-      
+
+  # Job para CD
+  docker-build-push-backend:
+    needs: build-and-test-backend # Só executa se os testes passaram
+    runs-on: ubuntu-latest
+    # Permissões necessárias para enviar pacotes para o GitHub Container Registry
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      # Passo 1: Checkout do código (clona o repositório para dentro do runner)
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Passo 2: Configurar o Docker Buildx (necessário para recursos avançados de build)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Passo 3: Fazer login no GitHub Container Registry (GHCR)
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }} # Usa o GITHUB_TOKEN automático, não precisa de criar segredo novo.
+
+      # Passo 4: Gerar metadados (tags, labels) para a imagem Docker
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with: # Isto garante que se o push for na 'main', a tag é 'main' (e talvez 'latest')
+          images: ghcr.io/${{ github.repository }}/backend # Se for na 'developer', a tag é 'developer'
+          tags: |
+            type=ref,event=branch
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      # Passo 5: Construir e Enviar a Imagem
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }} # Usa as tags e labels geradas automaticamente pelo passo anterior
+          labels: ${{ steps.meta.outputs.labels }}
